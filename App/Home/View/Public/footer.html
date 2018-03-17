@@ -1,0 +1,89 @@
+<style> 
+.rightwidth{ width:340px;}
+/*.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
+	line-height: 0;
+}*/
+</style>
+<!--footer start-->
+
+
+
+
+<div class="coin_footer">
+	<!-- <div class="coin_hint" style="border:0">
+		<h2>{$info_one4.title|default="风险提示"}</h2>
+		<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$config.risk_warning}</p>
+	</div> -->
+	
+	<div class="coin_footerbar" style="background:#333333; height:240px">
+		<div class="coin_footer_nav clearfix">
+			<div class="coin_nav coin_copy left">
+				<p><a href="{:U('Index/index')}"><img style=" height:120px;" src="{$config.index_logo_footer}"></a></p>
+			</div>
+			<div class="coin_nav left" style="margin-right:70px">
+				<h2 style="color:white;">快速链接</h2>
+				<ul>
+				<volist name="team" id="vo">
+					<li><a href="{:U('Art/details',array('team_id'=>$vo['article_id']))}" target="_blank" class="left" style="color:white">{$vo.title}</a></li>
+                </volist>
+                <li><a href="{$config.qianbao}" target="_blank" class="left" style="color:white">钱包下载</a></li>
+				</ul>
+			</div>
+			<div class="coin_nav left" style="margin-right:70px">
+				<h2 style="color:white">网站地图</h2>
+				<ul>
+                <volist name="help" id="vo">
+					<li><a href="{:U('Help/index',array('id'=>$vo['id']))}" target="_blank" class="left" style="color:white">{$vo.name}</a></li>
+					
+                </volist>
+				</ul>
+			</div>
+			<div class="coin_nav coin_nav02 left">
+				<h2 class="clearfix" style="height:19px;margin-bottom:11px"><span class="left" style="color:white;">联系我们</span><!-- <a href="http://weibo.com/{$config.weibo}" target="_blank" class="coin_sina left" style="display:block;width:25px;height:25px"></a> --><!--<a href="#" id="coin_weixin" class="coin_wei left"></a>--></h2>
+				<ul>
+					
+					<li style="color:white;">客 服 QQ：{$config.qq1|default="暂无"}</li>
+					<li><a href="mailto:{$config['email']}" style="color:white">客服邮箱：{$config.email|default="暂无"}</a></li>
+					<li><a href="mailto:{$config['business_email']}" style="color:white">业务合作：{$config.business_email|default="暂无"}</a></li>
+					<li style="color:white;">客服电话：{$config['suggest_email']|default="暂无"}</li>
+					<li style="color:white;">公司地址：{$config['address']|default="暂无"}</li>				
+				</ul>
+			</div>
+			<!-- <div class="coin_nav coin_nav02 left rightwidth" style="position:relative;">
+              <div style="float:left; padding-top:25px; padding-left:10px;" >
+              <img style=" width:100px;" src="{$config['weixin']}"/></div>
+              <div style=" float:left; padding-left:10px;color:white" >
+				<p class="coin_phoneqq" style="color:white;padding-top:30px;font-size:14px">
+				实体积分网官网总群：{$config.qqqun1|default="暂无"}<br>
+				实体积分网官网一群：{$config.qqqun2|default="暂无"}<br>
+				实体积分网官网二群：{$config.qqqun3|default="暂无"}<br>
+				实体积分网官网三群：{$config.qqqun4|default="暂无"}<br>
+               </div>
+			</div> -->
+		</div>
+	</div>
+<div class="footer_aq" style="background:#474747;width:100%;margin:0px;padding-bottom:20px;">
+	<p style="color:white">{$config.copyright|default="暂无"}</p>
+	<p style="color:white">{$config.record|default="暂无"}</p>
+	<!-- <ul class="footerSafety clearfix">
+        <li class="safety02"><a href="http://net.china.com.cn/" target="_blank"></a></li>
+        <li class="safety03"><a href="http://webscan.360.cn/index/checkwebsite/?url={$config['localhost']}" target="_blank"></a></li>
+        <li class="safety04"><a href="http://www.cyberpolice.cn/wfjb/" target="_blank"></a></li>
+    </ul> -->
+</div>
+<div id="weixin" style="position:absolute; bottom:88px; left:50%; margin-left:170px; display:block;"><!--<img src="{$config.logo}">--></div>
+
+<script>
+	$('#coin_weixin').mouseover(function(){
+		$('#weixin').show();
+	}).mouseout(function(){
+		$('#weixin').hide();
+	});
+</script>
+</div>
+<!--footer end-->
+
+
+
+
+</body></html>

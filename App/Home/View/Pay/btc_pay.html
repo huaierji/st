@@ -1,0 +1,225 @@
+<include file="App/Home/View/Public/header.html"/>
+<div id="main">
+	<div class="main_box">
+		<include file="App/Home/View/Public/left.html"/>
+		<div class="raise right clearfix">
+            <link rel="stylesheet" href="__PUBLIC__/Home/css/layer.css">
+<script src="__PUBLIC__/Home/js/base64.js"></script>
+<script src="__PUBLIC__/Home/js/Fnc.js"></script>
+<style>
+.zzzn a{ display:block; float:right; margin:20px; padding:8px 20px; color:#fff; background:#82b52d; font-size: 20px; border-radius:30px; text-decoration:none;}
+.zzzn a:hover{ background:#90c13e;}
+.ul_recharge_padding{padding:20px 0 0px 160px;}
+.recharge_tips{color:#f00; line-height:40px; margin:0;}
+.recharge_left_input{margin-left:16px;}
+.help_link{ line-height:40px; color:#2471cb; text-decoration:underline; font-size:14px;}
+.help_link:hover{ color:#f30;}
+.help_link1{ color:#;}
+.ebank_pay{font-family: Arial,"微软雅黑"; width:260px; height:40px; color:#fff; font-size:16px; line-height: 40px; text-align: center; margin:0 auto; background:#f60; display: block; text-decoration: none; border: 0;}
+.ebank_pay:hover{ background: #f70; color:#fff; text-decoration: none; cursor: pointer;}
+
+.box_close{ height:24px; line-height:24px; width:24px; text-align:center; font-size:14px; color:#999; border-radius:20px; position:absolute; top:10px; right:10px; text-decoration:none; font-family:Arial;}
+.box_close:hover{ color:#fff; background:#f00; text-decoration:none;}
+.choice_ebank .note1{ width:100px; text-align:right; display:block; float:left; margin-right:5px; line-height:40px;}
+.fkbtn{
+    width: 80px;
+    height: 30px;
+    color: #f60;
+	border:1px #f60 solid;
+    border-radius: 3px;
+    font-size: 12px;
+    display: inline-block;
+    line-height: 30px;
+    text-align: center;
+}
+.fkbtn:hover{ color:#f60 !important;}
+
+</style>
+	<name id="realname" data="{$member['name']|default='暂无'}"></name>
+<div class="ybc_list">
+    <div class="ybcoin clearfix">
+        <h2 class="left">充值比特币CNY[<span style="color:red">谨防诈骗</span>]</h2>
+        <p class="right recharge_tips" style="margin-bottom:0;"><a href="{:U('Help/index',array('article_id'=>'59'))}" class="help_link">银行卡汇款帮助？</a></p>
+    </div>
+    <div class="support_ybc pass_ybc ybc_optimize" id="verifyon">
+<!--        <ul id="pass_change">-->
+<!--            <li class="selectTag ebank_change"><a onclick="selectTag('tagContent0',this);Ebank.platform('bank');" href="javascript:void(0)" class="">银行卡汇款</a></li>-->
+<!--             <li class="ebank_change"><a onclick="selectTag('tagContent0',this);Ebank.platform('alipay');" href="javascript:void(0)" class="middle" class="ebank_pay">支付宝汇款</a></li>-->
+<!--            <li class="note ebank_change"><a onclick="selectTag('tagContent1',this)" href="javascript:void(0)" class="">从元宝理财转账</a></li>-->
+<!--            <div class="clear"></div>-->
+<!--        </ul>-->
+        <!-- <div class="alert alert_orange m_t_20">
+			<div style=" float:left;"><b class="font_orange">比特币充值说明：</b></div>
+			<div style=" float:left;">
+            {$art.content}
+            </div>
+					</div> -->
+        <div id="tagContent" class="passContent">
+
+            <!-- bank/alipay -->
+            <div class="tagContent selectTag" id="tagContent0">
+               <ul class="ybc_optimize_con ul_recharge_padding" id="rollout2" style="margin-top:30px;">
+		
+                   <!--  <li class="clearfix">
+                        <span class="note1" style="color:#333;font-size:12px; margin-left: 30px;">选择汇款额度</span>
+                        <input type="radio" name="bank" id="choice_money_upper" onclick="Ebank.choiceMoney(1)" checked="checked" style="vertical-align:bottom; height:40px;">
+                        <label for="choice_money_upper" class="tibi_l" onclick="Ebank.choiceMoney(1)" style="font-size:16px; line-height:40px;">大于等于5000元&nbsp;&nbsp;</label>
+                        <input type="radio" name="bank" id="choice_money_lower" onclick="Ebank.choiceMoney(0)" style="vertical-align:bottom; height:40px;">
+                        <label for="choice_money_lower" class="tibi_l" onclick="Ebank.choiceMoney(0)" style="font-size:16px; line-height:40px;">小于5000元</label>
+                    </li> -->
+				
+                    <li style="margin-top:0; position:relative;" class="choice_ebank">
+                        <span class="note1" style="color:#333;font-size:12px;">充值数量</span>
+                        <input name="number" id="num" class="money num_three" onkeyup="value=value.replace(/[^\d]/g,'');notfee();" autocomplete="off" maxlength="10" type="text">
+                        <!-- <span class="note" style="margin-left: 5px;">最小充值金额{$config['pay_min_money']|default='0'}元。</span> -->
+                        <input id="rand_num" value="0" type="hidden">
+                    </li>
+                    <!--<li class="num_money choice_ebank" style="margin-left:105px; position:relative;">
+                        <span class="left">应转币数量：</span>
+                        <font id="ure" class="left" color="red"></font>
+                        <span class="note" style="position:absolute; top:0; right:-270px; color:#f00; font-size:14px; line-height:20px;">请严格按照汇款金额汇款，汇款金额的后<br>3位是为了保证即时到账系统自动分配的。</span>
+                    </li>-->
+
+                    <li style="margin-top:10px; position:relative;" class="choice_ebank">
+                        <span class="note1" style="color:#333;font-size:12px;" id="recharge_name">平台比特币地址</span>
+						<input id="btc_address" class="money num_three" value="{$list['chongzhi_url']|default='暂无'}" autocomplete="off" readonly="readonly" type="text">
+                        <span class="note" style="margin-left: 5px;">请手动向此账户转币</span>
+                    </li>
+
+
+                    <li style="margin-top:10px; position:relative;" class="choice_ebank">
+                        <span class="note1 recharge_left_input" style="color:#333;font-size:12px; margin-left:0;" id="recharge_account">我的比特币地址</span>
+                        <input id="address" class="money num_three"  type="text">
+                        <span class="note" style="position:absolute; top:0; right:205px; line-height:20px;">&nbsp;&nbsp;请准确填写自己的比特币地址，否则不能到账，<br>&nbsp;&nbsp;需要人工联系客服排队处理，时间无法保证。</span>
+                    </li>
+					<li style="margin-top:10px; position:relative;" class="choice_ebank">
+						<span class="note1" style="color:#333;font-size:12px;" id="recharge_name">验证码</span>
+						<input id="code" class="money num_three"  type="text">
+						<img class="yanzm" id="captchaimg" src="{:U('Login/showVerify')}" onclick="$(this).attr('src','{:U(\'Login/showVerify\')}?t='+Math.random())" >
+						</li>
+                    <li style="color:#f00; font-size:16px; margin-top:20px; margin-left:99px;" class="choice_ebank"></li>
+					
+                    <li>
+                    <a href="javascript:void(0);" onclick="recharge()" class="btn_turn" id="choice_submit" style="margin-left:105px;">立即充值</a></li>
+                </ul>
+            </div>
+
+                <div class="turns">
+                    <h2>使用说明</h2>
+                    <p style="margin-bottom:0;">1. 使用本平台充值比特币请认真填写以上信息，若是信息错误则无法到账。</p>
+                    <p style="margin-bottom:0;">2. 充值后在工作日内两小时到账，非工作日可能延误。</p>
+					<p>3. 若是充值信息未到账，请联系客服进行处理。</p>
+                </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- exchange_cny list start-->
+
+<div class="ybc_list">
+    <div class="ybcoin ">
+        <h2 class="left">充值记录</h2>
+        <p class="right" style="font-size:14px; color:#f00; line-height:40px; margin-bottom:0;">超过3个小时的汇款订单将失效，请重新生成汇款订单并汇款。<a href="{:U('Help/index?id=62')}" class="help_link">充值不到账如何处理？</a></p>
+        <div class="clear"></div>
+    </div>
+</div>
+<table class="raise_list" style="border:1px solid #e1e1df;" align="center" border="0" cellpadding="0" cellspacing="0">
+    <thead>
+        <tr>
+            <th>记录ID</th>
+            
+            <th>数量</th>
+            <th>发送时间</th>
+            <th>状态</th>
+        </tr>
+    </thead>
+    <tbody>
+		<volist name='chongzhi' id='vo' key='key'>
+			<tr>
+			<td>{$key}</td>
+			
+			<td>{$vo.count|default=0}</td>
+			<td>{$vo.add_time|date='Y-m-d H:i:s',###}</td>
+			<!-- <td><eq name='vo.status' value='2'><a class="fkbtn" >等待审核<else/><a class="fkbtn">充值成功</eq></a></td> -->
+			 <td><eq name="vo.status" value="8"><a class="fkbtn" >驳回<else/><eq name="vo.status" value="1"><a class="fkbtn" >通过<else/><a class="fkbtn" >审核中</eq></eq></a></td>
+			</tr>
+		</volist>
+    </tbody>
+</table>
+<div class="page" style=" min-width:200px !important; float:right;">
+                    {$page}
+</div>
+<!-- exchange_cny list end -->
+
+
+<div id="recharge_alert_bank" style="display:none;">
+<div class="box_bg2"></div>
+
+</div>
+<!-- recharge alert end -->
+<div id="noneform">
+
+</div>
+<div>
+    <!-- <button class="ebank_pay" onclick="Ebank.licai()" style="margin-top:160px;">去元宝理财充值</button> -->
+    <div class="ebank_box_common" style=" width:100%; height:100%; background:#000; filter: Alpha(opacity=60); -moz-opacity: 0.6; -khtml-opacity: 0.6; opacity: 0.6; position:absolute; z-index:9998; position:fixed; left:0; top:0; z-index: 9998;  display:none;">
+	</div>
+</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>   
+<script type="text/javascript">
+	function recharge(){
+		//layer.msg(111);
+		var num = $('#num').val();
+		var address = $('#address').val();
+		var code = $('#code').val();
+		var btc_address = $('#btc_address').val();
+		var currency_id = "{$currency.currency_id}";
+		//alert(address);
+		/*parseFloat(num);
+		if( num <= 0 ){
+			layer.msg('请输入正确金额');
+			return false;
+		}*/
+		if(address == ''){
+			layer.msg('请输入自己的比特币地址');
+			return false;
+		}
+		if(code == ''){
+			layer.msg('请输入验证码');
+			return false;
+		}
+		$.ajax({
+			url:"{:U('Pay/btc_recharge')}",
+			type:'POST',
+			dataType:"JSON",
+			data:{'num':num,'code':code,'address':address,'btc_address':btc_address,'currency_id':currency_id},
+			success:function (data){
+				layer.msg(data.info);
+				if(data.status == -2221){
+					$('#captchaimg').attr('src','{:U(\'Login/showVerify\')}?t='+Math.random());
+				}
+				if(data.status == 1){
+					location.reload();
+				}
+			}
+		})
+	}
+</script>
+<script>
+    $(".menu1").addClass("uc-current");
+
+    function showTips(id,msg){
+        var tips = layer.tips(msg, id, {
+            tips: [1, '#fff8db'],
+            area: ['400px', '35px']
+        });
+        $(id).on('mouseout', function(){
+            layer.close(tips);
+        });
+    }
+</script>
+<include file="App/Home/View/Public/footer.html"/>

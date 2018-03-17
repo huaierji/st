@@ -1,0 +1,213 @@
+<include file="App/Home/View/Public/header.html"/>
+<!--top end-->
+<link rel="shortcut icon" href="http://www.stjfw.net/favicon.ico" type="image/x-icon">
+<script src="_PUBLIC__/Home/js/script.js"></script>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/jb_font-awesome.css">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+.s-policy{ margin-top:30px; padding-right: 20px;}
+.security-col a span{ color:#999; padding-right:5px;}
+dd{
+    font-size: 14px;
+}
+dt{
+    font-size: 14px;
+}
+
+</style>
+</head>
+
+<body>
+<div id="main">
+    <div class="main_box">
+        <include file="App/Home/View/Public/left.html"/>
+        <div class="assets_content w753 right bg_w" id="safebox" style=" border-left-style:none !important;"><h1>用户中心</h1>
+            <div class="safe_center clear">
+              <div style="float:left; margin-left:30px;">
+                <div class="sc_level">
+                    <div class="sc_level_4">
+                      <img style=" width:102px; height:102px;" <if condition="$u_info['head']">src="{$u_info['head']}"<else/>src="__PUBLIC__/Home/images/ulogodefault.jpg"</if> >
+                    </div>
+                    <!--<div class="sc_level_info"></div>-->
+                </div>
+                <dl>
+                    <dt>ID：<span>{$u_info['member_id']}</span></dt>
+                    <dd>姓名：{$u_info['name']}</dd>
+                    <dd>用户名：{$u_info['email']}</dd>
+                    <dd>会员等级：   
+                        <if condition="($total gt 50) ">钻石会员
+                            <elseif condition=" ($total lt 10) and ($total gt 4) "/>铜牌会员
+                            <elseif condition=" ($total lt 20) and ($total gt 9) "/>银牌会员
+                            <elseif condition=" ($total lt 50) and ($total gt 19) "/>金牌会员
+                            <else /> 普通会员
+                        </if>
+                    </dd>
+					<dd>注册时间：{$u_info['reg_time']|date="Y-m-d H:i:s",###}</dd>
+                </dl>
+              </div>
+              <div style="float:left; margin-left:170px;">
+                <dl style=" padding-top:0px !important;"><span style="font-size:16px;">人民币信息</span>
+                    <dt>可用：￥{$u_info['rmb']|floatval=###}</span></dt>
+                    <dd>冻结：￥{$u_info['forzen_rmb']|floatval=###}</dd>
+                    <dd>总资产：￥{$u_info['rmb']+$u_info['forzen_rmb']|floatval=###}</dd>
+                </dl>
+              </div>
+            </div>
+            <ul class="sc_statu">
+                 <li> 
+                     <?php if($u_info['status'] < 2){ ?> 
+                     <em class="sc_statu_type_1_1"></em> 
+                     <dl> 
+                         <dt>实名认证</dt> 
+                         <dd class="nopass">未认证<a href="{:U('ModifyMember/userAuthentication')}">点击认证</a></dd> 
+                     </dl> 
+                     <?php }else if($u_info['status']==4){ ?> 
+                     <em class="sc_statu_type_1_1"></em> 
+                     <dl> 
+                         <dt>实名认证</dt> 
+                         <dd class="nopass">未通过审核，请重新上传资料<a href="{:U('ModifyMember/userAuthentication')}">重新认证</a></dd> 
+                     </dl> 
+                     <?php }else if($u_info['status']==5){ ?> 
+                     <em class="sc_statu_type_1_2"></em> 
+                     <dl> 
+                         <dt>实名认证</dt> 
+                         <dd class="alpass">已认证</dd> 
+                     </dl> 
+                     <?php }else if($u_info['status']==3){ ?> 
+                     <em class="sc_statu_type_1_1"></em> 
+                     <dl> 
+                         <dt>实名认证</dt> 
+                         <dd class="nopass">审核中</dd> 
+                     </dl> 
+                     <?php }else{ ?> 
+                     <dl> 
+                         <dt>实名认证</dt> 
+                         <dd class="nopass">账号有误,请联系客服</dd> 
+                     </dl> 
+                     <?php } ?> 
+                 </li> 
+                <li>
+                    <if condition="$u_info['phone']">
+                        <em class="sc_statu_type_3"></em>
+                        <dl>
+                            <dt>绑定手机</dt>
+                            <dd class="alpass">已认证 <a href="{:U('User/updateMassage')}">查看</a></dd>
+                        </dl>
+                        <else/>
+                        <em class="sc_statu_type_3_1"></em>
+                        <dl>
+                            <dt>绑定手机</dt>
+                            <dd class="nopass">未认证 <a href="{:U('ModifyMember/modify')}">点击绑定</a></dd>
+                        </dl>
+                    </if>
+
+                </li>
+                <!--<li>
+                    <em class="sc_statu_type_2"></em>
+                    <dl>
+                        <dt>账户资产</dt>
+                        <dd class="alpass">已认证<a href="{:U('User/index')}">点击进入</a></dd>
+                    </dl>
+                </li>
+-->
+            </ul>
+            
+            <!--copy_hb新修改的-->
+            <div class="s-policy s-setting">
+              <dl>
+                 <dt>您已设置 <b>2</b> 个保护项，还有 <b>0</b>个保护项可设置</dt>                    
+                    <!-- <dd> -->
+                        <!-- <i class="icon-pilicy-mobile float_left"></i> -->
+                        <!-- <div class="security-col"> -->
+                            <!-- <div class="validate"><b>实名认证</b></div> -->
+                            <!-- <div class="pass">受国家要求及为了您的资金安全需进行实名认证</div> -->
+                            <!-- <?php if($u_info['status']==0){ ?> -->
+		                        <!-- <a href="{:U('ModifyMember/modify')}"><span>未认证</span>认证</a> -->
+		                    <!-- <?php }else if($u_info['status']==1){ ?> -->
+		                        <!-- <a href="{:U('User/updateMassage')}"><span>已认证</span>查看</a> -->
+		                    <!-- <?php }else if($u_info['status']==3){ ?> -->
+		                    	<!-- <a href="{:U('ModifyMember/userAuthentication')}"><span>未认证</span>认证</a> -->
+		                    <!-- <?php }else if($u_info['status']==4){ ?> -->
+                                <!-- <a href="{:U('User/updateMassage')}"><span>审核中</span>查看</a> -->
+                            <!-- <?php }else{ ?> -->
+                                 <!-- <span>账号有误，联系客服</span> -->
+                            <!-- <?php } ?> -->
+                        <!-- </div> -->
+                    <!-- </dd>                    -->
+                    <dd>
+                        <i class="icon-pilicy-login float_left"></i>
+                        <div class="security-col">
+                            <div class="validate"><b>登录密码</b></div>
+                            <div class="pass">登录{$config['name']}账户时需要输入的密码</div>
+                            <a target="_blank" href="{:U('User/updatePassword',array('type'=>1))}">修改登录密码</a>
+                        </div>
+                    </dd>
+                    <dd class="no">
+                        <i class="icon-pilicy-money float_left"></i>
+                        <div class="security-col">
+                            <div class="validate"><b>交易密码</b></div>
+                            <div class="pass">在{$config['name']}进行交易时需要输入的密码</div>
+                            <a target="_blank" href="{:U('User/updatePassword',array('type'=>2))}">修改交易密码</a>
+                        </div>
+                    </dd>
+              </dl>
+    </div>
+            <!--copy_hb新修改的结束-->
+            
+            <!--原来的-->
+            
+                
+                <!--<div class="sc_info_list" id="sc_info_list">
+                <dl style="background-color: rgb(249, 249, 249);">
+                    <dt>登录密码</dt>
+                    <dd><p>登录{$config['name']}账户时需要输入的密码</p></dd>
+                    <dd><div class="changepw"><a href="{:U('User/updatePassword')}">修改登录密码</a></div></dd>
+                </dl>
+                <dl style="background-color: rgb(255, 255, 255);">
+                    <dt>交易密码</dt>
+                    <dd><p>在{$config['name']}进行交易时需要输入的密码</p></dd>
+                    <dd><div class="changepw"><a href="{:U('User/updatePassword')}">修改交易密码</a></div></dd>
+                </dl>
+                <dl style="background-color: rgb(249, 249, 249);">
+                    <dt>实名认证</dt>
+                    <dd><p>受国家要求及为了您的资金安全需进行实名认证</p></dd>
+                    <dd>
+                        <if condition="$u_info['status'] eq 0 ">
+                            <div class="changepw">
+                                未认证 <a href="{:U('ModifyMember/modify')}">认证</a>
+                            </div>
+                            <else/>
+                            <div class="changepw">
+                                已认证 <a href="{:U('User/updateMassage')}">查看</a>
+                            </div>
+                        </if>
+                    </dd>
+                </dl>
+                </div>-->
+                
+                <!--原来的结束-->
+                
+            
+        </div>
+
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+<script>
+$("#head_nav ul").children("li").eq(3).addClass("cur");
+    $(".menu11").addClass("uc-current");
+
+    function showTips(id,msg){
+        var tips = layer.tips(msg, id, {
+            tips: [1, '#fff8db'],
+            area: ['400px', '35px']
+        });
+        $(id).on('mouseout', function(){
+            layer.close(tips);
+        });
+    }
+</script>
+<!--footer start-->
+<include file="App/Home/View/Public/footer.html"/>
+<!--footer end-->

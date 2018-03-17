@@ -1,0 +1,245 @@
+    <include file="App/Admin/View/Public/left.html"/>
+    <!--/sidebar-->
+	
+	
+    <div class="main-wrap">
+        <div class="crumb-wrap">
+            <div class="crumb-list"><i class="icon-font"></i><a href="{:U('Index/index')}">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">推荐奖金设置</span></div>
+        </div>
+        
+        <div class="result-wrap">
+					
+                <div class="result-content">
+					<h2>上级推荐奖励
+						<volist name="reward_up" id="v">
+							&nbsp;&nbsp;{$v.name}<span style="color:red;">:上级总奖励：{$v.will}已发放奖励：{$v.ok} </span>
+						</volist>
+					</h2>
+                    <table class="result-tab" width="100%">
+                        <tr>
+                            <th>币种名称</th>
+                            <th>设置奖金数量</th>
+                            <th>设置返奖天数</th>
+                            <th>设置返奖总量</th>
+                            <th>操作</th>
+                        </tr>
+                        <volist name="up_currency" id="vo" key="k" empty="$empty">
+                        <tr>
+							<input type="hidden" value="{$vo.currency_id}" id="up_currency_id{$k}">
+                            <td id="up_currency_name{$k}">{$vo.currency_name}:</td>
+                            <td id="up_money{$k}">{$vo.money}</td>
+                            <td id="up_day{$k}">{$vo.day}</td>
+                            <td id="up_sum{$k}">{$vo.sum}</td>
+                            <td><button onclick="up_save({$k});" id="up_xiu{$k}" >修改</button></td>
+                            
+                        </tr>
+                        </volist>
+                    </table>
+					<div class="list-page"> <ul>{$page}</ul></div>
+                </div>
+				<hr /><br><br>
+				<div class="result-content">
+					<h2>下级被推荐奖励
+						<volist name="reward_down" id="vv">
+							&nbsp;&nbsp;{$vv.name}<span style="color:red;">:下级总奖励：{$vv.will}已发放奖励：{$vv.ok} </span>
+						</volist>
+					</h2>
+                    <table class="result-tab" width="100%">
+                        <tr>
+                            <th>币种名称</th>
+                            <th>设置奖金数量</th>
+                            <th>设置返奖天数</th>
+                            <th>设置返奖总量</th>
+                            <th>操作</th>
+                        </tr>
+                        <volist name="currency" id="vo" key="k" empty="$empty">
+                        <tr>
+							<input type="hidden" value="{$vo.currency_id}" id="currency_id{$k}">
+                            <td id="currency_name{$k}">{$vo.currency_name}:</td>
+                            <td id="money{$k}">{$vo.money}</td>
+                            <td id="day{$k}">{$vo.day}</td>
+                            <td id="sum{$k}">{$vo.sum}</td>
+                            <td><button onclick="save({$k});" id="xiu{$k}" >修改</button></td>
+                            
+                        </tr>
+                        </volist>
+                    </table>
+					<div class="list-page"> <ul>{$page}</ul></div>
+                </div>
+				<hr /><br><br>
+				<div class="result-content">
+					<span>开启推荐奖励活动</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="list_switch" id="open" class="radio" value="1">开
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="list_switch" id="close" class="radio" value="0">关
+					
+					
+                </div><br><br>
+				<div class="result-content" id="time_set" style="display:none;" >
+					<span>活动时间：</span>
+					开启时间：<input type="text" name="start_time" class="ui_timepicker" value="{$config.reward_start_time|date='Y-m-d H:i:s',###}">
+					结束时间：<input type="text" name="end_time" class="ui_timepicker" value="{$config.reward_end_time|date='Y-m-d H:i:s',###}">
+					<button type="button" onclick="set_time();" >确定开启</button>
+					<button type="button" onclick="close_switch();" >确定关闭</button>
+					<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<span style="color:red">活动规则请在《信息设置》里面添加</span>
+                </div>
+        </div>
+    </div>
+	<script type="text/javascript">
+    $(function () {
+        $(".ui_timepicker").datetimepicker({
+            //showOn: "button",
+            //buttonImage: "./css/images/icon_calendar.gif",
+            //buttonImageOnly: true,
+            showSecond: true,
+            timeFormat: 'hh:mm:ss',
+            stepHour: 1,
+            stepMinute: 1,
+            stepSecond: 1
+        })
+    })
+    </script>
+	<script type="text/javascript">
+		$(function(){
+			var list_switch = "{$config.list_switch}";
+			if(list_switch == '1'){
+				$('#open').click();
+			}else{
+				$('#close').click();
+			}
+		})
+		
+	
+	
+	
+		$("input[name='list_switch']").change(function(){
+			if($(this).val() == '1'){
+				$("#time_set").css('display','block');
+			}else{
+				$("#time_set").css('display','none');
+			}
+		})
+		
+		function set_time(){
+			var start_time = $('input[name="start_time"]').val();
+			var end_time = $('input[name="end_time"]').val();
+			$.ajax({
+				url:"{:U('Reward/set_time')}",
+				type:"POST",
+				data:{'start':start_time,'end':end_time},
+				dataType:"JSON",
+				success:function (data){
+					layer.msg(data.info);
+					if(data.status == 1){
+						location.replace(location);
+					}
+				}
+			})
+		}
+		function close_switch(){
+			
+			$.ajax({
+				url:"{:U('Reward/close')}",
+				type:"POST",
+				data:null,
+				dataType:"JSON",
+				success:function (data){
+					layer.msg(data.info);
+					if(data.status==1){
+						location.replace(location);
+					}
+				}
+			})
+		}
+	
+	
+	</script>
+    <!--/main-->
+</div>
+</body>
+<script>
+	function up_save(k){
+		var xiu = $("#up_xiu"+k).html();
+		if(xiu == '修改'){
+			//var currency_id = $("#currency_id"+k).html();
+			var money = $("#up_money"+k).html();
+			var day = $("#up_day"+k).html();
+			var sum = $("#up_sum"+k).html();
+			var str1 = "<input type='number' value='"+money+"'>";
+			var str2 = "<input type='number' value='"+day+"'>";
+			var str3 = "<input type='number' value='"+sum+"'>";
+			$("#up_money"+k).html(str1);
+			$("#up_day"+k).html(str2);
+			$("#up_sum"+k).html(str3);
+			$("#up_xiu"+k).html('保存');
+		}else{
+			var currency_id = $("#up_currency_id"+k).val();
+			var money = $("#up_money"+k).children('input').val();
+			var day = $("#up_day"+k).children('input').val();
+			var sum = $("#up_sum"+k).children('input').val();
+			$.ajax({
+				url:"{:U('Reward/save')}",
+				type:"POST",
+				data:{'currency_id':currency_id,'money':money,'day':day,'sum':sum,type:1},
+				dataType:"JSON",
+				success:function (data){
+					layer.msg(data.info);
+					if(data.status == 1){
+						$("#up_money"+k).html(money);
+						$("#up_day"+k).html(day);
+						$("#up_sum"+k).html(sum);
+						$("#up_xiu"+k).html('修改');
+					}
+				}
+			})
+			
+		}
+	}
+</script>
+<script>
+	function save(k){
+		var xiu = $("#xiu"+k).html();
+		if(xiu == '修改'){
+			//var currency_id = $("#currency_id"+k).html();
+			var money = $("#money"+k).html();
+			var day = $("#day"+k).html();
+			var sum = $("#sum"+k).html();
+			var str1 = "<input type='number' value='"+money+"'>";
+			var str2 = "<input type='number' value='"+day+"'>";
+			var str3 = "<input type='number' value='"+sum+"'>";
+			$("#money"+k).html(str1);
+			$("#day"+k).html(str2);
+			$("#sum"+k).html(str3);
+			$("#xiu"+k).html('保存');
+		}else{
+			var currency_id = $("#currency_id"+k).val();
+			var money = $("#money"+k).children('input').val();
+			var day = $("#day"+k).children('input').val();
+			var sum = $("#sum"+k).children('input').val();
+			$.ajax({
+				url:"{:U('Reward/save')}",
+				type:"POST",
+				data:{'currency_id':currency_id,'money':money,'day':day,'sum':sum,type:2},
+				dataType:"JSON",
+				success:function (data){
+					layer.msg(data.info);
+					if(data.status == 1){
+						$("#money"+k).html(money);
+						$("#day"+k).html(day);
+						$("#sum"+k).html(sum);
+						$("#xiu"+k).html('修改');
+					}
+				}
+			})
+			
+		}
+	}
+</script>
+</html>
+<script>
+$(".sub-menu").eq(0).show();
+$(".sub-menu").eq(0).children("li").eq(7).addClass("on");
+</script>

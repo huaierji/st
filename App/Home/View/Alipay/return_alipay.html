@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="GB2312">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>支付宝结果返回</title>
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+
+<body>
+<h2  style="font-family: arial; background: #fff; text-align:center; font-size= 40px"> 交易结果：</h2>
+<h3 style="text-align:center; color:red">{$data.info}</h3>
+<script language="JavaScript" type="text/javascript">
+        function delayURL(url) {
+                var delay = document.getElementById("time").innerHTML;
+                if(delay > 0) {
+                        delay--;
+                        document.getElementById("time").innerHTML = delay;
+                } else {
+                        window.top.location.href = url;
+                }
+                setTimeout("delayURL('" + url + "')", 1000);
+        }
+</script>
+<h4 style="text-align:center"> <span id="time" style="color: #FF0000">5</span>秒钟后自动跳转，如果不跳转，请点击<a href="http://www.stjfw.net/Home/User">这里</a>
+</h4>
+<script type="text/javascript">
+delayURL("http://www.stjfw.net/Home/User");
+</script>
+
+</body>
+</html>

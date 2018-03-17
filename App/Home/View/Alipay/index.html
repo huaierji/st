@@ -1,0 +1,156 @@
+<include file="App/Home/View/Public/header.html"/>
+
+<!-- jQuery (necessary JavaScript plugins) -->
+<!-- <script type='text/javascript' src="__PUBLIC__/Alipay/js/jquery-1.11.1.min.js"></script>-->
+<!-- Custom Theme files -->
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="__PUBLIC__/Alipay/css/style.css" rel='stylesheet' type='text/css' />
+<link href="__PUBLIC__/Alipay/css/bootstrap.css" rel='stylesheet' type='text/css' />
+<link href="__PUBLIC__/Alipay/css/HY_style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="__PUBLIC__/Alipay/css/megamenu.css" rel="stylesheet" type="text/css" media="all" />
+</head>
+<style>
+.main{ padding:0px !important;}
+.container{ width:1000px !important; padding-left:0px !important; padding-right:0px !important; }
+</style>
+<body>
+
+
+<div class="container">
+<div class="main">
+<div class="contact">
+	
+  <div class="contact-form">
+                        
+      
+ <!--   修改个人信息开始-->         
+			 	 	    <!--内容开始-->
+<div class="container col-md-12">
+    <include file="App/Home/View/Public/left.html"/>
+	<div class="check col-md-9" style=" margin-left: 15px;">	 
+         <div class="col-md-12 cart-items">
+         <div class="col-md-12">
+			 <p style=" font-size:18px; padding:1% 2%; background-color:#333; color:#fff">输入要充值数额</p>
+             </div>
+			 <form action="{:U('Alipay/alipay_index')}" method="post"  target="_blank">
+             <div class="col-md-12" style=" padding-top:2%">
+                <table width="100%" class="HY_item">
+                  <tr style="padding:2% 0;">
+                        <td width="50%">充值金额： <span style="margin-left:2%;margin-right:1%;">
+                        <input id="money" name="money" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"   style=" width:32%; height:50px;display:inline" type="text"></span>元</td>
+                    </tr>
+                </table>       
+              </div>		
+		 </div>
+         <div class="col-md-12 cart-items">
+         <div class="col-md-12">
+			 <p style=" font-size:18px; padding:1% 2%; background-color:#333; color:#fff">选择支付方式</p>
+             </div>
+             <div class="col-md-12" style=" padding-top:2%">
+             <div class="col-md-3"></div>
+               <div class="sky-form col-md-7">
+					<div class="sky_form1" style="margin-left:auto; margin-right:auto">
+						<ul>
+							<li>
+                            	<label class="radio">
+                                <input type="radio" name="pay_radio" value="2">
+                                <i style=" position:absolute; top:38%; left:0" ></i>
+                                <img style="width:60%; position:relative" src="__PUBLIC__/Alipay/images/zfb.jpg"></label>
+                            </li>
+							<li>
+                            	<label class="radio">
+                                <input type="radio" name="pay_radio" value="2">
+                                <i style=" position:absolute; top:38%; left:0" ></i>
+                                <img style="width:60%; position:relative" src="__PUBLIC__/Alipay/images/wx.jpg"></label>
+                            </li>
+                            <li>
+                             <input style="float:right"   type="submit" value="提交" id="register-submit">
+                            </li>
+							<div class="clearfix"></div>
+						</ul>
+                       
+					</div>
+				</div> 
+                <div class="col-md-2" ></div>     
+              </div>
+   </form>
+		 </div>
+         <div class="col-md-12 cart-items" style=" margin-top:3%;">
+         <div class="col-md-12">
+			 <p style=" font-size:18px; padding:1% 2%; background-color:#333; color:#fff">输入要充值数额</p>
+          </div>
+             <div class="col-md-12  table-responsive " style=" padding-top:2%">
+             <table  class="col-md-12 HY_chargin">
+             	<tr>
+                    <th class="col-md-3">支付方式</th>
+                    <th class="col-md-2">充值数量</th>
+                    <th class="col-md-2">操作时间</th>
+                    <th class="col-md-2">状态</th>
+                </tr>
+				<foreach name="list" item="vo">
+					<tr>
+                    <td class="col-md-3">{$vo.type}</td>
+                    <td class="col-md-2">{$vo.price}</td>
+                    <td class="col-md-2">{$vo.add_time|date="Y-m-d H:i:s",###}</td>
+                    <td class="col-md-2">
+					<if condition="$vo['type'] eq 'weixin' "> 
+				
+					<eq name="vo['status']" value="1"> 已经到账 <else/> <a href="{:U('Alipay/pay',array('pay_no'=>$vo['pay_no']))}" >充值</a></eq>
+					<else />
+					<eq name="vo['status']" value="1">已经到账<else/>等待中</eq>
+					</if>
+					
+				
+					</td>
+                </tr>
+				</foreach>
+                
+             </table>
+              </div>		
+		 </div>
+			<div class="clearfix"> </div>
+	 </div>
+	 </div>
+  <!--   修改个人信息结束-->  
+				    </div>
+  				<div class="clearfix"></div>		
+			  </div>
+</div>
+</div>
+<div id="asd"></div>
+	<!--	<script>
+
+			function aaa(){
+				var r=$("input[name='pay_radio']:checked").val();
+				var money = $('#money').val();
+				if(r == 1){
+					var url="{:U('Alipay/weixin')}";
+				}else{
+					var url="{:U('Zhifubao/index')}";
+				}
+				$.post(url,{'money':money},function(data){
+					$("#asd").val(data.info);
+					if(r == 1){
+					//表示成功需要充值
+						if(data['status']  == 1){
+					
+							window.location.reload();
+						
+						}
+					}else{
+					
+						
+					
+					}
+					
+			});
+				
+			}
+
+		
+		</script>-->
+
+</body>
+</html>

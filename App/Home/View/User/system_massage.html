@@ -1,0 +1,123 @@
+<include file="App/Home/View/Public/header.html" />
+
+<style>
+#main {
+	min-height: 620px;
+}
+
+.messagetab {
+	border-bottom: none !important;
+	width: 150px;
+	float: left;
+}
+
+.massage_right {
+	width: 170px;
+	float: right;
+	height: 50px;
+	line-height: 65px;
+}
+</style>
+<body>
+	<div id="main" style="padding: 30px 0px !important;">
+		<div class="main_box">
+			<include file="App/Home/View/Public/left.html" />
+			<div class="raise right clearfix">
+				<div class="message">
+					<p class="messagetab">
+						<a href="#" class="current">系统消息 </a>
+					</p>
+					<div class="massage_right">
+						<span class="font_orange">{$newMessageCount}</span>条未读 / {$count}条消息
+					</div>
+					<div class="clear"></div>
+					<div class="mod_bd"
+						style="border-top: 2px solid #e2e2e2 !important;">
+						<div class="filter_box">
+							<!--<div class="gtoup">
+								<span class="label">筛选类型：</span> 
+								
+								<a href="{:U('User/sysMassage',array('type'=>'all'))}"  class="tag cur">全部</a>
+								<a href="{:U('User/sysMassage',array('type'=>'xtxx'))}" class="tag">系统消息</a> 
+								<a href="{:U('User/sysMassage',array('type'=>'grxx'))}" class="tag">个人消息</a>
+							</div>
+						</div>-->
+						<table class="table my-info-table check_all_box table_hover">
+							<colgroup>
+								<col>
+								<col style="width: 660px">
+								<col>
+								<col>
+							</colgroup>
+							<!--<thead>
+								<tr>
+									<th colspan="3"><label><input name="info"
+											value="all" class="check_all" type="checkbox"> 全选</label></th>
+									<th class="align_right"><a href="#" id="delete_check"
+										data-tips="确定要删除这些信息么?" data-tips-btn="确定"
+										data-tips-close="true" data-tips-trigger="click"
+										data-msg-null="请选择要删除的信息"><i class="icon_delete"><span>删除</span></i></a></th>
+								</tr>
+							</thead>-->
+							<tbody>
+							<volist name="list" id="row">
+								<tr>
+									<td style="text-align:right">1</td>
+									<td class="font_14"><a
+										href="{:U('User/showSysTem',array('message_id'=>$row['message_id'],'message_all_id'=>$row['message_all_id']))}"><if condition="$row['status'] eq 0 ">
+										【【{$row['type_name']}】{$row['title']}】<span style="color:#FF0000">未读</span>
+										<else/>【【{$row['type_name']}】{$row['title']}】
+									</if></a></td>
+									<td class="align_right">{$row['add_time']|date="Y-m-d H:i:s ",###}</td>
+									<td class="align_right"></td>
+								</tr>
+							</volist>
+							</tbody>
+						</table>
+					</div>
+					<!--<volist name="list" id="row">
+					<div class="mynews news01">
+						<div class="andfrom yourattention">
+							<p class="left news_name">
+								<a href="
+								{:U('User/showSysTem',array('message_id'=>$row['message_id'],'message_all_id'=>$row['message_all_id']))}
+								">
+									<if condition="$row['status'] eq 0 ">
+										【【{$row['type_name']}】{$row['title']}】<span style="color:#FF0000">未读</span>
+										<else/>【【{$row['type_name']}】{$row['title']}】
+									</if>
+								</a>
+							</p>
+							<p class="right news_date">{$row['add_time']|date="Y-m-d H:i:s ",###}</p>
+							<div class="clear">
+							</div>
+						</div>
+					</div>
+				</volist>-->
+
+				</div>
+			</div>
+			<div class="page" style="min-width: 200px !important; float: right;">
+				{$page}</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+	</div>
+	</div>
+	<script>
+$(".menu10").addClass("uc-current");
+
+$(".tag").on("click",function(){
+	$(this).addClass("cur").siblings().removeClass("cur");	
+});
+
+$(".check_all").on("click",function(){
+	if($(this).prop('checked')){
+		$("input[name='info']").prop("checked",true);
+	}else{
+		$("input[name='info']").prop("checked",false);
+	}	
+});
+</script>
+	<!--footer start-->
+	<include file="App/Home/View/Public/footer.html" />

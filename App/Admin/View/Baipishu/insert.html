@@ -1,0 +1,93 @@
+<include file="App/Admin/View/Public/left.html"/>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/kindeditor/kindeditor.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/kindeditor/lang/zh_CN.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/kindeditor/plugins/prettify.js"></script>
+<script>
+	function checkForm(){
+		editor.sync();
+		var name = document.getElementById('title').value;
+
+		if(name != ""){
+			document.getElementById('myform').submit();
+		}else{
+			alert('请填写标题');
+		}
+	}
+</script>
+
+<div class="main-wrap">
+  <div class="crumb-wrap">
+    <div class="crumb-list"><i class="icon-font"></i><a href=":U('Index/index')}">首页</a><span class="crumb-step">&gt;</span><a class="crumb-name" href="javascript:void(0)" onclick="history.go(-1)">文章管理</a><span class="crumb-step">&gt;</span><span>新增文章</span></div>
+  </div>
+  <div class="result-wrap">
+    <div class="result-content">
+      <form action="{:U('Baipishu/insert')}" method="post" id="myform" name="myform" enctype="multipart/form-data" >
+        
+        <table class="insert-tab" width="100%">
+          <tbody>
+            <input type="hidden" id="article_category_id" name="article_category_id" value="{$Think.get.article_category_id}">
+            <tr>
+              <th><i class="require-red">*</i>标题：</th>
+              <td><input class="common-text required" id="title" name="title" size="50" value="{$list.title}" type="text"></td>
+            </tr>
+            <!-- <tr>
+                <th>状态：</th>
+                <td>
+                <select name="status" id="status" class="required">
+                    <option value="1" selected="selected">显示</option>
+                    <option value="0">不显示</option>
+                </select>
+                </td>
+            </tr> -->
+            
+            <tr>
+	            <th>封面图片</th>
+	            <td>
+	            	<img src="{$list.pic}" width='200px'>
+	            </td>
+            </tr>
+            
+            <tr>
+            	<th>上传图片</th>
+            	<td>
+            		<input type="file" name="pic" value="{$list.pic}">
+            	</td>
+            </tr>
+            
+            <tr>
+              <th>内容：</th>
+              <input type="hidden" value="{$list.id}" name="id">
+              <td><textarea id="content" name="content" cols="30" style="width:800px;height:300px;" rows="10">{$list.content}</textarea>
+			<script>									
+                    KindEditor.ready(function(K) {
+                            window.editor = K.create('#content');	
+                    });
+
+            </script>
+            </td>
+            </tr>
+            <tr>
+              <th></th>
+              <!--确定文章的类型-->
+              
+               <!--确定后台成功返回的url-->
+              
+              <td><input class="btn btn-primary btn6 mr10" value="提交"  type="button" onclick="checkForm()" >
+                <input class="btn btn6" onclick="history.go(-1)" value="返回" type="button"></td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+  </div>
+</div>
+<!--/main-->
+
+</div>
+</body></html>
+<script>
+$(".sub-menu").eq(10).show();
+$("#myform").ready(function(e) {
+$(".sub-menu").eq(10).children("li").eq(0).addClass("on");
+});
+</script>

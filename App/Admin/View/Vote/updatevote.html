@@ -1,0 +1,117 @@
+<include file="App/Admin/View/Public/left.html"/>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/kindeditor/kindeditor.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/kindeditor/lang/zh_CN.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/kindeditor/plugins/prettify.js">
+</script>
+
+<script>
+	function checkForm(){
+		editor.sync();
+		var name = document.getElementById('title').value;
+		if(name != ""){
+			document.getElementById('myform').submit();
+		}else{
+			alert('请填写标题');
+		}
+	}
+</script>
+
+<div class="main-wrap">
+    <div class="crumb-wrap">
+        <div class="crumb-list">
+            <i class="icon-font"></i>
+            <a href="{:U('Index/index')}">
+                首页
+            </a>
+            <span class="crumb-step">&gt;</span>
+            <a class="crumb-name" href="javascript:void(0)" onclick="history.go(-1)">
+                投票管理
+            </a>
+            <span class="crumb-step">&gt;</span><span>修改积分投票</span> 
+        </div>
+    </div>
+
+    <div class="result-wrap">
+       <!-- <div class="result-content"> -->
+
+        <form action="{:U('Vote/update')}" method="post" id="myform" name="myform" enctype="multipart/form-data" >        
+            <table class="insert-tab" width="100%">
+                <tbody>                  
+                    <!-- <input type="hidden" id="article_category_id" name="article_category_id" value="{$Think.get.article_category_id}"> -->
+                    <tr>
+                      <th>修改积分名称</th>
+                      <td><input name="title" size="20" type="text" required="required"></td>
+                      <td><input name="vote_id" type="hidden" value="{$info['id']}"></td>
+                    </tr>  
+                    
+                    <tr>
+                    	<th>修改积分图片</th>
+                    	<td>
+                    		<input type="file" name="pic" required="required">
+                    	</td>
+                    </tr>
+
+                    <tr>
+                        <th>修改投票开始时间</th>                   
+                        <td><input name="start_time" size="20" type="date" required="required"></td>
+                    </tr>
+
+                    <tr>
+                        <th>修改投票结束时间</th>
+                        <td><input name="end_time" size="20" value="" type="date" required="required"></td>
+                    </tr>
+                    <tr>
+                        <th>修改抢购开始时间</th>                   
+                        <td><input name="buy_start_time" size="20" value="" type="date" required="required"></td>
+                    </tr>
+
+                    <tr>
+                        <th>修改抢购结束时间</th>
+                        <td><input name="buy_end_time" size="20" value="" type="date" required="required"></td>
+                    </tr>
+
+                    <tr>
+                        <th>修改积分抢购总量</th>                   
+                        <td><input name="total" size="20" value="" type="number" required="required"></td>
+                    </tr>
+
+                    <tr>
+                        <th>修改对外抢购总量</th>
+                        <td><input name="surplus" size="20" value="" type="number" required="required"></td>
+                    </tr>
+
+                    <tr>
+                        <th>修改积分发行价格</th>
+                        <td><input name="price" size="20" value="" type="number" required="required"></td>
+                    </tr>
+
+                    <tr>
+                        <th>修改投票支持人数</th>
+                        <td><input name="support" size="20" value="" type="number" required="required"></td>
+                    </tr>
+
+                    <tr>
+                        <th>修改投票反对人数</th>
+                        <td><input name="nonsupport" size="20" value="" type="number" required="required"></td>
+                    </tr>
+
+                    <tr>
+                        <th></th>              
+                        <td>
+                            <input class="btn btn-primary btn6 mr10" value="确认修改" type="submit" onclick="checkForm()" >
+                            <input class="btn btn-primary btn6" onclick="history.go(-1)" value="返回" type="button">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    $(".sub-menu").eq(10).show();
+    $("#myform").ready(function(e) {
+        $(".sub-menu").eq(10).children("li").eq(0).addClass("on");
+    });
+</script>

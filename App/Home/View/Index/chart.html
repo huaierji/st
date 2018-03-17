@@ -1,0 +1,77 @@
+<include file="App/Home/View/Public/header.html"/>
+<style type="text/css">
+  .qh_table{
+    margin-top: 20px;
+    width: 40%;
+    float: left;
+  }
+  .qh_table h1{
+    font-size:22px;
+    border-bottom:1px solid #ddd;
+  }
+  .qh_table table td{
+    padding-left: 5%;
+  }
+</style>
+
+<div id="main">
+	<div class="main_box">
+		<include file="App/Home/View/Public/left.html"/>
+	<div class="raise right clearfix">
+<div class="ybc_list">
+<div class="qh_table">
+  <table class="table table-striped" style="text-align:center;">
+  <h1>排行榜</h1>
+  <font size="3" color="seablue"><b>推荐并已实名认证成功人数</b></font>
+    <tr>
+      <th style="text-align:center;">序号</th>
+      <th style="text-align:center;">用户名</th>
+      <th style="text-align:center;">推荐总人数</th>
+    </tr>
+	<volist name="re_15" id="vo" key="k">
+		<tr>
+		  <td>{$k}</td>
+		  <td>{$vo.email}</td>
+		  <td>{$vo.count}人</td>
+		</tr>
+    </volist>
+
+  </table>
+</div>
+<notempty name="re_30" >
+<div class="qh_table" style="margin-left:5%">
+  <table class="table table-striped">
+  <h1> &nbsp;</h1>
+  <br>
+    <tr>
+      <th>序号</th>
+      <th>用户名</th>
+      <th>推荐总人数</th>
+    </tr>
+	<volist name="re_30" id="v" key="kk">
+    <tr>
+      <td>{$kk + 15}</td>
+      <td>{$v.email}</td>
+      <td>{$v.count}人</td>
+    </tr>
+    </volist>
+  </table>
+</div>
+</notempty>
+</div><div class="clear"></div>
+
+<div class="clear"></div>
+<div>
+	
+	<div style=" float:left;"><b class="font_orange">活动说明：</b></div>
+	<div style=" float:left;">
+            {$config.list_reward_rule}</div>
+</div>
+</div>
+
+		<div class="clear"></div>
+	</div>
+<script type="text/javascript">
+$(".menu13").addClass("uc-current");
+</script>
+<include file="App/Home/View/Public/footer.html"/>

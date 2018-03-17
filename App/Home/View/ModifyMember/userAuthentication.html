@@ -1,0 +1,135 @@
+<include file="App/Home/View/Public/header.html"/>
+<!--top end-->
+
+<script src="/Public/js/jquery.form.js"></script>
+<style>
+    .buttons{
+        display: block;
+        float: left;
+        width: 123px;
+        text-align: center;
+        border: 1px solid #dddcda;
+        color: #fff;
+        cursor: pointer;
+        text-decoration: none;
+        background: #fc7a33;
+        height: 40px
+    }
+</style>
+<div id="main">
+    <div class="main_box">
+        <div style="width: 100%;" class="raise right clearfix">
+            <h2 style="border-bottom:1px solid #e1e1df;font-size: 25px;text-align: center">实名认证</h2>
+            <form enctype="multipart/form-data" method="post" id="useridForm" action="{:U('ModifyMember/userAuthentication')}" jump-url="{:U('Safe/index')}" >
+                <ul class="apply">
+                    <li style="margin-left:5%;margin-bottom:0px;font-size: 18px;color: #ff6000;padding-bottom: 22px;">上传正反面身份认证照片(每张照片大小不超过3M)<br>
+                     <b>（推荐使用微信拍照保存照片再上传，目的是缩小照片尺寸，防止上传失败）</b>
+                    <li style="margin-left:5%;line-height: 10px;color: #999;font-family: 微软雅黑;">1.上传的证件照片必须为本人证件照片，完成后不可修改。</li>
+                    <li style="margin-left:5%;line-height: 10px;color: #999;font-family: 微软雅黑;">2.证件上传请确保姓名，身份证号清晰。</li>
+                    <li style="margin-left:5%;line-height: 10px;color: #999;font-family: 微软雅黑;">3.请上传正反面身份认证照片。</li>
+                    <li style="margin-left:5%;line-height: 10px;color: #999;font-family: 微软雅黑;">4.为确保您的信息不外泄，审核通过后照片不可查看。</li>
+                </ul>
+                <h2 style="border-bottom:1px solid #e1e1df;"></h2>
+                <ul	style="float: left;font-family: 微软雅黑;margin: 0px;padding: 0px;list-style: none;margin: 30px 0 0 100px;width: 40%;margin-left: 1%;">
+                    <li style="margin-left:5%">
+                         <p style="margin: 25px 0 0 0;color: #ff8839;font-size: 20px">1.请上传身份证正面照片</p>
+                        <div id="" style="color: #333;font-size: 13px;margin: 10px 0 5px 0;">照片要求：身份证信息（姓名、身份证号）清晰可见。
+                            <div id="imgDiv1">
+                                <img id="imgShow1" style="width:241px;height: 159px;" src="{$user_id_P}">
+                            </div>
+                        </div>
+                    </li>
+                    <li style="margin-left:5%;	line-height: 40px">
+                        <input onchange="previewImage(this,1)" type="file" name="user_id_P" id="up_img" size="45" style="width: 330px;height: 38px;border: 1px solid #dddcda;padding-left: 2px;">
+                    </li>
+                </ul>
+                <ul	style="float: left;font-family: 微软雅黑;margin: 0px;padding: 0px;list-style: none;margin: 30px 0 0 100px;margin-left: -7%;">
+                    <li style="width: 100%;margin-left:5%">
+                         <p style="margin: 25px 0 0 0;color: #ff8839;font-size: 20px">2.请上传身份证反面照片</p>
+                        <div id="" style="color: #333;font-size: 13px;margin: 10px 0 5px 0;">照片要求：身份证信息（有效期、公安归属地）清晰可见。<br>
+                            <div id="imgDiv2">
+                                <img id="imgShow2" style="width:241px;height: 159px;" src="{$user_id_N}">
+                            </div>
+                        </div>
+                    </li>
+                    <li style="margin-left:5%;	line-height: 40px">
+                        <input onchange="previewImage(this,2)" type="file" name="user_id_N" id="up_img1" size="45" style="width: 330px;height: 38px;border: 1px solid #dddcda;padding-left: 2px;">
+                    </li>
+                </ul>
+                <ul	style="float: left;font-family: 微软雅黑;margin: 0px;padding: 0px;list-style: none;margin: 30px 0 0 100px;margin-left: 2.5%;">
+                    <li style="width: 100%;margin-left:5%">
+                        <p style="margin: 25px 0 0 0;color: #ff8839;font-size: 20px">3.请上传指定手势的手持身份证照</p>
+                        <div id="" style="color: #333;font-size: 13px;margin: 10px 0 5px 0;">照片要求：本人手持身份证并摆出大拇指朝上姿势，确保安全。<br>
+                            <div id="imgDiv3">
+                                <img id="imgShow3" style="width:241px;height: 159px;" src="{$user_id_S}">
+                            </div>
+                        </div>
+                    </li>
+                    <li style="margin-left:5%;	line-height: 40px">
+                        <input onchange="previewImage(this,3)" type="file" name="user_id_S" id="up_img1" size="45" style="width: 330px;height: 38px;border: 1px solid #dddcda;padding-left: 2px;line-height: 38px;">
+                    </li>
+                </ul>
+                <button class="buttons" style="float: left; margin-top: 30%; margin-left: -93.5%;margin-bottom: 15px;"  type="submit">点击上传</button>
+            </form>
+            <script type="text/javascript">
+                function previewImage(file,imgNum)
+                {
+                    var MAXWIDTH  = 200;
+                    var MAXHEIGHT = 200;
+                    var div = document.getElementById('imgDiv'+imgNum);
+                    if (file.files && file.files[0])
+                    {
+                        div.innerHTML ='<img id=imgShow'+imgNum+'>';
+                        var img = document.getElementById('imgShow'+imgNum+'');
+                        img.onload = function(){
+                            var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+                            img.width  =  '241';
+                            img.height =  '159';
+                            img.style.marginTop = '0px';
+                        }
+                        var reader = new FileReader();
+                        reader.onload = function(evt){img.src = evt.target.result;}
+                        reader.readAsDataURL(file.files[0]);
+                    }
+                    else
+                    {
+                        var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+                        file.select();
+                        var src = document.selection.createRange().text;
+                        div.innerHTML = '<img id=imgShow'+imgNum+'>';
+                        var img = document.getElementById('imghead2');
+                        img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+                        var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+                        status =('rect:'+rect.top+','+rect.left);
+                        div.innerHTML = "<div id=divhead"+imgNum+" style='width:214px;height:159px;margin-top:0px;"+sFilter+src+"\"'></div>";
+                    }
+                }
+                function clacImgZoomParam( maxWidth, maxHeight, width, height ){
+                    var param = {top:0, left:0, width:width, height:height};
+                    if( width>maxWidth || height>maxHeight )
+                    {
+                        rateWidth = width / maxWidth;
+                        rateHeight = height / maxHeight;
+
+                        if( rateWidth > rateHeight )
+                        {
+                            param.width =  maxWidth;
+                            param.height = Math.round(height / rateWidth);
+                        }else
+                        {
+                            param.width = Math.round(width / rateHeight);
+                            param.height = maxHeight;
+                        }
+                    }
+                    param.left = Math.round((maxWidth - param.width) / 2);
+                    param.top = Math.round((maxHeight - param.height) / 2);
+                    return param;
+                }
+            </script>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<link href="__PUBLIC__/js/uploadify/uploadify.css">
+<script type="text/javascript" src="__PUBLIC__/js/uploadify/jquery.uploadify.min.js"></script>
+<include file="App/Home/View/Public/footer.html"/>

@@ -1,0 +1,144 @@
+   <include file="App/Admin/View/Public/left.html"/>
+    <div class="main-wrap">
+
+        <div class="crumb-wrap">
+            <div class="crumb-list"><i class="icon-font"></i><a href="{:U('Index/index')}">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">提现审核</span></div>
+        </div>
+        <div class="search-wrap">
+            <div class="search-content">
+                <form action="{:U('pay/s_tibi')}" method="post">
+                    <table class="search-tab">
+                        <tr>
+                            <th width="120">提币状态:</th>
+                            <td>
+                                <select name="status" id="">
+                                  <option value="">全部</option>
+                                  <option value="-1">驳回</option>
+								  <option value="1">已完成</option>
+                                  <option value="2">审核通过</option>
+                                  <option value="12">审核中</option>
+                                </select>
+                            </td>
+							 <th width="120">选择币种:</th>
+							<td>
+								<select name="currency_id" id="">
+									<option value="0">全部</option>
+									<volist name="currency" id="vo">
+										<option value="{$vo['currency_id']}" >{$vo['currency_name']}</option>
+									</volist>
+								</select>
+							</td>
+                            <th width="70">姓名:</th>
+                            <td><input class="common-text" placeholder="姓名" name="name" value="" id="name" type="text"></td>
+							 <th width="70">用户名:</th>
+                            <td><input class="common-text" placeholder="用户名" name="email" value="" id="email" type="text"></td>
+							<th width="120">提币地址:</th>
+                            <td><input style="width:400px" class="common-text" placeholder="提币地址" name="url" value="" id="url" type="text"></td>
+                            <td><input class="btn btn-primary btn2" name="sub" value="查询" type="submit"></td>	
+							</tr>
+
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <div class="result-wrap">
+                <div class="result-content">
+                    <table class="result-tab" width="100%">
+                        <tr>
+                            <th>ID</th>               
+                            <th>提现人</th>
+							<th>用户名</th>
+                            <th>币种</th>
+                            <th>提币数量</th>
+                            <th>提币地址</th>
+                            <th>地址标签</th>
+                            <th>手续费</th>
+                            <th>到账金额</th>
+                            <th>提币时间</th>
+                            <th>审核时间</th>
+                            <th>提币状态</th>
+                            <th>操作</th>
+                        </tr>
+  						<volist name='list' id='vo'>
+                        <tr>
+                            <td>{$vo.id}</td>
+                            <td>{$vo.username}</td>
+							<td>{$vo.email}</td>
+                            <td>{$vo.currencyname}</td>
+                            <td>{$vo.num}</td>
+                            <td>{$vo.url}</td>
+                            <td>{$vo.name}</td>
+                            <td>{$vo.fee}</td>
+                            <td>{$vo.actual}</td>
+                            <td>{$vo.add_time|date='Y-m-d H:i:s',###}</td>
+                            <td><empty name="vo.check_time">--<else />{$vo.check_time|date='Y-m-d H:i:s',###}</empty></td>
+                            <td><eq name="vo.status" value="-1">驳回</eq>
+								<eq name="vo.status" value="1">已完成</eq>
+								<eq name="vo.status" value="0">审核通过</eq>
+								<eq name="vo.status" value="12">审核中</eq>
+							</td>
+                            <td>	
+                            	<eq name="vo.status" value="12">										
+                                <a class="link-update" href="javascript:void(0);" onclick="pass({$vo.id});">通过</a>
+                                &nbsp;&nbsp;
+                                <a class="link-del" href="javascript:void(0);"onclick="fail({$vo.id})">不通过</a>
+                                <else /> 操作成功</eq>	
+                            </td>                        
+                            </tr>
+                        </volist>
+                       
+                    </table>
+                    <div class="list-page"> <ul>{$page}</ul></div>
+                </div>
+          
+        </div>
+    </div>
+    <!--/main-->
+</div>
+</body>
+</html>
+<script>
+$(".sub-menu").eq(3).show();
+$(".sub-menu").eq(3).children("li").eq(6).addClass("on");
+function pass(id){
+	layer.confirm('确定通过审核', {
+	  btn: ['确定','取消'], //按钮
+	}, function(){
+		//location.href = '{:U('Pending/successByid',array('id'=>$vo['withdraw_id']))}';
+		$.post("{:U('Pay/s_shenhe_success')}",{"id":id},function(datas){
+			
+					layer.msg(datas['info']);
+					setTimeout("location.reload()",2000);
+				
+			});
+	  //layer.msg('');
+	}, function(){
+		layer.msg('已取消');
+	});
+}
+function fail(id){
+	layer.confirm('确定不通过审核', {
+	  btn: ['确定','取消'], //按钮
+	}, function(){		
+	//	location.href = '{:U('Pending/falseByid', array('id'=>$vo['withdraw_id']))}';
+		$.post("{:U('Pay/s_shenhe_false')}",{"id":id},function(datas){
+				
+					layer.msg(datas['info']);
+					setTimeout("location.reload()",2000);
+		});
+	  //layer.msg('');
+	}, function(){
+		layer.msg('已取消');
+	});
+}
+</script>
+
+<script>
+function download(){
+	var add_time=$('#aaaaa1').val();
+	var end_time=$('#aaaaa2').val();
+	var url="{:U('Pending/derivedExcel')}";
+	window.location.href=url+"?add_time="+add_time+"&&end_time="+end_time;
+}
+</script>

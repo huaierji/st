@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>火币行情</title>
+    <link href="chart.htm" rel="stylesheet" media="screen">
+    <script type="text/javascript" src="chart.htm"></script>
+    <style type="text/css">
+        html,body{
+            height : 100%;
+            padding: 0;
+            margin : 0;
+            overflow: hidden;
+        }
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #chart_wrap{
+            position: absolute;
+            left: 0;
+            width: 100%;
+            top: 50px;
+            bottom: 0;
+            overflow: hidden;
+        }
+        #period{
+            font-size: 12px;
+            height: 54px;
+        }
+        #period:after{
+             content: '.';
+             clear: both;
+             display: block;
+             height: 0;
+             visibility: hidden;
+         }
+        #period a{
+            display: inline-block;
+            text-align: center;
+            text-decoration:none;
+            float: left;
+            margin-right:1%;
+            color: #777;
+            width: 9.5%;
+            padding: 4px 0;
+            margin-top: 15px;
+            border: 1px solid #fff;
+        }
+        #period a:hover{
+
+            color: #ff6600;
+
+        }
+        #period a.cur{
+            background: #FFF;
+            font-weight: 700;
+            border: 1px solid #e6e6e6;
+        }
+        #chart_loading,#chart_reload{
+            position: absolute;
+            width: 200px;
+            left: 50%;
+            margin-left: -100px;
+            top: 30px;
+            text-align: center;
+            font-size: 14px;
+            height: 50px;
+            line-height: 50px;
+        }
+        #chart_loading{
+            background: url('https://static.huobi.com/exchange/src/images/layout/loading.gif') no-repeat 50% 20px;
+        }
+        #chart_reload{
+            background: #EEE;
+        }
+    </style>
+<script src="chart_data/fl_key_map.js" type="text/javascript"></script><script src="chart_data/module_socket_io.js" type="text/javascript"></script><script src="chart_data/module_socket_api.js" type="text/javascript"></script><script src="chart_data/module_connect.js" type="text/javascript"></script><script src="chart_data/fl_config_zh_cn.js" type="text/javascript"></script><script src="chart_data/fl_app.js" type="text/javascript"></script></head>
+
+<body>
+<div class="chart_option">
+    <div id="period">
+        <a href="" data-act="noKMode" data-index="0" class="cur" id="ml">分时</a>
+        <a href="" data-act="setTime" data-period="1min" data-index="1">1分</a>
+        <a href="" data-act="setTime" data-period="5min" data-index="2">5分</a>
+        <a href="" data-act="setTime" data-period="15min" data-index="3">15分</a>
+        <a href="" data-act="setTime" data-period="30min" data-index="4">30分</a>
+        <a href="" data-act="setTime" data-period="60min" data-index="5">60分</a>
+        <a href="" data-act="setTime" data-period="1day" data-index="6">日线</a>
+        <a href="" data-act="setTime" data-period="1week" data-index="7">周线</a>
+        <a href="" data-act="setTime" data-period="1mon" data-index="8">月线</a>
+        
+    </div>
+</div>
+<div style="background: rgb(255, 255, 255) none repeat scroll 0% 0%;" id="chart_wrap">
+    <div style="display: none;" id="chart_loading"></div>
+    <div id="chart_reload" style="display: none">Click on the reload</div>
+<canvas height="645" width="664" style="position: absolute; left: 0px; top: 0px;"></canvas><canvas height="454" width="664" style="position: absolute; left: 0px; top: 1px;"></canvas><canvas height="645" width="664" style="position: absolute; left: 0px; top: 0px;"></canvas><canvas height="455" width="664" style="position: absolute; left: 0px; top: 0px;"></canvas><dl style="position: absolute; left: 0px; top: 0px; width: 100%; font-size: 12px;"><dt style="position: absolute; left: 10px; top: 1px; width: 100%;"><span style="background:#FFF;display:inline-block;padding-right:5px;padding-top:4px;color:#333">日期:2016-04-07 14:16:00</span><span style="background:#FFF;display:inline-block;padding-right:5px;padding-top:4px;color:#333">开:2726.43</span><span style="background:#FFF;display:inline-block;padding-right:5px;padding-top:4px;color:#333">高:2726.55</span><span style="background:#FFF;display:inline-block;padding-right:5px;padding-top:4px;color:#333">低:2726.3</span><span style="background:#FFF;display:inline-block;padding-right:5px;padding-top:4px;color:#333">收:2726.3</span><span style="background:#FFF;display:inline-block;padding-right:5px;padding-top:4px;color:#333">量:118.2791</span><span style="background:#FFF;display:inline-block;padding-right:5px;padding-top:4px;color:#FF9900">MA60:2726.06</span></dt><dd style="position: absolute; left: 10px; top: 456px; width: 100%;"><span style="background:#FFF;display:inline-block;padding-right:5px;padding-top:4px;color:#333">量:118.2791</span><span style="background:#FFF;display:inline-block;padding-right:5px;padding-top:4px;color:#108ED5">MA5:103.58</span><span style="background:#FFF;display:inline-block;padding-right:5px;padding-top:4px;color:#FF9900">MA10:244.75</span></dd><dd style="position: absolute; left: 10px; top: 536px; width: 100%;"><span style="background:#FFF;display:inline-block;padding-right:5px;padding-top:4px;color:#333">MACD(12,26,9)</span><span style="background:#FFF;display:inline-block;padding-right:5px;padding-top:4px;color:#108ED5">DIF:-0.01</span><span style="background:#FFF;display:inline-block;padding-right:5px;padding-top:4px;color:#FF9900">DEA:0.16</span><span style="background:#FFF;display:inline-block;padding-right:5px;padding-top:4px;color:#DE4520">MACD:-0.35</span></dd></dl></div>
+<script src="chart_data/fl_lib.js"></script>
+<script>
+
+    var HBVERSION          = '2016040604',
+        MAIN_DOMAIN        = 'www.huobi.com',
+        HTTP_STATIC_DOMAIN = 'https://static.huobi.com',
+        COOKIE_PRE         = '',
+        COOKIE_DOMAIN      = '.huobi.com',
+        AJAX_API_DOMAIN    = 'www.huobi.com/qt',
+        UID                = '5812389' * 1,
+        IS_DEV_MODE        = '0' * 1,
+        PROTOCOL           = window.location.protocol,
+        LANG               = 'zh_cn',
+        $_ws_hq_url,$_ws_hq_url_usd,$_ws_hq_url_cny;
+
+    if(LANG == 'en'){
+        document.getElementById('ml').style.width = '12%';
+    }
+
+    /**/
+
+    /**/
+    $_ws_hq_url     = PROTOCOL + '//hq.huobi.com';
+    $_ws_hq_url_usd = PROTOCOL + '//hq.huobi.com';
+    $_ws_hq_url_cny = PROTOCOL + '//hq.huobi.com';
+    /**/
+
+    /**/
+    var FLChart        = HTTP_STATIC_DOMAIN+"/exchange/src/swf/market_chart.swf";
+    (function(){
+        var oWrap   = document.getElementById('chart_wrap'),
+            oPeriod = document.getElementById('period'),
+            jsUri   = HTTP_STATIC_DOMAIN+'/exchange/src/script/',
+            useJs   = ['fl_key_map.js', 'module_socket_io.js', 'module_socket_api.js', 'module_connect.js', 'fl_config_'+LANG+'.js', 'fl_app.js'],
+            HF      = HasFlash(),
+            h5Chart,
+            periods =['noKMode','','0'],
+            coinType=['cny','btc'],
+            symList =['btccny','ltccny','btcusd'],
+            eventBind,
+            oLoading= document.getElementById('chart_loading'),
+            oReload = document.getElementById('chart_reload');
+            oReload.onclick = function(){
+                location.reload()
+            };
+        //适配行情图
+        AutoChart({lang:LANG});
+        function AutoChart(options){
+            //console.log(options);
+            var option = options ||{};
+                option.lang = LANG;
+            if(HF.f && option.lang!=='en' || IEInfo()['version']*1 <= 8){
+                MarketChart('flash',options)
+            }else{
+                MarketChart('h5',options)
+            }
+        }
+
+        //行情图
+        function MarketChart(type,options){
+            var option    = options || {},
+                currency  = GetQueryString('currency') || option.currency || 'cny',
+                coin      = GetQueryString('coin') || option.coin || 'btc',
+                lang      = option.lang || 'zh_cn',
+                api       = option.api  || AJAX_API_DOMAIN,
+                symBol    = 0;
+
+                coinType  = [currency,coin];
+                for(var _i=0; _i<symList.length;_i++){
+                    if(coin+currency == symList[_i]){
+                        symBol = _i
+                    }
+                }
+
+            if(type =='flash'){
+                var FlConfig  = "?hbver="+HBVERSION+"&cointype="+currency+'_'+coin+"&language="+lang+"&server="+api+"&devmode="+IS_DEV_MODE+"&hidetool=1&hidektab=1";
+                if(oLoading.style.display !== 'none'){
+                    oLoading.style.display = 'none';
+                    oWrap.innerHTML +=
+                    '<object type="application/x-shockwave-flash" data="'+FLChart+FlConfig+'" width="100%" height="100%" id="market_chart">' +
+                    '<param name="allowFullScreen" value="true">' +
+                    '<param name="allowscriptaccess" value="always">' +
+                    '<param name="allowFullScreenInteractive" value="true">' +
+                    '<param name="wmode" value="transparent" />' +
+                    '<param name="movie" value="'+FLChart+FlConfig+'">' +
+                    '</object>';
+                }
+
+                var fl = document.getElementById('market_chart');
+
+                //flash切换周期币种
+                fl.changeKChart && fl.changeKChart(periods[2],coinType[0]+'_'+coinType[1]);
+                Period(function(){
+                    periods && fl.changeKChart(periods[2],coinType[0]+'_'+coinType[1])
+                });
+            }else{
+                if(oLoading.style.display !== 'none'){
+
+                    function _callback(){
+                        try {
+                            oLoading.style.display = 'none';
+                            h5Chart = period(oWrap, {
+                                border: 0,
+                                currentTools: 'CrossLine',
+                                symlist: symList,
+                                symbol: symBol,
+                                vIndicator: 'MACD',
+                                timeShare: 1,
+                                schemes: 'HuoBi',
+                                drawRange: 75 / 100,
+                                level: 4,
+                                version: HBVERSION,
+                                url: $_ws_hq_url
+                            });
+                        } catch (e) {
+                            console.log(e)
+                            oReload.style.display = 'block';
+                        }
+
+                        window.h5Chart = h5Chart;
+
+                        h5Chart[periods[0]] && h5Chart[periods[0]](periods[1]);
+
+                        //h5周期
+                        if(!eventBind){
+                            Period(function(){
+                                periods && h5Chart[periods[0]] && h5Chart[periods[0]](periods[1]);
+                            });
+                            eventBind = 1;
+                        }
+                    }
+                    LoadScript().Request(jsUri,useJs,_callback);
+                }else{
+                    //H5币种
+                    h5Chart.req.changeSymbolId(symBol)
+                }
+            }
+        }
+        //周期切换
+        function Period(callback){
+            var oTag    = window.querySelectorAll ? oPeriod.querySelectorAll('a[data-act]') : oPeriod.getElementsByTagName('a'),
+                oNCur   = window.querySelectorAll ? oPeriod.querySelectorAll('.cur') : '',
+                oCur    = oTag[0];
+           // if(oNCur.length<=0){oCur.className='cur'}
+            Event.add(oPeriod,'click',function(e){
+                var _t      = Event.target(e),
+                        _act    = _t.getAttribute('data-act'),
+                        _period = _t.getAttribute('data-period'),
+                        _index  = _t.getAttribute('data-index');
+
+                periods = [_act,_period,_index];
+                Event.stop(e);
+                if(oCur == _t){return}
+                if (!_act) {return}
+                oCur.className = '';
+                oCur = _t;
+                oCur.className = 'cur';
+                callback&&callback()
+            });
+        }
+
+        window.MarketChart = MarketChart;
+        window.AutoChart   = AutoChart;
+
+        function LoadScript(){
+            var _h = document.getElementsByTagName("head")[0],
+                Load = function (obj){
+                    var Script = document.createElement('script'),
+                        url    = obj["uri"]+obj["script"] ;
+                    Script.setAttribute("type","text/javascript");
+                    Script.setAttribute("src",url);
+
+                    if(typeof Script != "undefined"){
+                        _h.appendChild(Script);
+                        Script.onload = function(){obj.success(Script)};
+                    }
+                },
+                Request = function(uri,script,callback){
+                    var _index = 0,
+                        _retry = 0;
+                        Dispose = function(){
+                            if(script[_index]){
+                                Load({
+                                    "uri" : uri,
+                                    "script":script[_index],
+                                    "success":function(o){
+                                        _index++;
+                                        Dispose();
+                                    },
+                                    "error" : function(){
+                                        if(_retry){
+                                            console.log('载入失败');
+                                            return
+                                        }else{
+                                            console.log(uri[_index], 'retry')
+                                        }
+                                        _retry = 1;
+                                        Dispose();
+                                    }
+                                })
+                            }else{
+                                callback && callback()
+                            }
+                        };
+                    Dispose();
+                };
+            return{
+                "Request" : Request
+            }
+        }
+
+
+
+        function HasFlash() {
+            var flashChecker = 0,
+                    flashVersion = 0,
+                    UA = window.navigator.userAgent.toLowerCase(),
+                    swf;
+            if (IEInfo()['name']==='msie') {
+
+                try{
+                    swf = new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
+                    flashChecker = 1;
+                    VSwf = swf.GetVariable("$version");
+                    flashVersion = parseInt(VSwf.split(" ")[1].split(",")[0]);
+                }
+                catch(e){
+                    //alert('请安装flash或升级浏览器');
+                }
+            } else {
+
+                try{
+                    swf = navigator.plugins['Shockwave Flash'];
+                    if(swf == undefined){
+                        //alert('请安装flash或升级浏览器');
+                    }
+                    else {
+                        flashChecker = 1;
+                        var words = swf.description.split(" ");
+                        for (var i = 0; i < words.length; ++i) {
+                            if (isNaN(parseInt(words[i]))) continue;
+                            flashVersion = parseInt(words[i]);
+                        }
+                    }
+                }
+                catch(e){
+                    //alert('请安装flash或升级浏览器');
+                }
+            }
+            return { f: flashChecker, v: flashVersion };
+        }
+
+        function IEInfo(){
+            var _ua = window.navigator.userAgent.toLowerCase(),
+                    _bInfo = {'name': '', 'version': 0},
+                    _mark = '';
+
+            if (/msie/.test(_ua) && !/opera/.test(_ua)) {
+                _bInfo.name = 'msie';
+                _mark = 'msie';
+            }else if (/trident/.test(_ua)){
+                _bInfo.name = 'msie';
+                _mark = 'rv';
+            }else {
+                _bInfo = false
+            }
+            _bInfo.version = new RegExp("(?:" + _mark + ")[\\/: ]([\\d.]+)").test(_ua) ? RegExp.$1 : "0";
+            return _bInfo
+        }
+
+        function GetQueryString(name)
+        {
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)"),
+                r = window.location.search.substr(1).match(reg),
+                v = null;
+            if(r!=null)
+                v = decodeURI(r[2]);
+            return v;
+        }
+    })();
+    /**/
+</script>
+
+
+</body></html>

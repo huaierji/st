@@ -1,0 +1,75 @@
+    <include file="App/Admin/View/Public/left.html"/>
+    <!--/sidebar-->
+    <div class="main-wrap">
+
+        <div class="crumb-wrap">
+            <div class="crumb-list"><i class="icon-font"></i><a href="{:U('Index/index')}">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">银行卡管理</span></div>
+        </div>
+        <div class="search-wrap">
+            
+        </div>
+        <div class="result-wrap">
+
+            <div class="result-title">
+                <div class="result-list">
+                    <a href="{:U('Websitebank/addBank')}"><i class="icon-font"></i>新增银行卡</a>
+                </div>
+            </div>
+            <div class="result-content">
+                <table class="result-tab" width="100%">
+                    <tr>
+                       
+                        <th>ID</th>
+						<th>短信来源</th>
+                        <th>短信内容</th>
+                        <th>充值类别</th>
+                        <th>结果</th>
+                    </tr>
+                    <volist name='list' id='vo'>
+                        <tr>
+                            <td>{$vo['id']}</td>
+                            <td>{$vo['from']}</td>
+							<td>{$vo['content']}</td>
+                            <td>{$vo.type}
+							
+								</td>
+                            <td>
+                               {$vo.status}
+                            </td>
+                        </tr>
+                    </volist>
+
+                </table>
+                <div class="list-page"> <ul>{$page}</ul></div>
+            </div>
+
+        </div>
+    </div>
+    <!--/main-->
+</div>
+</body>
+</html>
+<script>
+	function cexiao(_this){
+		layer.confirm('确定删除银行卡？', {
+	  btn: ['确定','取消'], //按钮
+	  title: '撤销删除银行卡'
+	}, function(){
+	  $.post('{:U('Websitebank/delBank')}',{bank_id:_this},function(data){
+				   if(data['status'] == 1){
+					   layer.msg(data['info']);
+					   setTimeout(function(){location.reload();},1000);
+				   }else{
+					   layer.msg(data['info']);
+				   }
+			})
+	}, function(){
+	  layer.msg('已取消');
+	});
+
+	}
+</script>
+<script>
+$(".sub-menu").eq(9).show();
+$(".sub-menu").eq(9).children("li").eq(1).addClass("on");
+</script>

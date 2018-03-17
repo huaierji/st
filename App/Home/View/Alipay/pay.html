@@ -1,0 +1,84 @@
+<include file="App/Home/View/Public/header.html"/>
+
+<!-- jQuery (necessary JavaScript plugins) -->
+<script type='text/javascript' src="__PUBLIC__/Alipay/js/jquery-1.11.1.min.js"></script>
+<!-- Custom Theme files -->
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="__PUBLIC__/Alipay/css/style.css" rel='stylesheet' type='text/css' />
+<link href="__PUBLIC__/Alipay/css/bootstrap.css" rel='stylesheet' type='text/css' />
+<link href="__PUBLIC__/Alipay/css/HY_style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="__PUBLIC__/Alipay/css/megamenu.css" rel="stylesheet" type="text/css" media="all" />
+<style>
+.main{ padding:0px !important;}
+.container{ width:1000px !important; padding-left:0px !important; padding-right:0px !important; }
+</style>
+</head>
+
+<body>
+
+
+<div class="container">
+<div class="main">
+<div class="contact">
+	
+  <div class="contact-form">
+                        
+      
+ <!--   修改个人信息开始-->         
+			 	 	    <!--内容开始-->
+<div class="container col-md-12">
+  <include file="App/Home/View/Public/left.html"/>
+	<div class="check col-md-9" style=" margin-left: 15px;">	 
+         <div class="col-md-12 cart-items">
+         <div class="col-md-12">
+			 <p style=" font-size:18px; padding:1% 2%; background-color:#333; color:#fff">微信支付
+             <span style="font-size:14px; margin-left:2%;">（请您及时处理以便订单尽快处理！）</span>
+             </p>
+             </div>
+             <div class="col-md-12" >
+               <p class="col-md-4" style="font-size:16px; font-weight:bold; float:left"> 应付金额<span style="color:red">{$pay['price']}</span> 元 </p>   
+               <p class="col-md-4" style="font-size:16px; font-weight:bold;float:left"> 订单号：{$pay['pay_no']}</p> 
+               <p class="col-md-12" style="font-size:14px;">请您在提交订单后<span style="color:red">30分钟</span>内完成支付，否则订单会自动取消</p>   
+              </div>		
+		 </div>
+         <div class="col-md-12 cart-items">
+         <div class="col-md-12">
+			 <p style=" font-size:18px; padding:1% 2%; background-color:#333; color:#fff">二维码</p>
+             </div>
+             <div class="col-md-12" style=" padding-top:2%">
+             <div class="col-md-3"></div>
+             <div class="col-md-4"><img style="width:50%" src="{$pic}">
+             <img style="width:50%; margin-top:15%" src="__PUBLIC__/Alipay/images/jg.jpg"></div>
+              
+                <div class="col-md-4" ><img style="width:60%" style=" margin-left:auto; margin-right:auto" src="__PUBLIC__/Alipay/images/photo.jpg"></div>     
+              </div>
+              	
+		 </div>
+         
+		 
+		
+			<div class="clearfix"> </div>
+	 </div>
+	 </div>
+  <!--   修改个人信息结束-->  
+				    </div>
+  				<div class="clearfix"></div>		
+			  </div>
+</div>
+</div>
+<script>
+		function get_weixin(){
+			var pay_no = "{$pay['pay_no']}";
+			var url="{:U('Alipay/get_weixin')}";
+			$.post(url,{'pay_no':pay_no},function(data){
+					if(data['status']  != 1){
+						get_weixin();
+					}
+				});
+			}
+	    setTimeout("get_weixin()",1000);
+		</script>
+</body>
+</html>

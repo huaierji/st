@@ -1,0 +1,146 @@
+<include file="App/Admin/View/Public/left.html"/>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/kindeditor/kindeditor.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/kindeditor/lang/zh_CN.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/kindeditor/plugins/prettify.js"></script>
+<script>
+	function checkForm(){
+		editor.sync();
+		var name = document.getElementById('title').value;
+		if(name != ""){
+			document.getElementById('myform').submit();
+		}else{
+			alert('请填写标题');
+		}
+	}
+</script>
+
+
+<div class="main-wrap">
+    <div class="crumb-wrap">
+        <div class="crumb-list">
+            <i class="icon-font"></i>
+            <a href="{:U('Index/index')}">
+                首页
+            </a>
+            <span class="crumb-step">&gt;</span>
+            <a class="crumb-name" href="javascript:void(0)" onclick="history.go(-1)">
+                投票管理
+            </a>
+            <span class="crumb-step">&gt;</span><span>新增积分投票</span> 
+        </div>
+    </div>
+
+    <div class="result-wrap">
+       <!-- <div class="result-content"> -->
+        <form action="{:U('Vote/add')}" method="post" id="myform" name="myform" enctype="multipart/form-data" >        
+            <table class="insert-tab" width="100%">
+                <tbody>
+                    <!-- <input type="hidden" id="article_category_id" name="article_category_id" value="{$Think.get.article_category_id}"> -->
+                    <tr>
+                      <th>新增积分名称</th>
+                      <td><input name="title" size="20" value="" type="text"></td>
+
+                    </tr>  
+                    
+                    <tr>
+                    	<th>上传积分图片</th>
+                    	<td>
+                    		<input type="file" name="pic" value="">
+                            <!-- <div style="border:2px">
+                                <p>
+                                    <input type="file" id="xdaTanFileImg" onchange="xmTanUploadImg(this)" accept="image/*"/>
+                                    <input type="button" value="隐藏图片" onclick="document.getElementById('xmTanImg').style.display = 'none';"/>
+                                    <input type="button" value="显示图片" onclick="document.getElementById('xmTanImg').style.display = 'block';"/>
+                                </p>
+                                <img id="xmTanImg"/>
+                                <div id="xmTanDiv"></div>
+                            </div>
+                                <script type="text/javascript">            
+                                    //判断浏览器是否支持FileReader接口
+                                    if (typeof FileReader == 'undefined') {
+                                        document.getElementById("xmTanDiv").InnerHTML = "<h1>当前浏览器不支持FileReader接口</h1>";
+                                        //使选择控件不可操作
+                                        document.getElementById("xdaTanFileImg").setAttribute("disabled", "disabled");
+                                    }
+                                    //选择图片，马上预览
+                                    function xmTanUploadImg(obj) {
+                                        var file = obj.files[0];           
+                                        console.log(obj);console.log(file);
+                                        console.log("file.size = " + file.size);  //file.size 单位为byte
+                                        var reader = new FileReader();
+                                        //读取文件过程方法
+                                        reader.onloadstart = function (e) {
+                                            console.log("开始读取....");
+                                        }
+                                        reader.onprogress = function (e) {
+                                            console.log("正在读取中....");
+                                        }
+                                        reader.onabort = function (e) {
+                                            console.log("中断读取....");
+                                        }
+                                        reader.onerror = function (e) {
+                                            console.log("读取异常....");
+                                        }
+                                        reader.onload = function (e) {
+                                            console.log("成功读取....");
+                                            var img = document.getElementById("xmTanImg");
+                                            img.src = e.target.result;
+                                            //或者 img.src = this.result;  //e.target == this
+                                        }
+                                        reader.readAsDataURL(file)
+                                    }
+                                </script> -->
+                    	</td>
+                    </tr>
+
+                    <tr>
+                        <th>投票开始时间</th>                   
+                        <td><input name="start_time" size="20" value="" type="date"></td>
+                    </tr>
+                    <tr>
+                        <th>投票结束时间</th>
+                        <td><input name="end_time" size="20" value="" type="date"></td>
+                    </tr>
+                    <tr>
+                        <th>抢购开始时间</th>                   
+                        <td><input name="buy_start_time" size="20" value="" type="date"></td>
+                    </tr>
+                    <tr>
+                        <th>抢购结束时间</th>
+                        <td><input name="buy_end_time" size="20" value="" type="date"></td>
+                    </tr>
+
+                    <tr>
+                        <th>积分抢购总量</th>
+                        <td><input name="total" size="20" value="" type="number"></td>
+                    </tr>
+                    <tr>
+                        <th>对外抢购总量</th>
+                        <td><input name="surplus" size="20" value="" type="number"></td>
+                    </tr>
+
+                    <tr>
+                        <th>积分发行价格</th>
+                        <td><input name="price" size="20" value="" type="number"></td>
+                    </tr>
+                    
+                    <tr>
+                        <th></th>              
+                        <td>
+                            <input class="btn btn-primary btn6 mr10" value="新增"  name="submit" type="submit" onclick="checkForm()" >
+                            <input class="btn btn-primary btn6" onclick="history.go(-1)" value="返回" type="button">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    $(".sub-menu").eq(10).show();
+    $("#myform").ready(function(e) {
+        $(".sub-menu").eq(10).children("li").eq(0).addClass("on");
+    });
+</script>

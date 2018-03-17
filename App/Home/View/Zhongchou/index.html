@@ -1,0 +1,68 @@
+
+<include file="App/Home/View/Public/header.html"/>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/reset.css">
+<script src="__PUBLIC__/Home/js/zc_hm.js">
+</script><script type="text/javascript" src="__PUBLIC__/Home/js/zc_jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/zc_common.js"></script>
+<style type="text/css">
+    .vip_header1 {
+        background: #fafafa;
+    }
+    .vip_user1 {
+        position: relative;
+        font-size:16px;
+        padding:10px 0px 10px 20px;
+    }
+    .vip_stop1{
+        line-height:41px;
+    }
+    .vip_upgrade ul li{
+        line-height:40px;
+    }
+    .vip_upgrade .left {
+        text-align: right;
+        width: 405px;
+    }
+    .vip_upgrade .right {
+        width: 575px;
+    }
+    .vip_upgrade .right a {
+        color:#F60;
+    }
+    .vip_upgrade .right a:hover {
+        color:#F90;
+    }
+    input{ height:25px;}
+	.pcfenpost1{
+		width:300px;}
+</style>
+<!--top end-->
+<div id="programlist" class="programlistbox pclistnav">
+    <!--<h1 class="pcheadertitle">众筹项目列表</h1>-->
+    <volist name="list" id="vo" >
+        <div class="positiononly clearfix">
+            <!--标题-->
+            <!-- <h2 class="pctips state1"><span style="display:none;">{$vo.title}</span></h2> -->
+            <h2><span style="display:none;">{$vo.title}</span></h2>
+            <!--图片-->
+            <div class="clearfix" style="margin-left:120px;width:60%;">
+                <a href="{:U('Zhongchou/show',array('id'=>$vo['id']))}">
+                    <img style="width: 100%;" src="{$vo.pic}" alt="{$vo.title}">
+                </a>
+            </div>
+        </div>
+    <!--内容-->    
+    </volist>
+    <div style="width: 1200px; clear: both; margin: 0px auto;">
+        <div class="page" style="min-width: 250px !important;margin-left: 500px;">
+            {$page}
+        </div>
+    </div>
+
+</div>
+<script>
+    $(".menu6").addClass("uc-current");
+	$("#head_nav ul").children("li").eq(2).addClass("cur");
+</script>
+
+<include file="App/Home/View/Public/footer.html" /> 

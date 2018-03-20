@@ -15,8 +15,7 @@ class LoginController extends CommonController{
      * 展示界面
      */
     
-    public function index(){
-        
+    public function index(){        
         if(session('')){
             $this->redirect('Index/index');
             return;
@@ -24,10 +23,7 @@ class LoginController extends CommonController{
 		$this->assign("style",1);
         $this->display();
     }
-
 	
-    
-
     public function login(){
     	$this->redirect(U('Login/index','','',false));
     }
@@ -39,30 +35,26 @@ class LoginController extends CommonController{
         $email = I('post.email');
         $pwd = md5(I('post.pwd'));
         $M_member = D('Member');
-        //再次判断
-        
+        //再次判断       
         if((checkEmail($email) || checkMobile($email))==false){
             $data['status']=2;
             $data['info']="请输入正确的手机或者用户名";
             $this->ajaxReturn($data);
         }
         //判断传值是手机还是email
-        $info = checkEmail($email)?$M_member->logCheckEmail($email):$M_member->logCheckMo($email);
-       
+        $info = checkEmail($email)?$M_member->logCheckEmail($email):$M_member->logCheckMo($email);      
         if($info['status']==2){
         	$_SESSION['NUM']++;
             $data['status']=2;
             $data['info']="账号或密码错误";
-            $this->ajaxReturn($data);
-            
+            $this->ajaxReturn($data);           
         }
         //验证手机或用户名
         if($info==false){
         	$_SESSION['NUM']++;
             $data['status']=2;
             $data['info']="账号或密码错误";
-            $this->ajaxReturn($data);
-            
+            $this->ajaxReturn($data);           
         }
         //验证密码
         if($info['pwd']!=$pwd){
@@ -73,11 +65,7 @@ class LoginController extends CommonController{
             $data['info']="账号或密码错误";
             $this->ajaxReturn($data);
           
-        }
-        
-//        if($_SESSION['NUM']>=3){
-//
-//        }
+        }       
         if(empty($_POST['captcha'])){
             $data['status']=2;
             $data['info']="请填写验证码";
@@ -131,8 +119,7 @@ class LoginController extends CommonController{
 			$trade = S('trade_info_'.$v['currency_id']);
 			if(date('Y-m-d',$trade['time']) != date('Y-m-d')){
 				$trade = S('trade_info_'.$v['currency_id'],null);
-			}
-			
+			}			
  			$rs=$this->getCurrencyUser($_SESSION['USER_KEY_ID'], $v['currency_id']);
  			if(!$rs){
  				$this->addCurrencyUser($_SESSION['USER_KEY_ID'],$v['currency_id']);
@@ -147,8 +134,7 @@ class LoginController extends CommonController{
 			$info = M('Reward_log')->where("reward_id={$list[0]['id']}")->order('add_time desc')->find();
 			//计算间隔发放时间
 			if(!empty($info)){
-				$time_jiange = max(0,time() - $info['add_time']) ;
-				
+				$time_jiange = max(0,time() - $info['add_time']) ;				
 				$num = floor($time_jiange / (24 * 60 * 60 ));
 			}else{
 				if(date('Y-m-d',$list[0]['add_time']) != date('Y-m-d',time())){
@@ -289,8 +275,7 @@ class LoginController extends CommonController{
                 $data['info']="用户不存在";
                 $this->ajaxReturn($data);
             }
-			$_SESSION['find_pwd_phone'] = $_POST['email'];
-			
+			$_SESSION['find_pwd_phone'] = $_POST['email'];			
 			$ip = get_ip();
 			$v = S('ip_phone'.$ip);
 			S('limit_phone_ip',null);
@@ -309,17 +294,6 @@ class LoginController extends CommonController{
 			$A_Sms = new \SmsApi();
 			$r = $A_Sms ->send($_POST['email']);
 			if(!$r){
-				
-// 				$time = S('ip_phone_time'.$ip);
-// 				if( $time == null || time() - $time > 60 ){
-// 					S('ip_phone_time'.$ip,time());
-// 					S('ip_phone'.$ip,1);
-// 				}else{
-// 					++$v;
-// 					S('ip_phone'.$ip,$v);
-// 					S('ip_phone_time'.$ip,time());
-// 				}
-				
 				$data['status']=0;
 				$data['info'] = $r;
 				$this->ajaxReturn($data);
@@ -396,6 +370,7 @@ class LoginController extends CommonController{
             $this->display();
         }
     }
+    
     /**
      * 显示验证码
      */

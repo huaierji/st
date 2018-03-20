@@ -118,7 +118,7 @@
 					<a data-widget="#message_slide" href="#" class="option top_msg top_msg_new top_colorhover" id="message_slide">(UID: <?php echo (session('USER_KEY_ID')); ?> )</a>
 					<a data-widget="#message_slide" href="#" class="option top_msg top_msg_new top_colorhover" id="message_slide">
 						会员等级:
-							<?php if(($total > 50) ): ?>钻石会员
+							<?php if(($total > 49)): ?>钻石会员
 								<?php elseif( ($total < 10) and ($total > 4) ): ?>铜牌会员
 								<?php elseif( ($total < 20) and ($total > 9) ): ?>银牌会员
 								<?php elseif( ($total < 50) and ($total > 19) ): ?>金牌会员
@@ -497,20 +497,174 @@ $(document).ready(function(){
 	</script>
 <!--top end-->
 
-<script type="text/javascript">
-	.box{
-		background:url(/Uploads/Public/Uploads/pic/bg3.png);
-		height:500px;
-		width:500px;
-	}
-</script>
+<style>
+    .backg_pic{ padding-top:70px; background: url("/Public/Home/images/login_bg700.jpg?16022901") 50% 0 no-repeat;}
+    .top{ border-bottom:0; padding:10px 0;}
+    /*#main{ padding:0;}*/
+    .login_tongyi{ width:400px; margin:0 auto; border:1px solid #ddd;height:450px; background-color: #fff; opacity: 0.8;}
+    .ybc_footer{ text-align:center; color:#999; margin:30px 0;}
+	 .loginBox .login label.error{
+         float:inherit;
+         padding-left: 10px;
+     }
+    .error{
+        color: #999;
+		display:block;
+    }
+	.user_mtop{ margin-top:30px;}
+	.yanzm{  position:absolute; right:80px; top:2px;}
+	.login li {
+    margin-bottom: 20px;
+}
+.login li span.youzh_pleft{ padding-left:40px; margin-left:0px;}
+.login .zhuce{ padding-left:15px;}
+#email-error,#captcha-error{margin:0 auto;}
+</style>
+<div id="main" class="backg_pic">
+    <div class="mainbody login_tongyi">
 
-<body>
+        <div class="bigcontainer">
+            <div class="left630">
+                <h2 class="user user_mtop">忘记密码</h2>
 
-<div class="box">
-
-	123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123131231231231231231231231231231231231231231231231231231231231231231231231231231231231231231231231231231231231231231231231231231231231231231231231231231231
-
+                <div class="loginBox">
+                    <form method="post" id="findPwdForm" action="<?php echo U('Login/findpwd');?>" jump-url="<?php echo U('Login/resetpwd');?>">
+                        <!-- 电子邮箱 -->
+                        <ul class="login">
+                            <li>
+                                <label for="email">手机号码：</label><input type="text" class="loginValue" value="" name="email">
+                            </li>
+                            <li style="position:relative;"><label>验证码：</label><input class="loginValue" name="captcha" id="captcha">
+                                <img class="yanzm" id="captchaimg" src="<?php echo U('Login/showVerify');?>">
+                                <a href="#" onclick="$('#captchaimg').attr('src', '<?php echo U('Login/showVerify');?>?t='+Math.random())" style="position:absolute; right:20px; top:2px;">
+                                    看不清？
+                                </a>
+                            </li>
+                            <li style="margin-bottom:15px;"><label>&nbsp;</label><input type="submit" value="找回密码" class="tijiao" style="border:0;"></li>
+                            <li>
+                                <span class="youzh_pleft">已有账号&nbsp;<a href="<?php echo U('Login/index');?>">登录</a></span>
+                                <span>没有<?php echo ((isset($config["name"]) && ($config["name"] !== ""))?($config["name"]):'本网站'); ?>账号？&nbsp;<a href="<?php echo U('Reg/reg');?>" class="zhuce">注册一个</a></span>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-</body>
+<script>
+    $("#findPwdForm").validate({
+        rules: {
+            email:{
+                required:true,
+                //email:true
+            },
+            captcha:{
+                required:true
+            }
+        },
+        messages: {
+            email:{
+                required:"手机号不能为空",
+                email:"手机格式不正确"
+            },
+            captcha:{
+                required:"验证码不能为空"
+            }
+        },
+        submitHandler:function(form){
+            ajax_submit_form(form)
+            return false;
+        },
+        invalidHandler: function() {  //不通过回调
+            return false;
+        }
+    });
+</script>
+
+<!--footer start-->
+<style> 
+.rightwidth{ width:340px;}
+/*.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
+	line-height: 0;
+}*/
+</style>
+<!--footer start-->
+
+
+
+
+<div class="coin_footer">
+	<!-- <div class="coin_hint" style="border:0">
+		<h2><?php echo ((isset($info_one4["title"]) && ($info_one4["title"] !== ""))?($info_one4["title"]):"风险提示"); ?></h2>
+		<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo ($config["risk_warning"]); ?></p>
+	</div> -->
+	
+	<div class="coin_footerbar" style="background:#333333; height:240px">
+		<div class="coin_footer_nav clearfix">
+			<div class="coin_nav coin_copy left">
+				<p><a href="<?php echo U('Index/index');?>"><img style=" height:120px;" src="<?php echo ($config["index_logo_footer"]); ?>"></a></p>
+			</div>
+			<div class="coin_nav left" style="margin-right:70px">
+				<h2 style="color:white;">快速链接</h2>
+				<ul>
+				<?php if(is_array($team)): $i = 0; $__LIST__ = $team;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><li><a href="<?php echo U('Art/details',array('team_id'=>$vo['article_id']));?>" target="_blank" class="left" style="color:white"><?php echo ($vo["title"]); ?></a></li><?php endforeach; endif; else: echo "" ;endif; ?>
+                <li><a href="<?php echo ($config["qianbao"]); ?>" target="_blank" class="left" style="color:white">钱包下载</a></li>
+				</ul>
+			</div>
+			<div class="coin_nav left" style="margin-right:70px">
+				<h2 style="color:white">网站地图</h2>
+				<ul>
+                <?php if(is_array($help)): $i = 0; $__LIST__ = $help;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><li><a href="<?php echo U('Help/index',array('id'=>$vo['id']));?>" target="_blank" class="left" style="color:white"><?php echo ($vo["name"]); ?></a></li><?php endforeach; endif; else: echo "" ;endif; ?>
+				</ul>
+			</div>
+			<div class="coin_nav coin_nav02 left">
+				<h2 class="clearfix" style="height:19px;margin-bottom:11px"><span class="left" style="color:white;">联系我们</span><!-- <a href="http://weibo.com/<?php echo ($config["weibo"]); ?>" target="_blank" class="coin_sina left" style="display:block;width:25px;height:25px"></a> --><!--<a href="#" id="coin_weixin" class="coin_wei left"></a>--></h2>
+				<ul>
+					
+					<li style="color:white;">客 服 QQ：<?php echo ((isset($config["qq1"]) && ($config["qq1"] !== ""))?($config["qq1"]):"暂无"); ?></li>
+					<li><a href="mailto:<?php echo ($config['email']); ?>" style="color:white">客服邮箱：<?php echo ((isset($config["email"]) && ($config["email"] !== ""))?($config["email"]):"暂无"); ?></a></li>
+					<li><a href="mailto:<?php echo ($config['business_email']); ?>" style="color:white">业务合作：<?php echo ((isset($config["business_email"]) && ($config["business_email"] !== ""))?($config["business_email"]):"暂无"); ?></a></li>
+					<li style="color:white;">客服电话：<?php echo ((isset($config['suggest_email']) && ($config['suggest_email'] !== ""))?($config['suggest_email']):"暂无"); ?></li>
+					<li style="color:white;">公司地址：<?php echo ((isset($config['address']) && ($config['address'] !== ""))?($config['address']):"暂无"); ?></li>				
+				</ul>
+			</div>
+			<!-- <div class="coin_nav coin_nav02 left rightwidth" style="position:relative;">
+              <div style="float:left; padding-top:25px; padding-left:10px;" >
+              <img style=" width:100px;" src="<?php echo ($config['weixin']); ?>"/></div>
+              <div style=" float:left; padding-left:10px;color:white" >
+				<p class="coin_phoneqq" style="color:white;padding-top:30px;font-size:14px">
+				实体积分网官网总群：<?php echo ((isset($config["qqqun1"]) && ($config["qqqun1"] !== ""))?($config["qqqun1"]):"暂无"); ?><br>
+				实体积分网官网一群：<?php echo ((isset($config["qqqun2"]) && ($config["qqqun2"] !== ""))?($config["qqqun2"]):"暂无"); ?><br>
+				实体积分网官网二群：<?php echo ((isset($config["qqqun3"]) && ($config["qqqun3"] !== ""))?($config["qqqun3"]):"暂无"); ?><br>
+				实体积分网官网三群：<?php echo ((isset($config["qqqun4"]) && ($config["qqqun4"] !== ""))?($config["qqqun4"]):"暂无"); ?><br>
+               </div>
+			</div> -->
+		</div>
+	</div>
+<div class="footer_aq" style="background:#474747;width:100%;margin:0px;padding-bottom:20px;">
+	<p style="color:white"><?php echo ((isset($config["copyright"]) && ($config["copyright"] !== ""))?($config["copyright"]):"暂无"); ?></p>
+	<p style="color:white"><?php echo ((isset($config["record"]) && ($config["record"] !== ""))?($config["record"]):"暂无"); ?></p>
+	<!-- <ul class="footerSafety clearfix">
+        <li class="safety02"><a href="http://net.china.com.cn/" target="_blank"></a></li>
+        <li class="safety03"><a href="http://webscan.360.cn/index/checkwebsite/?url=<?php echo ($config['localhost']); ?>" target="_blank"></a></li>
+        <li class="safety04"><a href="http://www.cyberpolice.cn/wfjb/" target="_blank"></a></li>
+    </ul> -->
+</div>
+<div id="weixin" style="position:absolute; bottom:88px; left:50%; margin-left:170px; display:block;"><!--<img src="<?php echo ($config["logo"]); ?>">--></div>
+
+<script>
+	$('#coin_weixin').mouseover(function(){
+		$('#weixin').show();
+	}).mouseout(function(){
+		$('#weixin').hide();
+	});
+</script>
+</div>
+<!--footer end-->
+
+
+
+
+</body></html>

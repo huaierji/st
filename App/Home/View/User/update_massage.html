@@ -114,37 +114,30 @@
 					<!-- <script src="/Public/js/jquery-1.4.2.min.js"></script> -->
 					<script type="text/javascript">
 						$(document).ready(function(){
-							$('#upl').click(function(){
-							
-							 $('#file_upload1').wrap("<form id='ajaxupload' action='{:U('User/addPicForAjax')}' method='POST' enctype='multipart/form-data'></form>");
+							$('#upl').click(function(){							
+							  $('#file_upload1').wrap("<form id='ajaxupload' action='{:U('User/addPicForAjax')}' method='POST' enctype='multipart/form-data'></form>");
 								$("#ajaxupload").ajaxSubmit({
 									dataType:'text',
 									success:function(data){
 										alert(123);
-										//alert(data);
-										
+										//alert(data);										
 										 //var r=jQuery.parseJSON(data);
 										$("#pic1").val(data['info']);
 										//$("#uploadedpic").empty();
 										$("#logo").attr("src",data['info']);
 										$("#head_hidden").attr("value",data['info']);
-										//$(".uploadedpic").append("<img src='"+r['info']+"' class='mt10'>");
-										
-										
-										$('#file_upload1').unwrap();
-										
+										//$(".uploadedpic").append("<img src='"+r['info']+"' class='mt10'>");																				
+										$('#file_upload1').unwrap();										
 									},
 									error:function(data){
-										 data = $.parseJSON(data.replace(/<.*?>/ig,""));
+										data = $.parseJSON(data.replace(/<.*?>/ig,""));
 										//console.log(data);
 										//alert(data.info);
 										$("#pic1").val(data['info']);
 										//$("#uploadedpic").empty();
 										$("#logo").attr("src",data['info']);
 										$("#head_hidden").attr("value",data['info']);
-										//$(".uploadedpic").append("<img src='"+r['info']+"' class='mt10'>");
-										
-										
+										//$(".uploadedpic").append("<img src='"+r['info']+"' class='mt10'>");								
 										$('#file_upload1').unwrap();
 									}
 								});

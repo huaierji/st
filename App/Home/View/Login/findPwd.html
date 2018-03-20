@@ -33,13 +33,20 @@
                     <form method="post" id="findPwdForm" action="{:U('Login/findpwd')}" jump-url="{:U('Login/resetpwd')}">
                         <!-- 电子邮箱 -->
                         <ul class="login">
-                            <li><label for="email">手机号码：</label><input type="text" class="loginValue" value="" name="email">
+                            <li>
+                                <label for="email">手机号码：</label><input type="text" class="loginValue" value="" name="email">
                             </li>
                             <li style="position:relative;"><label>验证码：</label><input class="loginValue" name="captcha" id="captcha">
                                 <img class="yanzm" id="captchaimg" src="{:U('Login/showVerify')}">
-                                <a href="#" onclick="$('#captchaimg').attr('src', '{:U(\'Login/showVerify\')}?t='+Math.random())" style="position:absolute; right:20px; top:2px;">看不清？</a></li>
+                                <a href="#" onclick="$('#captchaimg').attr('src', '{:U(\'Login/showVerify\')}?t='+Math.random())" style="position:absolute; right:20px; top:2px;">
+                                    看不清？
+                                </a>
+                            </li>
                             <li style="margin-bottom:15px;"><label>&nbsp;</label><input type="submit" value="找回密码" class="tijiao" style="border:0;"></li>
-                            <li><!--<label>&nbsp;</label>--><span class="youzh_pleft">已有账号&nbsp;<a href="{:U('Login/index')}">登录</a></span><span>没有{$config.name|default='本网站'}账号？&nbsp;<a href="{:U('Reg/reg')}" class="zhuce">注册一个</a></span></li>
+                            <li>
+                                <span class="youzh_pleft">已有账号&nbsp;<a href="{:U('Login/index')}">登录</a></span>
+                                <span>没有{$config.name|default='本网站'}账号？&nbsp;<a href="{:U('Reg/reg')}" class="zhuce">注册一个</a></span>
+                            </li>
                         </ul>
                     </form>
                 </div>

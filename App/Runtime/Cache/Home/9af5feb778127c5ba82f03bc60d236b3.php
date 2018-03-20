@@ -498,254 +498,137 @@ $(document).ready(function(){
 <!--top end-->
 
 <!--top end-->
-<link rel="shortcut icon" href="http://www.stjfw.net/favicon.ico" type="image/x-icon">
-<script src="_PUBLIC__/Home/js/script.js"></script>
-<link rel="stylesheet" type="text/css" href="/Public/Home/css/jb_font-awesome.css">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<script src="/Public/js/jquery.form.js"></script>
 <style>
-.s-policy{ margin-top:30px; padding-right: 20px;}
-.security-col a span{ color:#999; padding-right:5px;}
-dd{
-    font-size: 14px;
-}
-dt{
-    font-size: 14px;
-}
-
+    .buttons{
+        display: table;
+        float: left;
+        width: 100px; 
+        border: 1px solid #dddcda;
+        color: #fff;
+        cursor: pointer;
+        text-decoration: none;
+        background: #fc7a33;
+        height: 40px
+    }
 </style>
-</head>
-
-<body>
 <div id="main">
     <div class="main_box">
-        <div id="my_menu" class="sdmenu left">
-		<div>
-			<p><i class="iconfont iconcolor">&#xe61e;</i>&nbsp;我的资产</p>
-						<a href="<?php echo U('User/index');?>" class="menu"><b class="ic-uc"></b><!--<i class="iconfont">&#xe6f6;</i>&nbsp;&nbsp;-->账户资产</a>
-                        <a href="<?php echo U('Finance/index');?>" class="menu13"><b class="ic-uc"></b><!--<i class="iconfont">&#xe93e;</i>&nbsp;&nbsp;-->财务日志</a>
-					</div>
-                    <hr />
-		<div style="position:relative;">
-			<p><i class="iconfont iconcolor">&#xe643;</i>&nbsp;我的交易</p>
-						<a href="<?php echo U('Entrust/manage');?>" class="menu2"><b class="ic-uc"></b><!--<i class="iconfont">&#xe616;</i>&nbsp;&nbsp;-->委托管理</a>
-						<a href="<?php echo U('Trade/myDeal');?>" class="menu3"><b class="ic-uc"></b><!--<i class="iconfont">&#xe65b;</i>&nbsp;&nbsp;-->我的成交</a>
-						<!-- <a href="<?php echo U('Entrust/history');?>" class="menu4"><b class="ic-uc"></b><!--<i class="iconfont">&#xe62d;</i>&nbsp;&nbsp;委托历史</a> -->
-						
-						<!--<a href="<?php echo U('User/zhongchou');?>" class="menu6"><b class="ic-uc"></b>我的众筹</a>-->
-					</div>
-                    <hr />
-                    <div>
-			<p><i class="iconfont iconcolor">&#xe60e;</i>&nbsp;安全中心</p>
-            		
-						<!--<a href="<?php echo U('Safe/index');?>" class="menu11"><b class="ic-uc"></b><i class="iconfont">&#xe649;</i>&nbsp;&nbsp;安全中心</a>-->
-                        <a href="<?php echo U('User/updatePassword');?>" class="menu8"><b class="ic-uc"></b><!--<i class="iconfont">&#xe638;</i>&nbsp;&nbsp;-->修改密码</a>
-                        <a href="<?php echo U('User/updateMassage');?>" class="menu7"><b class="ic-uc"></b><!--<i class="iconfont">&#xe649;</i>&nbsp;&nbsp;-->个人信息</a>
-						<!--<a href="<?php echo U('Safe/mobilebind');?>" class="menu12"><b class="ic-uc"></b><i class="iconfont">&#xe609;</i>&nbsp;&nbsp;手机绑定</a>-->
-					  </div>
-                      <hr />
-				  <div>
-			<p><i class="iconfont iconcolor">&#xe611;</i>&nbsp;账户中心</p>
-			            <!-- <?php if(($config["huanxun"]) == "1"): ?><a href="<?php echo U('FillByBank/index');?>" class="menu12"><b class="ic-uc"></b><!--<i class="iconfont">&#xe620;</i>&nbsp;&nbsp;人民币充值（在线）</a><?php endif; ?> -->
-			            <a href="<?php echo U('User/pay');?>" class="menu12"><b class="ic-uc"></b><!--<i class="iconfont">&#xe620;</i>&nbsp;&nbsp;-->人民币充值</a>
-			            <!-- <a href="<?php echo U('Fill/index');?>" class="menu15"><b class="ic-uc"></b><i class="iconfont">&#xe620;</i>&nbsp;&nbsp;人民币充值记录</a> -->
-			            <a href="<?php echo U('User/draw');?>" class="menu14"><b class="ic-uc"></b><!--<i class="iconfont">&#xe6f0;</i>&nbsp;&nbsp;-->人民币提现</a>
-            		    <a href="<?php echo U('Safe/index');?>" class="menu11"><b class="ic-uc"></b><!--<i class="iconfont">&#xe660;</i>&nbsp;&nbsp;-->用户中心</a>
-						<a href="<?php echo U('User/invit');?>" class="menu9"><b class="ic-uc"></b><!--<i class="iconfont">&#xe602;</i>&nbsp;&nbsp;-->邀请好友</a>
-						<a href="<?php echo U('User/sysMassage');?>" class="menu10"><b class="ic-uc"></b><!--<i class="iconfont">&#xe664;</i>&nbsp;&nbsp;-->系统消息<span class="messagenum" id='messagenum2'><?php echo ($count); ?></span></a>
-					  </div>
-					  <?php if(($config["list_switch"]) == "1"): ?><div>
-						<p><i class="iconfont iconcolor">&#xe611;</i>&nbsp;精彩活动</p>
-			            <a href="<?php echo U('Index/chart');?>" class="menu13"><b class="ic-uc"></b><!--<i class="iconfont">&#xe620;</i>&nbsp;&nbsp;-->推荐排行榜</a>
-			            
-					  </div><?php endif; ?>
-                      
-		</div>
-		<script>
-			$("#head_nav ul").children("li").eq(3).addClass("cur");
-		</script>
-        <div class="assets_content w753 right bg_w" id="safebox" style=" border-left-style:none !important;"><h1>用户中心</h1>
-            <div class="safe_center clear">
-              <div style="float:left; margin-left:30px;">
-                <div class="sc_level">
-                    <div class="sc_level_4">
-                      <img style=" width:102px; height:102px;" <?php if($u_info['head']): ?>src="<?php echo ($u_info['head']); ?>"<?php else: ?>src="/Public/Home/images/ulogodefault.jpg"<?php endif; ?> >
-                    </div>
-                    <!--<div class="sc_level_info"></div>-->
-                </div>
-                <dl>
-                    <dt>ID：<span><?php echo ($u_info['member_id']); ?></span></dt>
-                    <dd>姓名：<?php echo ($u_info['name']); ?></dd>
-                    <dd>用户名：<?php echo ($u_info['email']); ?></dd>
-                    <dd>会员等级：   
-                        <?php if(($total > 50) ): ?>钻石会员
-                            <?php elseif( ($total < 10) and ($total > 4) ): ?>铜牌会员
-                            <?php elseif( ($total < 20) and ($total > 9) ): ?>银牌会员
-                            <?php elseif( ($total < 50) and ($total > 19) ): ?>金牌会员
-                            <?php else: ?> 普通会员<?php endif; ?>
-                    </dd>
-					<dd>注册时间：<?php echo (date("Y-m-d H:i:s",$u_info['reg_time'])); ?></dd>
-                </dl>
-              </div>
-              <div style="float:left; margin-left:170px;">
-                <dl style=" padding-top:0px !important;"><span style="font-size:16px;">人民币信息</span>
-                    <dt>可用：￥<?php echo (floatval($u_info['rmb'])); ?></span></dt>
-                    <dd>冻结：￥<?php echo (floatval($u_info['forzen_rmb'])); ?></dd>
-                    <dd>总资产：￥<?php echo (floatval($u_info['rmb']+$u_info['forzen_rmb'])); ?></dd>
-                </dl>
-              </div>
-            </div>
-            <ul class="sc_statu">
-                 <li> 
-                     <?php if($u_info['status'] < 2){ ?> 
-                     <em class="sc_statu_type_1_1"></em> 
-                     <dl> 
-                         <dt>实名认证</dt> 
-                         <dd class="nopass">未认证<a href="<?php echo U('ModifyMember/userAuthentication');?>">点击认证</a></dd> 
-                     </dl> 
-                     <?php }else if($u_info['status']==4){ ?> 
-                     <em class="sc_statu_type_1_1"></em> 
-                     <dl> 
-                         <dt>实名认证</dt> 
-                         <dd class="nopass">未通过审核，请重新上传资料<a href="<?php echo U('ModifyMember/userAuthentication');?>">重新认证</a></dd> 
-                     </dl> 
-                     <?php }else if($u_info['status']==5){ ?> 
-                     <em class="sc_statu_type_1_2"></em> 
-                     <dl> 
-                         <dt>实名认证</dt> 
-                         <dd class="alpass">已认证</dd> 
-                     </dl> 
-                     <?php }else if($u_info['status']==3){ ?> 
-                     <em class="sc_statu_type_1_1"></em> 
-                     <dl> 
-                         <dt>实名认证</dt> 
-                         <dd class="nopass">审核中</dd> 
-                     </dl> 
-                     <?php }else{ ?> 
-                     <dl> 
-                         <dt>实名认证</dt> 
-                         <dd class="nopass">账号有误,请联系客服</dd> 
-                     </dl> 
-                     <?php } ?> 
-                 </li> 
-                <li>
-                    <?php if($u_info['phone']): ?><em class="sc_statu_type_3"></em>
-                        <dl>
-                            <dt>绑定手机</dt>
-                            <dd class="alpass">已认证 <a href="<?php echo U('User/updateMassage');?>">查看</a></dd>
-                        </dl>
-                        <?php else: ?>
-                        <em class="sc_statu_type_3_1"></em>
-                        <dl>
-                            <dt>绑定手机</dt>
-                            <dd class="nopass">未认证 <a href="<?php echo U('ModifyMember/modify');?>">点击绑定</a></dd>
-                        </dl><?php endif; ?>
-
-                </li>
-                <!--<li>
-                    <em class="sc_statu_type_2"></em>
-                    <dl>
-                        <dt>账户资产</dt>
-                        <dd class="alpass">已认证<a href="<?php echo U('User/index');?>">点击进入</a></dd>
-                    </dl>
-                </li>
--->
-            </ul>
-            
-            <!--copy_hb新修改的-->
-            <div class="s-policy s-setting">
-              <dl>
-                 <dt>您已设置 <b>2</b> 个保护项，还有 <b>0</b>个保护项可设置</dt>                    
-                    <!-- <dd> -->
-                        <!-- <i class="icon-pilicy-mobile float_left"></i> -->
-                        <!-- <div class="security-col"> -->
-                            <!-- <div class="validate"><b>实名认证</b></div> -->
-                            <!-- <div class="pass">受国家要求及为了您的资金安全需进行实名认证</div> -->
-                            <!-- <?php if($u_info['status']==0){ ?> -->
-		                        <!-- <a href="<?php echo U('ModifyMember/modify');?>"><span>未认证</span>认证</a> -->
-		                    <!-- <?php }else if($u_info['status']==1){ ?> -->
-		                        <!-- <a href="<?php echo U('User/updateMassage');?>"><span>已认证</span>查看</a> -->
-		                    <!-- <?php }else if($u_info['status']==3){ ?> -->
-		                    	<!-- <a href="<?php echo U('ModifyMember/userAuthentication');?>"><span>未认证</span>认证</a> -->
-		                    <!-- <?php }else if($u_info['status']==4){ ?> -->
-                                <!-- <a href="<?php echo U('User/updateMassage');?>"><span>审核中</span>查看</a> -->
-                            <!-- <?php }else{ ?> -->
-                                 <!-- <span>账号有误，联系客服</span> -->
-                            <!-- <?php } ?> -->
-                        <!-- </div> -->
-                    <!-- </dd>                    -->
-                    <dd>
-                        <i class="icon-pilicy-login float_left"></i>
-                        <div class="security-col">
-                            <div class="validate"><b>登录密码</b></div>
-                            <div class="pass">登录<?php echo ($config['name']); ?>账户时需要输入的密码</div>
-                            <a target="_blank" href="<?php echo U('User/updatePassword',array('type'=>1));?>">修改登录密码</a>
-                        </div>
-                    </dd>
-                    <dd class="no">
-                        <i class="icon-pilicy-money float_left"></i>
-                        <div class="security-col">
-                            <div class="validate"><b>交易密码</b></div>
-                            <div class="pass">在<?php echo ($config['name']); ?>进行交易时需要输入的密码</div>
-                            <a target="_blank" href="<?php echo U('User/updatePassword',array('type'=>2));?>">修改交易密码</a>
-                        </div>
-                    </dd>
-              </dl>
-    </div>
-            <!--copy_hb新修改的结束-->
-            
-            <!--原来的-->
-            
-                
-                <!--<div class="sc_info_list" id="sc_info_list">
-                <dl style="background-color: rgb(249, 249, 249);">
-                    <dt>登录密码</dt>
-                    <dd><p>登录<?php echo ($config['name']); ?>账户时需要输入的密码</p></dd>
-                    <dd><div class="changepw"><a href="<?php echo U('User/updatePassword');?>">修改登录密码</a></div></dd>
-                </dl>
-                <dl style="background-color: rgb(255, 255, 255);">
-                    <dt>交易密码</dt>
-                    <dd><p>在<?php echo ($config['name']); ?>进行交易时需要输入的密码</p></dd>
-                    <dd><div class="changepw"><a href="<?php echo U('User/updatePassword');?>">修改交易密码</a></div></dd>
-                </dl>
-                <dl style="background-color: rgb(249, 249, 249);">
-                    <dt>实名认证</dt>
-                    <dd><p>受国家要求及为了您的资金安全需进行实名认证</p></dd>
-                    <dd>
-                        <?php if($u_info['status'] == 0 ): ?><div class="changepw">
-                                未认证 <a href="<?php echo U('ModifyMember/modify');?>">认证</a>
+        <div style="width: 100%;" class="raise right clearfix">
+            <h2 style="border-bottom:1px solid #e1e1df;font-size: 25px;text-align: center">实名认证</h2>
+            <form enctype="multipart/form-data" method="post" id="useridForm" action="<?php echo U('ModifyMember/userAuthentication');?>" jump-url="<?php echo U('Safe/index');?>" >
+                <ul class="apply">
+                    <li style="margin-left:5%;margin-bottom:0px;font-size: 18px;color: #ff6000;padding-bottom: 22px;">上传正反面身份认证照片(每张照片大小不超过3M)<br>
+                     <b>（推荐使用微信拍照保存照片再上传，目的是缩小照片尺寸，防止上传失败）</b>
+                    <li style="margin-left:5%;line-height: 10px;color: #999;font-family: 微软雅黑;">1.上传的证件照片必须为本人证件照片，完成后不可修改。</li>
+                    <li style="margin-left:5%;line-height: 10px;color: #999;font-family: 微软雅黑;">2.证件上传请确保姓名，身份证号清晰。</li>
+                    <li style="margin-left:5%;line-height: 10px;color: #999;font-family: 微软雅黑;">3.请上传正反面身份认证照片。</li>
+                    <li style="margin-left:5%;line-height: 10px;color: #999;font-family: 微软雅黑;">4.为确保您的信息不外泄，审核通过后照片不可查看。</li>
+                </ul>
+                <h2 style="border-bottom:1px solid #e1e1df;"></h2>
+                <ul	style="float: left;font-family: 微软雅黑;margin: 0px;padding: 0px;list-style: none;margin: 30px 0 0 100px;width: 40%;margin-left: 1%;">
+                    <li style="margin-left:5%">
+                         <p style="margin: 25px 0 0 0;color: #ff8839;font-size: 20px">1.请上传身份证正面照片</p>
+                        <div id="" style="color: #333;font-size: 13px;margin: 10px 0 5px 0;">照片要求：身份证信息（姓名、身份证号）清晰可见。
+                            <div id="imgDiv1">
+                                <img id="imgShow1" style="width:241px;height: 159px;" src="<?php echo ($user_id_P); ?>">
                             </div>
-                            <?php else: ?>
-                            <div class="changepw">
-                                已认证 <a href="<?php echo U('User/updateMassage');?>">查看</a>
-                            </div><?php endif; ?>
-                    </dd>
-                </dl>
-                </div>-->
-                
-                <!--原来的结束-->
-                
-            
-        </div>
+                        </div>
+                    </li>
+                    <li style="margin-left:5%;	line-height: 40px">
+                        <input onchange="previewImage(this,1)" type="file" name="user_id_P" id="up_img" size="45" style="width: 330px;height: 38px;border: 1px solid #dddcda;padding-left: 2px;">
+                    </li>
+                </ul>
+                <ul	style="float: left;font-family: 微软雅黑;margin: 0px;padding: 0px;list-style: none;margin: 30px 0 0 100px;margin-left: -7%;">
+                    <li style="width: 100%;margin-left:5%">
+                         <p style="margin: 25px 0 0 0;color: #ff8839;font-size: 20px">2.请上传身份证反面照片</p>
+                        <div id="" style="color: #333;font-size: 13px;margin: 10px 0 5px 0;">照片要求：身份证信息（有效期、公安归属地）清晰可见。<br>
+                            <div id="imgDiv2">
+                                <img id="imgShow2" style="width:241px;height: 159px;" src="<?php echo ($user_id_N); ?>">
+                            </div>
+                        </div>
+                    </li>
+                    <li style="margin-left:5%;	line-height: 40px">
+                        <input onchange="previewImage(this,2)" type="file" name="user_id_N" id="up_img1" size="45" style="width: 330px;height: 38px;border: 1px solid #dddcda;padding-left: 2px;">
+                    </li>
+                </ul>
+                <ul	style="float: left;font-family: 微软雅黑;margin: 0px;padding: 0px;list-style: none;margin: 30px 0 0 100px;margin-left: 2.5%;">
+                    <li style="width: 100%;margin-left:5%">
+                        <p style="margin: 25px 0 0 0;color: #ff8839;font-size: 20px">3.请上传指定手势的手持身份证照</p>
+                        <div id="" style="color: #333;font-size: 13px;margin: 10px 0 5px 0;">照片要求：本人手持身份证并摆出大拇指朝上姿势，确保安全。<br>
+                            <div id="imgDiv3">
+                                <img id="imgShow3" style="width:241px;height: 159px;" src="<?php echo ($user_id_S); ?>">
+                            </div>
+                        </div>
+                    </li>
+                    <li style="margin-left:5%;	line-height: 40px">
+                        <input onchange="previewImage(this,3)" type="file" name="user_id_S" id="up_img1" size="45" style="width: 330px;height: 38px;border: 1px solid #dddcda;padding-left: 2px;line-height: 38px;">
+                    </li>
+                </ul>
+                <button class="buttons" style="float: left; margin-top: 30%; margin-left: -93.5%;margin-bottom: 15px;"  type="submit">点击上传</button>
+            </form>
+            <script type="text/javascript">
+                function previewImage(file,imgNum)
+                {
+                    var MAXWIDTH  = 200;
+                    var MAXHEIGHT = 200;
+                    var div = document.getElementById('imgDiv'+imgNum);
+                    if (file.files && file.files[0])
+                    {
+                        div.innerHTML ='<img id=imgShow'+imgNum+'>';
+                        var img = document.getElementById('imgShow'+imgNum+'');
+                        img.onload = function(){
+                            var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+                            img.width  =  '241';
+                            img.height =  '159';
+                            img.style.marginTop = '0px';
+                        }
+                        var reader = new FileReader();
+                        reader.onload = function(evt){img.src = evt.target.result;}
+                        reader.readAsDataURL(file.files[0]);
+                    }
+                    else
+                    {
+                        var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+                        file.select();
+                        var src = document.selection.createRange().text;
+                        div.innerHTML = '<img id=imgShow'+imgNum+'>';
+                        var img = document.getElementById('imghead2');
+                        img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+                        var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+                        status =('rect:'+rect.top+','+rect.left);
+                        div.innerHTML = "<div id=divhead"+imgNum+" style='width:214px;height:159px;margin-top:0px;"+sFilter+src+"\"'></div>";
+                    }
+                }
+                function clacImgZoomParam( maxWidth, maxHeight, width, height ){
+                    var param = {top:0, left:0, width:width, height:height};
+                    if( width>maxWidth || height>maxHeight )
+                    {
+                        rateWidth = width / maxWidth;
+                        rateHeight = height / maxHeight;
 
+                        if( rateWidth > rateHeight )
+                        {
+                            param.width =  maxWidth;
+                            param.height = Math.round(height / rateWidth);
+                        }else
+                        {
+                            param.width = Math.round(width / rateHeight);
+                            param.height = maxHeight;
+                        }
+                    }
+                    param.left = Math.round((maxWidth - param.width) / 2);
+                    param.top = Math.round((maxHeight - param.height) / 2);
+                    return param;
+                }
+            </script>
+        </div>
         <div class="clear"></div>
     </div>
-    <div class="clear"></div>
 </div>
-<script>
-$("#head_nav ul").children("li").eq(3).addClass("cur");
-    $(".menu11").addClass("uc-current");
-
-    function showTips(id,msg){
-        var tips = layer.tips(msg, id, {
-            tips: [1, '#fff8db'],
-            area: ['400px', '35px']
-        });
-        $(id).on('mouseout', function(){
-            layer.close(tips);
-        });
-    }
-</script>
-<!--footer start-->
+<link href="/Public/js/uploadify/uploadify.css">
+<script type="text/javascript" src="/Public/js/uploadify/jquery.uploadify.min.js"></script>
 <style> 
 .rightwidth{ width:340px;}
 /*.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
@@ -830,5 +713,3 @@ $("#head_nav ul").children("li").eq(3).addClass("cur");
 
 
 </body></html>
-
-<!--footer end-->

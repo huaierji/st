@@ -833,10 +833,7 @@ class UserController extends HomeController {
         //随机数
         //$num = 0.01*rand(10,99);+0.01*$order_num+$num
         $fee=floatval($config['pay_fee']);
-
-        //dump($config['pay_fee']);die;
-        
-        
+        //dump($config['pay_fee']);die;              
         //支付表
         $where['member_name']=$member['name'];
         $where['member_id']=$member['member_id'];
@@ -849,7 +846,7 @@ class UserController extends HomeController {
         $show  = $Page->show();// 分页显示输出
         $list=$pay->where($where)->order('pay_id desc')->limit($Page->firstRow.','.$Page->listRows)->select();
         // foreach ($list as $k=>$v){
-            // $list[$k]['status']=payStatus($v['status']);
+        //     $list[$k]['status']=payStatus($v['status']);
         // }
         // dump($list);die;
         $bank = M('Website_bank')->where('status = 1')->select();
@@ -943,32 +940,25 @@ class UserController extends HomeController {
    /**
     *  我的众筹显示页面
     */
-    public function zhongchou(){
-    	
-    	$member_id = $_SESSION['USER_KEY_ID'];
-    	
+    public function zhongchou(){   	
+    	$member_id = $_SESSION['USER_KEY_ID'];    	
     	$count      = M('Issue_log')->where("uid = {$member_id}")->count();// 查询满足要求的总记录数
     	$Page       = new \Think\Page($count,10);// 实例化分页类 传入总记录数和每页显示的记录数
     	$show       = $Page->show();// 分页显示输出
-    	// 进行分页数据查询 注意limit方法的参数要使用Page类的属性
-    	
+    	// 进行分页数据查询 注意limit方法的参数要使用Page类的属性    	
     	$list = M('Issue_log')
-    	->field(C('DB_PREFIX').'issue_log.*,'.C('DB_PREFIX').'issue.id,'.C('DB_PREFIX').'issue.currency_id,'.C('DB_PREFIX').'issue.title')
-    	->join(C('DB_PREFIX').'issue on '.C('DB_PREFIX').'issue.id = '.C('DB_PREFIX').'issue_log.iid')
-    	->where(C('DB_PREFIX')."issue_log.uid = {$member_id}")->limit($Page->firstRow.','.$Page->listRows)->select();
-    	
-    	$this->assign('page',$show);// 赋值分页输出
-    	$this ->assign('list',$list);
-        $this->display();
+        	->field(C('DB_PREFIX').'issue_log.*,'.C('DB_PREFIX').'issue.id,'.C('DB_PREFIX').'issue.currency_id,'.C('DB_PREFIX').'issue.title')
+        	->join(C('DB_PREFIX').'issue on '.C('DB_PREFIX').'issue.id = '.C('DB_PREFIX').'issue_log.iid')
+        	->where(C('DB_PREFIX')."issue_log.uid = {$member_id}")->limit($Page->firstRow.','.$Page->listRows)->select();    	
+        	$this->assign('page',$show);// 赋值分页输出
+        	$this ->assign('list',$list);
+            $this->display();
     }
-	
-	
-	public function substitution_center(){
 		
+	public function substitution_center(){		
 		$this->display();
-		}
-	public function duihuan(){
-	
+	}
+	public function duihuan(){	
 		$this->display();
 	}
 }

@@ -118,7 +118,7 @@
 					<a data-widget="#message_slide" href="#" class="option top_msg top_msg_new top_colorhover" id="message_slide">(UID: <?php echo (session('USER_KEY_ID')); ?> )</a>
 					<a data-widget="#message_slide" href="#" class="option top_msg top_msg_new top_colorhover" id="message_slide">
 						会员等级:
-							<?php if(($total > 50) ): ?>钻石会员
+							<?php if(($total > 49)): ?>钻石会员
 								<?php elseif( ($total < 10) and ($total > 4) ): ?>铜牌会员
 								<?php elseif( ($total < 20) and ($total > 9) ): ?>银牌会员
 								<?php elseif( ($total < 50) and ($total > 19) ): ?>金牌会员
@@ -497,112 +497,194 @@ $(document).ready(function(){
 	</script>
 <!--top end-->
 
+    <!--top end-->
 <style>
-.coin_num td input{
+.list_con1 td input,.list_con2 td input{
 border: 1px solid #e55600;
 color:#e55600;
 border-radius: 3px;
-width: 80px;
+width: 90px;
 height: 30px;
 margin: 5px;
 cursor: pointer;
 }
-.coin_num td input:hover{
+.list_con1 td input:hover,.list_con2 td input:hover{
 border: 1px solid #e55600;
 border-radius: 3px;
-width: 80px;
+width: 90px;
 height: 30px;
 margin: 5px;
 cursor: pointer;
 color:#FFF;
 background-color:#e55600;	
 }
+
+.list_con1:hover{
+	background-color:#FFE9D2;
+	}
+.list_con2:hover{
+	background-color:#FFE9D2;
+	}
+a{text-decoration:none;}
+.coin_style_box{ height:69px !important;}
+.raise .coin_style_box {
+    line-height: 30px;
+}
+.coin_style_box li{ line-height:35px !important;}
 </style>
-    <!--top end-->
-    <link rel="shortcut icon" href="http://www.stjfw.net/favicon.ico" type="image/x-icon">
-	<script src="_PUBLIC__/Home/js/script.js"></script>
-    <link rel="stylesheet" type="text/css" href="/Public/Home/css/jb_font-awesome.css">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">                                         
-</head>
-<body>
+<script src="js/index.js"></script>
 <div id="main">
+    
 	<div class="main_box">
-      <!--币币交易开始-->
-      <div id="tags_coin" class="coinarea left" style="position:relative;">
-		<!--<ul id="tags" class="for_coin">
-			<li class="selectTag"><a onmouseover="selectTag('tagContent0',this)">对CNY交易区</a></li>
-			<li><a onmouseover="selectTag('tagContent3',this)">对TRMB交易区</a></li>
-            </ul>
-		-->
-		<div class="bgcolor" style="display:none;"></div>
-		<div style="margin-top:30px;" id="tagContent">
-		<!-- 对CNY交易区 结束-->
-		<div class="tagContent selectTag" id="tagContent0">
-		<p style="color:#f00; font-size:14px; margin-bottom:10px;"><?php echo ($config["friendship_tips"]); ?></p>
-		<table class="coin_list coinarea" border="0" cellpadding="0" cellspacing="0">
-			<thead>
+		<div id="my_menu" class="sdmenu left">
+		<div>
+			<p><i class="iconfont iconcolor">&#xe61e;</i>&nbsp;我的资产</p>
+						<a href="<?php echo U('User/index');?>" class="menu"><b class="ic-uc"></b><!--<i class="iconfont">&#xe6f6;</i>&nbsp;&nbsp;-->账户资产</a>
+                        <a href="<?php echo U('Finance/index');?>" class="menu13"><b class="ic-uc"></b><!--<i class="iconfont">&#xe93e;</i>&nbsp;&nbsp;-->财务日志</a>
+					</div>
+                    <hr />
+		<div style="position:relative;">
+			<p><i class="iconfont iconcolor">&#xe643;</i>&nbsp;我的交易</p>
+						<a href="<?php echo U('Entrust/manage');?>" class="menu2"><b class="ic-uc"></b><!--<i class="iconfont">&#xe616;</i>&nbsp;&nbsp;-->委托管理</a>
+						<a href="<?php echo U('Trade/myDeal');?>" class="menu3"><b class="ic-uc"></b><!--<i class="iconfont">&#xe65b;</i>&nbsp;&nbsp;-->我的成交</a>
+						<!-- <a href="<?php echo U('Entrust/history');?>" class="menu4"><b class="ic-uc"></b><!--<i class="iconfont">&#xe62d;</i>&nbsp;&nbsp;委托历史</a> -->
+						
+						<!--<a href="<?php echo U('User/zhongchou');?>" class="menu6"><b class="ic-uc"></b>我的众筹</a>-->
+					</div>
+                    <hr />
+                    <div>
+			<p><i class="iconfont iconcolor">&#xe60e;</i>&nbsp;安全中心</p>
+            		
+						<!--<a href="<?php echo U('Safe/index');?>" class="menu11"><b class="ic-uc"></b><i class="iconfont">&#xe649;</i>&nbsp;&nbsp;安全中心</a>-->
+                        <a href="<?php echo U('User/updatePassword');?>" class="menu8"><b class="ic-uc"></b><!--<i class="iconfont">&#xe638;</i>&nbsp;&nbsp;-->修改密码</a>
+                        <a href="<?php echo U('User/updateMassage');?>" class="menu7"><b class="ic-uc"></b><!--<i class="iconfont">&#xe649;</i>&nbsp;&nbsp;-->个人信息</a>
+						<!--<a href="<?php echo U('Safe/mobilebind');?>" class="menu12"><b class="ic-uc"></b><i class="iconfont">&#xe609;</i>&nbsp;&nbsp;手机绑定</a>-->
+					  </div>
+                      <hr />
+				  <div>
+			<p><i class="iconfont iconcolor">&#xe611;</i>&nbsp;账户中心</p>
+			            <!-- <?php if(($config["huanxun"]) == "1"): ?><a href="<?php echo U('FillByBank/index');?>" class="menu12"><b class="ic-uc"></b><!--<i class="iconfont">&#xe620;</i>&nbsp;&nbsp;人民币充值（在线）</a><?php endif; ?> -->
+			            <a href="<?php echo U('User/pay');?>" class="menu12"><b class="ic-uc"></b><!--<i class="iconfont">&#xe620;</i>&nbsp;&nbsp;-->人民币充值</a>
+			            <!-- <a href="<?php echo U('Fill/index');?>" class="menu15"><b class="ic-uc"></b><i class="iconfont">&#xe620;</i>&nbsp;&nbsp;人民币充值记录</a> -->
+			            <a href="<?php echo U('User/draw');?>" class="menu14"><b class="ic-uc"></b><!--<i class="iconfont">&#xe6f0;</i>&nbsp;&nbsp;-->人民币提现</a>
+            		    <a href="<?php echo U('Safe/index');?>" class="menu11"><b class="ic-uc"></b><!--<i class="iconfont">&#xe660;</i>&nbsp;&nbsp;-->用户中心</a>
+						<a href="<?php echo U('User/invit');?>" class="menu9"><b class="ic-uc"></b><!--<i class="iconfont">&#xe602;</i>&nbsp;&nbsp;-->邀请好友</a>
+						<a href="<?php echo U('User/sysMassage');?>" class="menu10"><b class="ic-uc"></b><!--<i class="iconfont">&#xe664;</i>&nbsp;&nbsp;-->系统消息<span class="messagenum" id='messagenum2'><?php echo ($count); ?></span></a>
+					  </div>
+					  <?php if(($config["list_switch"]) == "1"): ?><div>
+						<p><i class="iconfont iconcolor">&#xe611;</i>&nbsp;精彩活动</p>
+			            <a href="<?php echo U('Index/chart');?>" class="menu13"><b class="ic-uc"></b><!--<i class="iconfont">&#xe620;</i>&nbsp;&nbsp;-->推荐排行榜</a>
+			            
+					  </div><?php endif; ?>
+                      
+		</div>
+		<script>
+			$("#head_nav ul").children("li").eq(3).addClass("cur");
+		</script>
+		<div class="raise right clearfix">
+            	<div class="ybc_list">
+                
+		<div class="ybcoin" id="mycoin">
+			<!-- 旧版：<h2 class="left">账户总资产估算: <span style="color:#f60;"><?php echo ((isset($allmoneys) && ($allmoneys !== ""))?($allmoneys):0.00); ?></span> CNY</h2>  end-->
+			<!-- <p class="right receive_rules" style="margin-bottom:0px;"><a href="/index/activity"> 存币送利息新规则</a></p> -->
             
-                <tr>
-					<th>&nbsp;</th>
-					<th style="text-align:left;">币名</th>
-					<th class="header">最新价格</th>
-					<th class="header">24H成交量</th>
-					<th class="header">24H成交额</th>
+            <!-- 账户总资产估算新改:-->
+        <div style="font-weight:700;font-size: 16px; margin-left:35px; padding-top:8px; color:#f60; border-bottom: 2px solid #e6e6e6;">账户资产
+        <span style="font-weight:normal;color:#e55600;font-size:12px;padding-left: 15px;"><?php echo ($config["VAP_rule"]); ?></span></div>
+        <div class="coin_style_box">
+             <div class="c_balance">
+			<ul class="item">
+				<li class="c_1">
+					<span>可用人民币：</span><br>
+					<strong data-flaunt="0.00" class="cny_cny_available" data-weight="700" style="color:green;">￥<?php echo ($u_info['rmb']); ?></strong>
+				</li>
+				<li class="c_2">
+					冻结:<span data-flaunt="0.00" class="cny_cny_frozen" style="color:orange;">￥<?php echo ($u_info['forzen_rmb']); ?></span>
 
-					<!-- 
-                    <th class="header">总市值</th>
-                    <th class="header">总成交额</th>
-                    -->
-
-					<th class="header">24H涨跌</th>
-					<th class="header">7D涨跌</th>
-                    <th class="header" style="padding-right: 60px;">去交易</th>
+				</li>
+				<li class="c_3">
+					总资产：<span data-flaunt="0.00" class="cny_cny_loan">￥<?php echo ($member['rmb']+$member['forzen_rmb']+$sum); ?></span>
+				</li>
+				<li class="c_4">
+					<a href="<?php echo U('User/draw');?>">提现</a>&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="javascript:void(0)" onclick="confirm_fill();" class="btn btn_orange size_s">充值</a>
+				</li>
+			</ul>			
+		</div>
+                    <!--<ul>
+                        <li><img src="/Public/Home/images/coin_rmb.png">　人民币(CNY)</li>
+                        <li>可用：<span style="color:green;" >￥<?php echo ($u_info['rmb']); ?></span></li>
+                        <li>冻结：<span style="color:orange;" >￥<?php echo ($u_info['forzen_rmb']); ?></span></li>
+                        <li>总资产：<b>￥<?php echo ($u_info['rmb']+$u_info['forzen_rmb']); ?></b></li>
+                    </ul>-->
+                </div>
+        
+        
+	   <!-- 账户总资产估算新改:-->
+            
+            
+            
+			<div class="clear" style="margin-bottom:15px;"></div>
+		</div>
+        
+       
+        
+        
+        		<!--会员条件不符的时候显示 点击×之后不再显示-->
+				<table class="raise_list" align="center" border="0" cellpadding="0" cellspacing="0">
+			<thead>
+				<tr class="list_head">
+					<th class="assets01">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名称</th>
+					<th class="assets02">总量</th>
+					<th class="assets02">可用</th>
+					<th class="assets02">冻结<a class="ico_tishi" id="pledge" href="" onmouseover="showTips('#pledge','冻结原因：货币交易中、提现/提币处理中、项目众筹中、项目交易中')" style="background:#999; color:#fff; padding:2px 5px; border-radius:10px; text-decoration:none; margin-left:5px; font-family:monospace;">i</a></th>
+					<th class="assets03">操作&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+					<th>交易</th>
 				</tr>
 			</thead>
 			<tbody>
-                <?php if(is_array($currency)): $i = 0; $__LIST__ = $currency;if( count($__LIST__)==0 ) : echo "$empty" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><tr class="coin_num">
-                        <td><a href="<?php echo U('Orders/index',array('currency'=>$vo['currency_mark']));?>"><img src="<?php echo ($vo["currency_logo"]); ?>" style="width:20px; height:20px;"></a></td>
-
-                        <td class="coin_name"><a href="<?php echo U('Orders/index',array('currency'=>$vo['currency_mark']));?>"><?php echo ((isset($vo["currency_name"]) && ($vo["currency_name"] !== ""))?($vo["currency_name"]):'虚拟币'); echo ((isset($vo["currency_mark"]) && ($vo["currency_mark"] !== ""))?($vo["currency_mark"]):''); ?></a></td>
-
-                        <td>
-                        	<?php if(($vo["new_price_status"]) == "0"): ?><a href="<?php echo U('Orders/index',array('currency'=>$vo['currency_mark']));?>" class="buy">
-                        	<?php else: ?>
-                        		<a href="<?php echo U('Orders/index',array('currency'=>$vo['currency_mark']));?>" class="sell"><?php endif; ?>
-                        	<?php echo (number_format($vo["new_price"],$vo['currency_digit_num'])); ?>
-                        	<?php if(($vo["new_price_status"]) == "0"): ?>↓<?php else: ?>↑<?php endif; ?>
-                        	(<?php echo ((isset($vo["biaoshi"]) && ($vo["biaoshi"] !== ""))?($vo["biaoshi"]):'cny'); ?>)
-                        	</a>
-                        </td>
-                        
-                        <td><a href="<?php echo U('Orders/index',array('currency'=>$vo['currency_mark']));?>"><?php echo ((isset($vo["24H_done_num"]) && ($vo["24H_done_num"] !== ""))?($vo["24H_done_num"]):'0'); ?></a></td>
-                        <td><a href="<?php echo U('Orders/index',array('currency'=>$vo['currency_mark']));?>"><?php echo ((isset($vo["24H_done_money"]) && ($vo["24H_done_money"] !== ""))?($vo["24H_done_money"]):'0.00'); ?></a></td>
-
-
-                        <!-- <td>
-                        <a href="<?php echo U('Orders/index',array('currency'=>$vo['currency_mark']));?>"><?php echo ((isset($vo["currency_all_money"]) && ($vo["currency_all_money"] !== ""))?($vo["currency_all_money"]):'0.00'); ?></a></td>
-                        <td><a href="<?php echo U('Orders/index',array('currency'=>$vo['currency_mark']));?>"><?php echo ($vo["currency_trade_all"]); ?></a></td>
-                        -->
-                        
-                        <td><?php if(($vo["24H_change"]) > "0"): ?><a href="<?php echo U('Orders/index',array('currency'=>$vo['currency_mark']));?>" class="sell"><?php else: ?><a href="<?php echo U('Orders/index',array('currency'=>$vo['currency_mark']));?>" class="buy"><?php endif; echo ((isset($vo["24H_change"]) && ($vo["24H_change"] !== ""))?($vo["24H_change"]):'0'); ?>%</a></td>
-                        <td><?php if(($vo["7D_change"]) > "0"): ?><a href="<?php echo U('Orders/index',array('currency'=>$vo['currency_mark']));?>" class="sell">+<?php else: ?><a href="<?php echo U('Orders/index',array('currency'=>$vo['currency_mark']));?>" class="buy"><?php endif; echo ((isset($vo["7D_change"]) && ($vo["7D_change"] !== ""))?($vo["7D_change"]):'0'); ?>%</a></td>
-                        <td style="padding-right: 10px;"><a href="<?php echo U('Orders/index',array('currency'=>$vo['currency_mark']));?>"><input value="去交易"  type="button" style="line-height: 28px;"></a></td>
-                    </tr><?php endforeach; endif; else: echo "$empty" ;endif; ?>
-			</tbody>
+				<tr class="list_con1">
+				    <td class="usertdtitle assets01">人民币 CNY</td>
+				    <td class="assets02"><?php echo ((isset($member["count"]) && ($member["count"] !== ""))?($member["count"]):0.00); ?></td>
+				    <td class="assets02"><?php echo ((isset($member["rmb"]) && ($member["rmb"] !== ""))?($member["rmb"]):0.00); ?></td>
+				    <td class="assets02"><?php echo ((isset($member["forzen_rmb"]) && ($member["forzen_rmb"] !== ""))?($member["forzen_rmb"]):0.00); ?></td>
+				    <td class="cost assets03"><a  href="javascript:void(0)" onclick="confirm_fill();" ">充值</a> &nbsp;&nbsp;<a href="<?php echo U('User/draw');?>">提现</a></td>
+				    <td></td>
+				</tr>
+				<?php if(is_array($currency_user)): $i = 0; $__LIST__ = $currency_user;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><tr class="list_con2">
+					    <td class="usertdtitle assets01"> <?php echo ((isset($vo["currency_name"]) && ($vo["currency_name"] !== ""))?($vo["currency_name"]):'虚拟币'); echo ((isset($vo["currency_mark"]) && ($vo["currency_mark"] !== ""))?($vo["currency_mark"]):'--'); ?></td>
+					    <td class="assets02"> <?php echo ((isset($vo["count"]) && ($vo["count"] !== ""))?($vo["count"]):0.00); ?></td>
+					    <td class="assets02"><?php echo ((isset($vo["num"]) && ($vo["num"] !== ""))?($vo["num"]):0.00); ?></td>
+					    <td class="assets02"><?php echo ((isset($vo["forzen_num"]) && ($vo["forzen_num"] !== ""))?($vo["forzen_num"]):0.00); ?></td>
+					    <td class="cost interest assets03">
+						<a href="<?php echo U('Pay/bpay',array('currency_id'=>$vo['currency_id']));?>">充积分</a>
+                        &nbsp;&nbsp;<a href="<?php echo U('Pay/tcoin',array('currency_id'=>$vo['currency_id']));?>">提积分</a>
+						</td>
+					    <td class="cost interest" style="color:#f60;"><a style="text-decoration: none;" href="<?php echo U('Orders/index',array('currency'=>$vo['currency_mark']));?>" ><input value="去交易"  type="button"></a></td>
+				    </tr><?php endforeach; endif; else: echo "" ;endif; ?>  
+										
+							</tbody>
 		</table>
-		</div>
-            <div style="width: 1200px; clear: both; margin: 0px auto;">
-                <div class="page" style="min-width: 250px !important;margin-left: 500px;">
-                    <?php echo ($page); ?>
-                </div>
-            </div>
 	</div>
-    </div>
-	  <!--币币交易结束-->
+</div>
 <div class="clear"></div>
 		</div>
 		<div class="clear"></div>
 	</div>
+<script>
+$(".menu").addClass("uc-current");
+
+function showTips(id,msg){
+    var tips = layer.tips(msg, id, {
+	tips: [1, '#fff8db'],
+	area: ['400px', '25px'], 
+    });
+    $(id).on('mouseout', function(){
+    layer.close(tips);
+    });
+}
+</script>   
+
 <!--footer start-->
 <style> 
 .rightwidth{ width:340px;}

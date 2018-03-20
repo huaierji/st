@@ -37,12 +37,8 @@ class AlipayController extends CommonController {
         $data['member_name']=I('post.member_name');
         $data['money']=I('post.p3_Amt');
         $data['type']=intval(I('post.type'));
-
-
         $data['account']=I('post.account');
         $data['count']=I('post.p3_Amt') - $_SESSION['USER_KEY_ID']/100;
-
-
         //dump(empty($data['member_name'])||empty($data['money']));die;
         if(empty($data['member_name'])||empty($data['money'])){
                 // $arr['info']='请填写全部信息';
@@ -52,24 +48,16 @@ class AlipayController extends CommonController {
                 // $arr['info']='请输入正确的银行卡号或支付宝账号';
                 $this->error('请输入正确的支付宝账号');
         }
+        if($data['type'] == 1 && $data['money'] < $this->config['pay_min_money']){
+            $this->error('支付宝充值金额最小为'.$this->config['pay_min_money'].'元');
 
-
-            if($data['type'] == 1 && $data['money'] < $this->config['pay_min_money']){
-                $this->error('支付宝充值金额最小为'.$this->config['pay_min_money'].'元');
-
-            }
-
-            if($data['type'] == 1){
-                    $type_r = 1;
-            }
-
-
+        }
+        if($data['type'] == 1){
+                $type_r = 1;
+        }
         $data['member_id'] = session('USER_KEY_ID');
         $data['add_time']=time();
         $data['status']=0;
-
-
-
         //商户订单号，商户网站订单系统中唯一订单号，必填
         //返回当前 Unix 时间戳的微秒数
         $b=microtime() * 1000000;
@@ -140,14 +128,11 @@ class AlipayController extends CommonController {
         Vendor('Alipay.pagepay.service.AlipayTradeService');
         $arr=$_POST;
         //日志
-        $this->writeLog(json_encode($arr));
-        
+        $this->writeLog(json_encode($arr));       
         $config = C('ALIPAY_CONFIG');
         $alipaySevice = new \AlipayTradeService($config);
         //$alipaySevice->writeLog(var_export($_POST,true));
         $result = $alipaySevice->check($arr);
-
-
         /* 验证过程。
         1、要验证该通知数据中的out_trade_no是否为系统中创建的订单号，
         2、判断total_amount是否确实为该订单的实际金额（即订单创建时的金额），
@@ -155,20 +140,13 @@ class AlipayController extends CommonController {
         4、验证app_id是否为该本身。
         */
         if($result) {//验证成功
-
             //商户订单号
             $out_trade_no = $_POST['out_trade_no'];
-
             //支付宝交易号
-
             $trade_no = $_POST['trade_no'];
-
             //交易状态
             $trade_status = $_POST['trade_status'];
-
-
             if($_POST['trade_status'] == 'TRADE_FINISHED') {
-
             //判断该笔订单是否在商户网站中已经做过处理
             //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
             //请务必判断请求时的total_amount与通知时获取的total_fee为一致的
@@ -236,16 +214,12 @@ class AlipayController extends CommonController {
         4、验证app_id是否为该商户本身。
         */
         if($result ) {//验证成功
-
-
             $model = M('Pay');
             //查询数据库,是否存在订单号
             $where['pay_id'] = $arr['out_trade_no'];
             $where['status'] = 0;
             $list = $model->where($where)->find();
             //dump($list);die;
-
-
             //商户订单号
             $out_trade_no = htmlspecialchars($_GET['out_trade_no']);
             //支付宝交易号

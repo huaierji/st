@@ -118,7 +118,7 @@
 					<a data-widget="#message_slide" href="#" class="option top_msg top_msg_new top_colorhover" id="message_slide">(UID: <?php echo (session('USER_KEY_ID')); ?> )</a>
 					<a data-widget="#message_slide" href="#" class="option top_msg top_msg_new top_colorhover" id="message_slide">
 						会员等级:
-							<?php if(($total > 50) ): ?>钻石会员
+							<?php if(($total > 49)): ?>钻石会员
 								<?php elseif( ($total < 10) and ($total > 4) ): ?>铜牌会员
 								<?php elseif( ($total < 20) and ($total > 9) ): ?>银牌会员
 								<?php elseif( ($total < 50) and ($total > 19) ): ?>金牌会员
@@ -497,23 +497,243 @@ $(document).ready(function(){
 	</script>
 <!--top end-->
 
-<div id="main">
-  <div class="main_box">
-    <div class="dynamic">
-      <h3>最新动态</h3>
-      <ul>
-        <?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><li> <a href="<?php echo U('Art/details',array('id'=>$vo['article_id']));?>"><span><?php echo (date('Y-m-d H:i:s',$vo["add_time"])); ?></span> <?php echo ($vo["title"]); ?> </a> </li><?php endforeach; endif; else: echo "" ;endif; ?>
-      </ul>
-      <div class="page" style=" float:right; min-width: 200px !important;">
-      		<ul>
-            	<?php echo ($page); ?>
+
+<style>
+    .passContent .tagContent .ybc_con li label{
+        float:inherit;
+        padding-left: 10px;
+    }
+    .error{
+        color: #999;
+    }
+	.tishi1{ background-color:#FDF2DB; width:400px;}
+	.tishi1 span.tishi_text{ color:#ccc; padding-left:40px; }
+</style>
+
+<script>
+    $(document).ready(function(){
+        start=document.cookie.indexOf("motip=")
+        if (start!=-1){
+            start=start + 6
+            end=start + 1
+            motip = unescape(document.cookie.substring(start,end))
+            if(motip == 1)
+                $('#phone_top_div').show();
+        }
+    });
+
+    function hidephone(){
+        $('#phone_top_div').hide();
+        var d=new Date()
+        d.setTime(d.getTime() + 7200)
+        document.cookie="motip=2;expires="+d.toUTCString()
+    }
+</script>
+
+<script src="js/index.js"></script>
+    <div id="main">
+        <div class="main_box">
+            <div id="my_menu" class="sdmenu left">
+		<div>
+			<p><i class="iconfont iconcolor">&#xe61e;</i>&nbsp;我的资产</p>
+						<a href="<?php echo U('User/index');?>" class="menu"><b class="ic-uc"></b><!--<i class="iconfont">&#xe6f6;</i>&nbsp;&nbsp;-->账户资产</a>
+                        <a href="<?php echo U('Finance/index');?>" class="menu13"><b class="ic-uc"></b><!--<i class="iconfont">&#xe93e;</i>&nbsp;&nbsp;-->财务日志</a>
+					</div>
+                    <hr />
+		<div style="position:relative;">
+			<p><i class="iconfont iconcolor">&#xe643;</i>&nbsp;我的交易</p>
+						<a href="<?php echo U('Entrust/manage');?>" class="menu2"><b class="ic-uc"></b><!--<i class="iconfont">&#xe616;</i>&nbsp;&nbsp;-->委托管理</a>
+						<a href="<?php echo U('Trade/myDeal');?>" class="menu3"><b class="ic-uc"></b><!--<i class="iconfont">&#xe65b;</i>&nbsp;&nbsp;-->我的成交</a>
+						<!-- <a href="<?php echo U('Entrust/history');?>" class="menu4"><b class="ic-uc"></b><!--<i class="iconfont">&#xe62d;</i>&nbsp;&nbsp;委托历史</a> -->
+						
+						<!--<a href="<?php echo U('User/zhongchou');?>" class="menu6"><b class="ic-uc"></b>我的众筹</a>-->
+					</div>
+                    <hr />
+                    <div>
+			<p><i class="iconfont iconcolor">&#xe60e;</i>&nbsp;安全中心</p>
+            		
+						<!--<a href="<?php echo U('Safe/index');?>" class="menu11"><b class="ic-uc"></b><i class="iconfont">&#xe649;</i>&nbsp;&nbsp;安全中心</a>-->
+                        <a href="<?php echo U('User/updatePassword');?>" class="menu8"><b class="ic-uc"></b><!--<i class="iconfont">&#xe638;</i>&nbsp;&nbsp;-->修改密码</a>
+                        <a href="<?php echo U('User/updateMassage');?>" class="menu7"><b class="ic-uc"></b><!--<i class="iconfont">&#xe649;</i>&nbsp;&nbsp;-->个人信息</a>
+						<!--<a href="<?php echo U('Safe/mobilebind');?>" class="menu12"><b class="ic-uc"></b><i class="iconfont">&#xe609;</i>&nbsp;&nbsp;手机绑定</a>-->
+					  </div>
+                      <hr />
+				  <div>
+			<p><i class="iconfont iconcolor">&#xe611;</i>&nbsp;账户中心</p>
+			            <!-- <?php if(($config["huanxun"]) == "1"): ?><a href="<?php echo U('FillByBank/index');?>" class="menu12"><b class="ic-uc"></b><!--<i class="iconfont">&#xe620;</i>&nbsp;&nbsp;人民币充值（在线）</a><?php endif; ?> -->
+			            <a href="<?php echo U('User/pay');?>" class="menu12"><b class="ic-uc"></b><!--<i class="iconfont">&#xe620;</i>&nbsp;&nbsp;-->人民币充值</a>
+			            <!-- <a href="<?php echo U('Fill/index');?>" class="menu15"><b class="ic-uc"></b><i class="iconfont">&#xe620;</i>&nbsp;&nbsp;人民币充值记录</a> -->
+			            <a href="<?php echo U('User/draw');?>" class="menu14"><b class="ic-uc"></b><!--<i class="iconfont">&#xe6f0;</i>&nbsp;&nbsp;-->人民币提现</a>
+            		    <a href="<?php echo U('Safe/index');?>" class="menu11"><b class="ic-uc"></b><!--<i class="iconfont">&#xe660;</i>&nbsp;&nbsp;-->用户中心</a>
+						<a href="<?php echo U('User/invit');?>" class="menu9"><b class="ic-uc"></b><!--<i class="iconfont">&#xe602;</i>&nbsp;&nbsp;-->邀请好友</a>
+						<a href="<?php echo U('User/sysMassage');?>" class="menu10"><b class="ic-uc"></b><!--<i class="iconfont">&#xe664;</i>&nbsp;&nbsp;-->系统消息<span class="messagenum" id='messagenum2'><?php echo ($count); ?></span></a>
+					  </div>
+					  <?php if(($config["list_switch"]) == "1"): ?><div>
+						<p><i class="iconfont iconcolor">&#xe611;</i>&nbsp;精彩活动</p>
+			            <a href="<?php echo U('Index/chart');?>" class="menu13"><b class="ic-uc"></b><!--<i class="iconfont">&#xe620;</i>&nbsp;&nbsp;-->推荐排行榜</a>
+			            
+					  </div><?php endif; ?>
+                      
+		</div>
+		<script>
+			$("#head_nav ul").children("li").eq(3).addClass("cur");
+		</script>
+            <div class="raise right clearfix">
+            <link rel="stylesheet" href="/Public/Home/css/layer.css">
+            <h2>修改密码</h2>
+            <div class="support_ybc pass_ybc">
+            <ul id="pass_change">
+                <li class=""><a onclick="selectTag('tagContent0',this)" id="uppass" href="javascript:void(0)">修改密码</a> </li>
+                <li class="selectTag"><a onclick="selectTag('tagContent1',this)" id="uptrade" href="javascript:void(0)">修改交易密码</a></li>
+                <div class="clear"></div>
             </ul>
-      </div>
+
+			<script type="text/javascript">
+				$(document).ready(function(){
+					var getc = "<?php echo ($_GET['type']); ?>";
+					if(getc == '2'){
+						$('#uptrade').click();
+					}else{
+						$('#uppass').click();
+					}
+				})				
+		    </script>
+
+            <div id="tagContent" class="passContent">
+                <div class="tagContent selectTag" id="tagContent0" style="display: none;">
+                    <form method="post" id="signupForm"  jump-url="<?php echo U('Login/index');?>"   action="<?php echo U('User/updatePassword');?>">
+                        <ul class="ybc_con"  style="margin-left: 250px;">
+                            <li class="tishi1"><span class="tishi_text">您正在为账户&nbsp;<span style="color:red"><?php echo (session('USER_KEY')); ?></span>&nbsp;修改登录密码</span></li>
+                            <li><label for="password">登录密码：</label><input name="oldpwd" id="oldpwd" type="password" placeholder="请输入原登陆密码"></li>
+                            <li><label for="newword">新密码：&nbsp;&nbsp;&nbsp;</label><input name="pwd" id="pwd" type="password" placeholder="请输入新的密码"></li>
+                            <li><label for="repeat">重复密码：</label><input name="repwd" id="repwd" type="password" placeholder="两次密码必须保持一致"></li>
+                            <li><label class="buys">&nbsp;</label><input class="tijiao" value="提交"  type="submit"></li>
+                        </ul>
+                    </form>
+                </div>
+
+            <div class="tagContent" id="tagContent1" style="display: block;">
+                <script>
+                    $("#signupForm").validate({
+                        rules: {
+                            oldpwd:{required: true,rangelength:[6,20]},
+                            pwd:{required: true,rangelength:[6,20]},
+                            repwd:{rangelength:[6,20],equalTo: "#pwd"}
+                        },
+                        messages: {
+                            oldpwd:{required: "密码不能为空",rangelength:"密码长度在6-20个字符之间"},
+                            pwd:{required: "密码不能为空",rangelength:"密码长度在6-20个字符之间"},
+                            repwd:{rangelength:"密码长度在6-20个字符之间",equalTo: "两次输入不一样"}
+                        },
+                        submitHandler:function(form){
+                            ajax_submit_form(form)
+                            return false;
+                        },
+                        invalidHandler: function() {  //不通过回调
+                            return false;
+                        }
+                    });
+                </script>
+
+                        <form method="post" id="PwdtradeForm" jump-url="<?php echo U('Login/index');?>"  enctype="multipart/form-data" action="<?php echo U('User/updatePwdtrade');?>">
+                            <ul class="ybc_con" style=" margin-left:250px;">
+                                <li class="tishi1"><span class="tishi_text">您正在为账户&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:red"><?php echo (session('USER_KEY')); ?></span>&nbsp;修改交易密码，并却确认手机号码已绑定</span></li>
+                                <li><label for="password">登录密码：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><input name="oldpwd_b" type="password" placeholder="请输入登陆密码"></li>
+                                <li><label for="newword">新交易密码：&nbsp;&nbsp;&nbsp;</label><input name="pwdtrade" id="pwdtrade" type="password" placeholder="只能包含数字、字母、下划线"></li>
+                                <li><label for="repeat">重复交易密码：</label><input name="repwdtrade"  type="password" placeholder="两次输入必须报保持一致"></li>
+                                <li>
+									<label for="code" style='width:84px;float:left;' >短信验证：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><input style='width:160px;float:left;' name="code" id="code" autocomplete="off" type="text"> 
+								
+								
+									<input value="点击发送" style='width:160px;margin-left:5px;float:left;background-color:#f80;cursor:pointer;' type="button" id="msgt" data-key='off' onclick="sandPhone()">
+                                </li>                              
+								<li></li>
+                                <li ><label class="buys">&nbsp;</label><input  style='margin-top:60px;' class="tijiao" value="提交" type="submit"></li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+    <script>
+        $("#PwdtradeForm").validate({
+            rules: {
+                oldpwd_b:{required: true,rangelength:[6,20]},
+                oldpwdtrade_b:{required: true,rangelength:[6,20]},
+                pwdtrade:{required: true,rangelength:[6,20]},
+                repwdtrade:{rangelength:[6,20],equalTo: "#pwdtrade"}
+            },
+            messages: {
+                oldpwd_b:{required: "登录密码不能为空",rangelength:"登录密码长度在6-20个字符之间"},
+                oldpwdtrade_b:{required: "密码不能为空",rangelength:"交易密码长度在6-20个字符之间"},
+                pwdtrade:{required: "密码不能为空",
+                rangelength:"新交易密码长度在6-20个字符之间"},
+                repwdtrade:{rangelength:"新交易密码长度在6-20个字符之间",equalTo: "两次输入不一样"}
+           },
+            submitHandler:function(form){
+                if(!$("#code").val()){
+                    layer.msg("请填写验证码");
+                    return false;
+                }
+                ajax_submit_form(form)
+                return false;
+            },
+            invalidHandler: function() {  //不通过回调
+                return false;
+            }
+        });
+				  
+		function sandPhone(){
+            var phone="<?php echo ($member["phone"]); ?>";		
+    		var i=120;
+            var tid2;
+            tid2=setInterval(function(){
+                if($("#msgt").attr("data-key")=='off'){
+                    $("#msgt").attr("disabled",true);
+                    $("#msgt").removeClass("class");
+                    $("#msgt").addClass("button again");
+                    i--;
+                    $("#msgt").val(i+"秒后可重新发送");
+                    if(i<=0){
+                        $("#msgt").removeAttr("disabled").val("重新发送验证码");
+                        $("#msgt").attr("data-key","on");
+                    }
+                }
+        },1000);
+        
+        $.post("<?php echo U('Common/ajaxSandPhone');?>",{'phone':phone},
+            function(d){
+                layer.msg(d.info);
+                    if(d.status==1){
+                        i=120;
+                        $("#msgt").attr("data-key","off");
+            	}
+            });
+    }
+</script>
+
+                <script type="text/javascript" src="/Public/Home/js/tab2.js"></script>
+                <script src="/Public/Home/js/layer.js"></script>
+                <script src="/Public/Home/js/password.js"></script>
+                <script type="text/javascript" src="/Public/Home/js/ajaxfileupload.js"></script>
+            </div>
+        <div class="clear"></div>
     </div>
-    <div class="clear"></div>
-  </div>
 </div>
-<!--footer start--> 
+                <script type="text/javascript" src="/Public/js/uploadify/jquery.uploadify.min.js"></script>
+                <script type="text/javascript" src="/Public/Home/js/tab2.js"></script>
+                <script src="/Public/Home/js/layer.js"></script>
+                <script src="/Public/Home/js/password.js"></script>
+                <script type="text/javascript" src="/Public/Home/js/ajaxfileupload.js"></script>
+		    </div>
+		<div class="clear"></div>
+	</div>
+</div>
+
+<script>
+    $(".menu8").addClass("uc-current");
+</script>
+
 <style> 
 .rightwidth{ width:340px;}
 /*.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
@@ -598,5 +818,3 @@ $(document).ready(function(){
 
 
 </body></html>
-
-<script>$("#head_nav ul").children("li").eq(5).addClass("cur");</script>

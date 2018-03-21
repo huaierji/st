@@ -3,10 +3,12 @@ namespace Home\Controller;
 use Common\Controller\CommonController;
 use Home\Controller\PaymentController;
 class AlipayController extends CommonController {
+
     public function _empty(){
         header("HTTP/1.0 404 Not Found");
         $this->display('Public:404');
     }
+
     public function index(){
         /*if($this->config['DISANFANG'] != 1){
              $this->error("第三方充值未开启！");
@@ -20,11 +22,10 @@ class AlipayController extends CommonController {
               -> Field('payment_id,member_id,price,status,pay_no,add_time,end_time')
               -> where($where)
               -> order("add_time desc")
-              ->select();
+              -> select();
         $this->assign('list',$list);
         $this->display();
     }
-
 
     public function aliPagePay(){
         //dump($_POST);
@@ -32,7 +33,7 @@ class AlipayController extends CommonController {
         $member=$this->member;
         //dump(($member['name'] != $_POST['member_name']));
         if($member['name'] != $_POST['member_name']){
-           $this->error('姓名不正确');
+            $this->error('姓名不正确');
         }
         $data['member_name']=I('post.member_name');
         $data['money']=I('post.p3_Amt');
@@ -124,7 +125,6 @@ class AlipayController extends CommonController {
 
 
     public function notify_alipay(){
-
         Vendor('Alipay.pagepay.service.AlipayTradeService');
         $arr=$_POST;
         //日志
@@ -170,7 +170,7 @@ class AlipayController extends CommonController {
                         //设置订单状态为成功
                         $model->where($where)->setField('status','1');
                         if($list['money']>=$this->congif['pay_reward_limit']){
-                           $list['count']=$list['count']+$list['money']*$this->config['pay_reward']/100;
+                            $list['count']=$list['count']+$list['money']*$this->config['pay_reward']/100;
                         }
                             //修改member表钱数
                             $rs=M('Member')->where("member_id='".$list['member_id']."'")->setInc('rmb',$list['money']*0.995);

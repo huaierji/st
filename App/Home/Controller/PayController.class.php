@@ -35,10 +35,10 @@ class PayController extends HomeController {
     		// $arr['info']='请填写全部信息';
     		$this->error('请填写全部信息');
     	}
-//     	if($member['status']!=1){
-//     		// $arr['info']='请完成实名验证再进行充值';
-//     		$this->error('请完成实名验证再进行充值');
-//     	}
+        //if($member['status']!=1){
+        //$arr['info']='请完成实名验证再进行充值';
+        //$this->error('请完成实名验证再进行充值');
+        //}
     	if(strlen($data['account'])<11||strlen($data['account'])>20){
     		// $arr['info']='请输入正确的银行卡号或支付宝账号';
     		$this->error('请输入正确的银行卡号或支付宝账号');
@@ -58,7 +58,7 @@ class PayController extends HomeController {
 		}
 
 //原版支付宝充值
-/*    	$data['member_id'] = session('USER_KEY_ID');
+        /*$data['member_id'] = session('USER_KEY_ID');
     	$data['add_time']=time();
     	$data['status']=0;
     	$list=M('Pay')->add($data);

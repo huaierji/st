@@ -595,20 +595,21 @@ $(document).ready(function(){
               
     <script>
 	  	function checkSuccess(_this){
-			$.post("<?php echo U('User/delete');?>",{'id':_this},function(data){
-			if(data.status>0){
-				alert(data.info);
-				window.location.reload();
-			}else{
-				alert(data.info);
-				window.location.reload();
-			}
-			});	 	  	  
+            var msg = confirm("确定删除银行卡信息吗");
+            if ( msg == true ){           
+    			$.post("<?php echo U('User/delete');?>",{'id':_this},function(data){
+        			if(data.status>0){
+        				alert(data.info);
+        				window.location.reload();
+        			}           
+                });
+            }	  	  
 		}
-			function bank_id(){
-				$("#select_bank").val($("#bank_id").val());
-			}
+		function bank_id(){
+			$("#select_bank").val($("#bank_id").val());
+		}
     </script>
+
 </table>
            
 <table id="addNewAddr" class="add_list" border="0" cellpadding="0" cellspacing="0" style="display:none"> 
@@ -1003,38 +1004,28 @@ function chexiao(id){
     }</script>
 <!--footer start--> 
 <style> 
-.rightwidth{ width:340px;}
-/*.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
-	line-height: 0;
-}*/
+	.rightwidth{ width:340px;}
 </style>
-<!--footer start-->
-
-
-
 
 <div class="coin_footer">
-	<!-- <div class="coin_hint" style="border:0">
-		<h2><?php echo ((isset($info_one4["title"]) && ($info_one4["title"] !== ""))?($info_one4["title"]):"风险提示"); ?></h2>
-		<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo ($config["risk_warning"]); ?></p>
-	</div> -->
-	
 	<div class="coin_footerbar" style="background:#333333; height:240px">
-		<div class="coin_footer_nav clearfix">
+		<div class="coin_footer_nav clearfix;">
 			<div class="coin_nav coin_copy left">
 				<p><a href="<?php echo U('Index/index');?>"><img style=" height:120px;" src="<?php echo ($config["index_logo_footer"]); ?>"></a></p>
 			</div>
+
 			<div class="coin_nav left" style="margin-right:70px">
 				<h2 style="color:white;">快速链接</h2>
 				<ul>
-				<?php if(is_array($team)): $i = 0; $__LIST__ = $team;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><li><a href="<?php echo U('Art/details',array('team_id'=>$vo['article_id']));?>" target="_blank" class="left" style="color:white"><?php echo ($vo["title"]); ?></a></li><?php endforeach; endif; else: echo "" ;endif; ?>
-                <li><a href="<?php echo ($config["qianbao"]); ?>" target="_blank" class="left" style="color:white">钱包下载</a></li>
+					<?php if(is_array($team)): $i = 0; $__LIST__ = $team;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><li><a href="<?php echo U('Art/details',array('team_id'=>$vo['article_id']));?>" target="_blank" class="left" style="color:white"><?php echo ($vo["title"]); ?></a></li><?php endforeach; endif; else: echo "" ;endif; ?>
+	                <li><a href="<?php echo ($config["qianbao"]); ?>" target="_blank" class="left" style="color:white">钱包下载</a></li>
 				</ul>
 			</div>
+
 			<div class="coin_nav left" style="margin-right:70px">
 				<h2 style="color:white">网站地图</h2>
 				<ul>
-                <?php if(is_array($help)): $i = 0; $__LIST__ = $help;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><li><a href="<?php echo U('Help/index',array('id'=>$vo['id']));?>" target="_blank" class="left" style="color:white"><?php echo ($vo["name"]); ?></a></li><?php endforeach; endif; else: echo "" ;endif; ?>
+	            <?php if(is_array($help)): $i = 0; $__LIST__ = $help;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><li><a href="<?php echo U('Help/index',array('id'=>$vo['id']));?>" target="_blank" class="left" style="color:white"><?php echo ($vo["name"]); ?></a></li><?php endforeach; endif; else: echo "" ;endif; ?>
 				</ul>
 			</div>
 			<div class="coin_nav coin_nav02 left">
@@ -1051,7 +1042,7 @@ function chexiao(id){
 			<!-- <div class="coin_nav coin_nav02 left rightwidth" style="position:relative;">
               <div style="float:left; padding-top:25px; padding-left:10px;" >
               <img style=" width:100px;" src="<?php echo ($config['weixin']); ?>"/></div>
-              <div style=" float:left; padding-left:10px;color:white" >
+              <div style=" float:left; padding-left:10px;color:white" > 
 				<p class="coin_phoneqq" style="color:white;padding-top:30px;font-size:14px">
 				实体积分网官网总群：<?php echo ((isset($config["qqqun1"]) && ($config["qqqun1"] !== ""))?($config["qqqun1"]):"暂无"); ?><br>
 				实体积分网官网一群：<?php echo ((isset($config["qqqun2"]) && ($config["qqqun2"] !== ""))?($config["qqqun2"]):"暂无"); ?><br>
@@ -1061,28 +1052,27 @@ function chexiao(id){
 			</div> -->
 		</div>
 	</div>
-<div class="footer_aq" style="background:#474747;width:100%;margin:0px;padding-bottom:20px;">
-	<p style="color:white"><?php echo ((isset($config["copyright"]) && ($config["copyright"] !== ""))?($config["copyright"]):"暂无"); ?></p>
-	<p style="color:white"><?php echo ((isset($config["record"]) && ($config["record"] !== ""))?($config["record"]):"暂无"); ?></p>
-	<!-- <ul class="footerSafety clearfix">
-        <li class="safety02"><a href="http://net.china.com.cn/" target="_blank"></a></li>
-        <li class="safety03"><a href="http://webscan.360.cn/index/checkwebsite/?url=<?php echo ($config['localhost']); ?>" target="_blank"></a></li>
-        <li class="safety04"><a href="http://www.cyberpolice.cn/wfjb/" target="_blank"></a></li>
-    </ul> -->
+
+	<div class="footer_aq" style="background:#474747;width:100%;margin:0px;padding-bottom:20px;">
+		<p style="color:white"><?php echo ((isset($config["copyright"]) && ($config["copyright"] !== ""))?($config["copyright"]):"暂无"); ?></p>
+		<p style="color:white"><?php echo ((isset($config["record"]) && ($config["record"] !== ""))?($config["record"]):"暂无"); ?></p>
+		<!-- <ul class="footerSafety clearfix">
+	        <li class="safety02"><a href="http://net.china.com.cn/" target="_blank"></a></li>
+	        <li class="safety03"><a href="http://webscan.360.cn/index/checkwebsite/?url=<?php echo ($config['localhost']); ?>" target="_blank"></a></li>
+	        <li class="safety04"><a href="http://www.cyberpolice.cn/wfjb/" target="_blank"></a></li>
+	    </ul> -->
+	</div>
+
+	<div id="weixin" style="position:absolute; bottom:88px; left:50%; margin-left:170px; display:block;"><!--<img src="<?php echo ($config["logo"]); ?>">--></div>
+
+	<script>
+		$('#coin_weixin').mouseover(function(){
+			$('#weixin').show();
+		}).mouseout(function(){
+			$('#weixin').hide();
+		});
+	</script>
+
 </div>
-<div id="weixin" style="position:absolute; bottom:88px; left:50%; margin-left:170px; display:block;"><!--<img src="<?php echo ($config["logo"]); ?>">--></div>
-
-<script>
-	$('#coin_weixin').mouseover(function(){
-		$('#weixin').show();
-	}).mouseout(function(){
-		$('#weixin').hide();
-	});
-</script>
-</div>
-<!--footer end-->
-
-
-
-
-</body></html>
+</body>
+</html>

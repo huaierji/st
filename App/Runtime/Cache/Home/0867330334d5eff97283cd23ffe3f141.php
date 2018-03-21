@@ -504,7 +504,8 @@ $(document).ready(function(){
         padding-left: 10px;
     }
     .error{
-        color: #999;
+        color: red;
+        font-style: bold;
     }
 	.tishi1{ background-color:#FDF2DB; width:400px;}
 	.tishi1 span.tishi_text{ color:#ccc; padding-left:40px; }
@@ -622,7 +623,7 @@ $(document).ready(function(){
                         },
                         messages: {
                             oldpwd:{required: "密码不能为空",rangelength:"密码长度在6-20个字符之间"},
-                            pwd:{required: "密码不能为空",rangelength:"密码长度在6-20个字符之间"},
+                            pwd:{required: "新交易密码不能为空",rangelength:"密码长度在6-20个字符之间"},
                             repwd:{rangelength:"密码长度在6-20个字符之间",equalTo: "两次输入不一样"}
                         },
                         submitHandler:function(form){
@@ -664,12 +665,15 @@ $(document).ready(function(){
                 repwdtrade:{rangelength:[6,20],equalTo: "#pwdtrade"}
             },
             messages: {
-                oldpwd_b:{required: "登录密码不能为空",rangelength:"登录密码长度在6-20个字符之间"},
+                oldpwd_b:{required: "登录密码不能为空",
+                          rangelength:"登录密码长度在6-20个字符之间"
+                          },
                 oldpwdtrade_b:{required: "密码不能为空",rangelength:"交易密码长度在6-20个字符之间"},
                 pwdtrade:{required: "密码不能为空",
-                rangelength:"新交易密码长度在6-20个字符之间"},
+
+                          rangelength:"新交易密码长度在6-20个字符之间"},
                 repwdtrade:{rangelength:"新交易密码长度在6-20个字符之间",equalTo: "两次输入不一样"}
-           },
+            },
             submitHandler:function(form){
                 if(!$("#code").val()){
                     layer.msg("请填写验证码");
@@ -709,8 +713,8 @@ $(document).ready(function(){
                         $("#msgt").attr("data-key","off");
             	}
             });
-    }
-</script>
+        }
+    </script>
 
                 <script type="text/javascript" src="/Public/Home/js/tab2.js"></script>
                 <script src="/Public/Home/js/layer.js"></script>
@@ -735,38 +739,28 @@ $(document).ready(function(){
 </script>
 
 <style> 
-.rightwidth{ width:340px;}
-/*.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
-	line-height: 0;
-}*/
+	.rightwidth{ width:340px;}
 </style>
-<!--footer start-->
-
-
-
 
 <div class="coin_footer">
-	<!-- <div class="coin_hint" style="border:0">
-		<h2><?php echo ((isset($info_one4["title"]) && ($info_one4["title"] !== ""))?($info_one4["title"]):"风险提示"); ?></h2>
-		<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo ($config["risk_warning"]); ?></p>
-	</div> -->
-	
 	<div class="coin_footerbar" style="background:#333333; height:240px">
-		<div class="coin_footer_nav clearfix">
+		<div class="coin_footer_nav clearfix;">
 			<div class="coin_nav coin_copy left">
 				<p><a href="<?php echo U('Index/index');?>"><img style=" height:120px;" src="<?php echo ($config["index_logo_footer"]); ?>"></a></p>
 			</div>
+
 			<div class="coin_nav left" style="margin-right:70px">
 				<h2 style="color:white;">快速链接</h2>
 				<ul>
-				<?php if(is_array($team)): $i = 0; $__LIST__ = $team;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><li><a href="<?php echo U('Art/details',array('team_id'=>$vo['article_id']));?>" target="_blank" class="left" style="color:white"><?php echo ($vo["title"]); ?></a></li><?php endforeach; endif; else: echo "" ;endif; ?>
-                <li><a href="<?php echo ($config["qianbao"]); ?>" target="_blank" class="left" style="color:white">钱包下载</a></li>
+					<?php if(is_array($team)): $i = 0; $__LIST__ = $team;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><li><a href="<?php echo U('Art/details',array('team_id'=>$vo['article_id']));?>" target="_blank" class="left" style="color:white"><?php echo ($vo["title"]); ?></a></li><?php endforeach; endif; else: echo "" ;endif; ?>
+	                <li><a href="<?php echo ($config["qianbao"]); ?>" target="_blank" class="left" style="color:white">钱包下载</a></li>
 				</ul>
 			</div>
+
 			<div class="coin_nav left" style="margin-right:70px">
 				<h2 style="color:white">网站地图</h2>
 				<ul>
-                <?php if(is_array($help)): $i = 0; $__LIST__ = $help;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><li><a href="<?php echo U('Help/index',array('id'=>$vo['id']));?>" target="_blank" class="left" style="color:white"><?php echo ($vo["name"]); ?></a></li><?php endforeach; endif; else: echo "" ;endif; ?>
+	            <?php if(is_array($help)): $i = 0; $__LIST__ = $help;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><li><a href="<?php echo U('Help/index',array('id'=>$vo['id']));?>" target="_blank" class="left" style="color:white"><?php echo ($vo["name"]); ?></a></li><?php endforeach; endif; else: echo "" ;endif; ?>
 				</ul>
 			</div>
 			<div class="coin_nav coin_nav02 left">
@@ -783,7 +777,7 @@ $(document).ready(function(){
 			<!-- <div class="coin_nav coin_nav02 left rightwidth" style="position:relative;">
               <div style="float:left; padding-top:25px; padding-left:10px;" >
               <img style=" width:100px;" src="<?php echo ($config['weixin']); ?>"/></div>
-              <div style=" float:left; padding-left:10px;color:white" >
+              <div style=" float:left; padding-left:10px;color:white" > 
 				<p class="coin_phoneqq" style="color:white;padding-top:30px;font-size:14px">
 				实体积分网官网总群：<?php echo ((isset($config["qqqun1"]) && ($config["qqqun1"] !== ""))?($config["qqqun1"]):"暂无"); ?><br>
 				实体积分网官网一群：<?php echo ((isset($config["qqqun2"]) && ($config["qqqun2"] !== ""))?($config["qqqun2"]):"暂无"); ?><br>
@@ -793,28 +787,27 @@ $(document).ready(function(){
 			</div> -->
 		</div>
 	</div>
-<div class="footer_aq" style="background:#474747;width:100%;margin:0px;padding-bottom:20px;">
-	<p style="color:white"><?php echo ((isset($config["copyright"]) && ($config["copyright"] !== ""))?($config["copyright"]):"暂无"); ?></p>
-	<p style="color:white"><?php echo ((isset($config["record"]) && ($config["record"] !== ""))?($config["record"]):"暂无"); ?></p>
-	<!-- <ul class="footerSafety clearfix">
-        <li class="safety02"><a href="http://net.china.com.cn/" target="_blank"></a></li>
-        <li class="safety03"><a href="http://webscan.360.cn/index/checkwebsite/?url=<?php echo ($config['localhost']); ?>" target="_blank"></a></li>
-        <li class="safety04"><a href="http://www.cyberpolice.cn/wfjb/" target="_blank"></a></li>
-    </ul> -->
+
+	<div class="footer_aq" style="background:#474747;width:100%;margin:0px;padding-bottom:20px;">
+		<p style="color:white"><?php echo ((isset($config["copyright"]) && ($config["copyright"] !== ""))?($config["copyright"]):"暂无"); ?></p>
+		<p style="color:white"><?php echo ((isset($config["record"]) && ($config["record"] !== ""))?($config["record"]):"暂无"); ?></p>
+		<!-- <ul class="footerSafety clearfix">
+	        <li class="safety02"><a href="http://net.china.com.cn/" target="_blank"></a></li>
+	        <li class="safety03"><a href="http://webscan.360.cn/index/checkwebsite/?url=<?php echo ($config['localhost']); ?>" target="_blank"></a></li>
+	        <li class="safety04"><a href="http://www.cyberpolice.cn/wfjb/" target="_blank"></a></li>
+	    </ul> -->
+	</div>
+
+	<div id="weixin" style="position:absolute; bottom:88px; left:50%; margin-left:170px; display:block;"><!--<img src="<?php echo ($config["logo"]); ?>">--></div>
+
+	<script>
+		$('#coin_weixin').mouseover(function(){
+			$('#weixin').show();
+		}).mouseout(function(){
+			$('#weixin').hide();
+		});
+	</script>
+
 </div>
-<div id="weixin" style="position:absolute; bottom:88px; left:50%; margin-left:170px; display:block;"><!--<img src="<?php echo ($config["logo"]); ?>">--></div>
-
-<script>
-	$('#coin_weixin').mouseover(function(){
-		$('#weixin').show();
-	}).mouseout(function(){
-		$('#weixin').hide();
-	});
-</script>
-</div>
-<!--footer end-->
-
-
-
-
-</body></html>
+</body>
+</html>

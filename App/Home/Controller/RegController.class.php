@@ -2,10 +2,10 @@
 namespace Home\Controller;
 use Common\Controller\CommonController;
 class RegController extends CommonController {
-    public function success(){
-		
+    public function success(){		
         $this->display();
     }
+
     /**
      * 显示注册界面
      */
@@ -19,14 +19,16 @@ class RegController extends CommonController {
 		$this->assign("style",2);
         $this->display();
     }
+
     /**
      * 显示服务条款
      */
     public function terms(){
-//         $list = M('Article')->where(array('article_id'=>125))->find();
-//         $this->assign('list',$list);
+        //$list = M('Article')->where(array('article_id'=>125))->find();
+        //$this->assign('list',$list);
         $this->display();
     }
+
     /**
      * 添加注册用户
      */
@@ -47,20 +49,26 @@ class RegController extends CommonController {
 			$reg_ip[] = $_POST['ip'];
 			S('reg_ip_limit',$reg_ip);
 			*/
+            $pid= intval(I("post.pid"));
             $M_member = D('Member');
-
-			if(!empty($_POST['pid'])){//查询推荐人是否存在
+            if(!empty($pid)){
+                //查询推荐人是否存在
+                //$resss = M('Member')->where([`member_id` => I('post.pid'),'status' => ['neq',2] ])->find();
                 //推荐人必须已经实名认证
-				//$resss = M('Member')->where("`member_id`={$_POST['pid']} AND status!=2")->find();
+                //$resss = M('Member')->where("`member_id`={$_POST['pid']} AND status!=2")->find();               
                 //推荐人必须已经实名认证更改为注册用户都能推荐，但只有被实名认证后才会有奖励
-                $resss = M('Member')->where("`member_id`={$_POST['pid']}")->find();
-				if(empty($resss)){
-					$data['status'] = 0;
-					$data['info'] = "找不到推荐人，请重新确认填写";
-					$this->ajaxReturn($data);return;
-					
-				}
-			}
+                $where['member_id'] = $pid;
+                $where['status'] = array('neq',2);
+                $resss = M('Member')
+                       -> where($where)
+                       -> find();                           
+                //推荐人必须已经实名认证
+                if(empty($resss)){
+                    $data['status'] = 0;
+                    $data['info'] = "找不到推荐人，请重新确认填写";
+                    $this->ajaxReturn($data);return;                   
+                }
+            }
             if($_POST['pwd']==$_POST['pwdtrade']){
             	$data['status'] = 0;
             	$data['info'] = "交易密码不能和密码一样";
@@ -76,11 +84,11 @@ class RegController extends CommonController {
 				return;
             }
             if (!$M_member->create()){
-                // 如果创建失败 表示验证没有通过 输出错误提示信息
+                //如果创建失败 表示验证没有通过 输出错误提示信息
                 $data['status'] = 0;
                 $data['info'] = $M_member->getError();
                 $this->ajaxReturn($data);
-//                $this->error($M_member->getError());
+                //$this->error($M_member->getError());
                 return;
             }else{
                 $r = $M_member->add();
@@ -89,17 +97,14 @@ class RegController extends CommonController {
                     session('USER_KEY',$_POST['email']);//用户名
                     session('STAUTS',0);
                     session('procedure',1);//SESSION 跟踪第一步
-					//file_put_contents('./1.txt',$_POST['email'].'&&'.date('Y-m-d H:i:s',time()).'|',FILE_APPEND);
-					
+					//file_put_contents('./1.txt',$_POST['email'].'&&'.date('Y-m-d H:i:s',time()).'|',FILE_APPEND);					
                     //修正币种信息
                     $currency= $this->currency;
-                    foreach ($currency as $k=>$v){
-                    		
+                    foreach ($currency as $k=>$v){                   		
                     	$trade = S('trade_info_'.$v['currency_id']);
                     	if(date('Y-m-d',$trade['time']) != date('Y-m-d')){
                     		$trade = S('trade_info_'.$v['currency_id'],null);
-                    	}
-                    		
+                    	}                   		
                     	$rs=$this->getCurrencyUser($_SESSION['USER_KEY_ID'], $v['currency_id']);
                     	if(!$rs){
                     		$this->addCurrencyUser($_SESSION['USER_KEY_ID'],$v['currency_id']);
@@ -110,13 +115,13 @@ class RegController extends CommonController {
                     $data['status'] = 1;
                     $data['info'] = '提交成功';
                     $this->ajaxReturn($data);
-//                    $this->redirect('ModifyMember/modify');
+                    //$this->redirect('ModifyMember/modify');
                 }else{
                     $data['status'] = 0;
                     $data['info'] = '服务器繁忙,请稍后重试';
                     $this->ajaxReturn($data);
-//                    $this->error('服务器繁忙,请稍后重试');
-//                    return;
+                    //$this->error('服务器繁忙,请稍后重试');
+                    //return;
                 }
             }
         }else{
@@ -143,13 +148,7 @@ class RegController extends CommonController {
         }
 
     }
-
-	
-	
-	
-	
-	
-	
+					
     /**
      * ajax验证用户名
      * @param string $email 规定传参数的结构

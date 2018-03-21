@@ -14,9 +14,8 @@ class LoginController extends CommonController{
     /**
      * 展示界面
      */
-    
-    public function index(){        
-        if(session('')){
+    public function index(){
+        if(session('USER_KEY_ID')){
             $this->redirect('Index/index');
             return;
         }
@@ -35,26 +34,30 @@ class LoginController extends CommonController{
         $email = I('post.email');
         $pwd = md5(I('post.pwd'));
         $M_member = D('Member');
-        //再次判断       
+        //再次判断
+        
         if((checkEmail($email) || checkMobile($email))==false){
             $data['status']=2;
             $data['info']="请输入正确的手机或者用户名";
             $this->ajaxReturn($data);
         }
         //判断传值是手机还是email
-        $info = checkEmail($email)?$M_member->logCheckEmail($email):$M_member->logCheckMo($email);      
+        $info = checkEmail($email)?$M_member->logCheckEmail($email):$M_member->logCheckMo($email);
+       
         if($info['status']==2){
         	$_SESSION['NUM']++;
             $data['status']=2;
             $data['info']="账号或密码错误";
-            $this->ajaxReturn($data);           
+            $this->ajaxReturn($data);
+            
         }
         //验证手机或用户名
         if($info==false){
         	$_SESSION['NUM']++;
             $data['status']=2;
             $data['info']="账号或密码错误";
-            $this->ajaxReturn($data);           
+            $this->ajaxReturn($data);
+            
         }
         //验证密码
         if($info['pwd']!=$pwd){
@@ -65,7 +68,11 @@ class LoginController extends CommonController{
             $data['info']="账号或密码错误";
             $this->ajaxReturn($data);
           
-        }       
+        }
+        
+//        if($_SESSION['NUM']>=3){
+//
+//        }
         if(empty($_POST['captcha'])){
             $data['status']=2;
             $data['info']="请填写验证码";
@@ -119,7 +126,8 @@ class LoginController extends CommonController{
 			$trade = S('trade_info_'.$v['currency_id']);
 			if(date('Y-m-d',$trade['time']) != date('Y-m-d')){
 				$trade = S('trade_info_'.$v['currency_id'],null);
-			}			
+			}
+			
  			$rs=$this->getCurrencyUser($_SESSION['USER_KEY_ID'], $v['currency_id']);
  			if(!$rs){
  				$this->addCurrencyUser($_SESSION['USER_KEY_ID'],$v['currency_id']);
@@ -134,7 +142,8 @@ class LoginController extends CommonController{
 			$info = M('Reward_log')->where("reward_id={$list[0]['id']}")->order('add_time desc')->find();
 			//计算间隔发放时间
 			if(!empty($info)){
-				$time_jiange = max(0,time() - $info['add_time']) ;				
+				$time_jiange = max(0,time() - $info['add_time']) ;
+				
 				$num = floor($time_jiange / (24 * 60 * 60 ));
 			}else{
 				if(date('Y-m-d',$list[0]['add_time']) != date('Y-m-d',time())){
@@ -275,7 +284,8 @@ class LoginController extends CommonController{
                 $data['info']="用户不存在";
                 $this->ajaxReturn($data);
             }
-			$_SESSION['find_pwd_phone'] = $_POST['email'];			
+			$_SESSION['find_pwd_phone'] = $_POST['email'];
+			
 			$ip = get_ip();
 			$v = S('ip_phone'.$ip);
 			S('limit_phone_ip',null);
@@ -294,6 +304,17 @@ class LoginController extends CommonController{
 			$A_Sms = new \SmsApi();
 			$r = $A_Sms ->send($_POST['email']);
 			if(!$r){
+				
+// 				$time = S('ip_phone_time'.$ip);
+// 				if( $time == null || time() - $time > 60 ){
+// 					S('ip_phone_time'.$ip,time());
+// 					S('ip_phone'.$ip,1);
+// 				}else{
+// 					++$v;
+// 					S('ip_phone'.$ip,$v);
+// 					S('ip_phone_time'.$ip,time());
+// 				}
+				
 				$data['status']=0;
 				$data['info'] = $r;
 				$this->ajaxReturn($data);
@@ -351,7 +372,8 @@ class LoginController extends CommonController{
                     $this->ajaxReturn($data);
                 }
             }
-            $member_newPwd = I('pwd','','md5');
+            //$member_newPwd = I('pwd','','md5');
+            $member_newPwd = md5(I('post.pwd'));
             $r = M('member')
                 ->where(array('member_id'=>$member_info['member_id']))
                 ->setField('pwd',$member_newPwd);
@@ -370,7 +392,6 @@ class LoginController extends CommonController{
             $this->display();
         }
     }
-    
     /**
      * 显示验证码
      */
@@ -379,13 +400,13 @@ class LoginController extends CommonController{
             'fontSize'  =>  18,              // 验证码字体大小(px)
             'useCurve'  =>  true,            // 是否画混淆曲线
             'useNoise'  =>  true,            // 是否添加杂点
-            'imageH'    =>  40,              // 验证码图片高度
-            'imageW'    =>  150,             // 验证码图片宽度
+            'imageH'    =>  40,               // 验证码图片高度
+            'imageW'    =>  150,               // 验证码图片宽度
             'length'    =>  4,               // 验证码位数
-            'fontttf'   =>  '4.ttf',         // 验证码字体，不设置随机获取
+            'fontttf'   =>  '4.ttf',              // 验证码字体，不设置随机获取
         );
-        $Verify = new Verify($config); 
-        $Verify -> entry();
+        $Verify =     new Verify($config);
+        $Verify->entry();
     }
     /**
      * ajax判断Ip
@@ -399,13 +420,11 @@ class LoginController extends CommonController{
             $data['msg'] = '请输入正确的用户名或手机号码';
             $this->ajaxReturn($data);
         }
-
         if(checkEmail($email)){
-            $where['email'] = $email;
-        }else{ 
-            $where['phone'] = $email;
+            $where['email']  = $email;
+        }else{
+            $where['phone']  = $email;
         } 
-
         //检查用户是否存在
         $info =  M('Member')->where($where)->find();
         if(!$info){
@@ -418,7 +437,7 @@ class LoginController extends CommonController{
             //如果login_ip不存在那么就是第一次登录取注册IP
             $old_login_ip = $info['login_ip']?$info['login_ip']:$info['ip'];
             $new_ip = get_client_ip();
-            if($old_login_ip != $new_ip){
+            if($old_login_ip!=$new_ip){
                 $data['status'] = 1;
                 $data['msg'] = '系统监测到您的账号本次登录IP和上次不同，为了保障您的账户资产安全，请输入您在'.$this->config['name'].'预留的身份证上的出生日期；如还未实名认证，请联系客服认证。';
                 $this->ajaxReturn($data);
@@ -432,9 +451,9 @@ class LoginController extends CommonController{
      * 退出
      */
     public function loginOut(){
-//      $_SESSION['USER_KEY_ID']=null;
-//      $_SESSION['USER_KEY']=null;
-//      $_SESSION['STATUS']=null;
+//         $_SESSION['USER_KEY_ID']=null;
+//         $_SESSION['USER_KEY']=null;
+//         $_SESSION['STATUS']=null;
     	session_destroy();
         $this->redirect('Index/index');
     }

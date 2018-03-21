@@ -55,20 +55,21 @@
               
     <script>
 	  	function checkSuccess(_this){
-			$.post("{:U('User/delete')}",{'id':_this},function(data){
-			if(data.status>0){
-				alert(data.info);
-				window.location.reload();
-			}else{
-				alert(data.info);
-				window.location.reload();
-			}
-			});	 	  	  
+            var msg = confirm("确定删除银行卡信息吗");
+            if ( msg == true ){           
+    			$.post("{:U('User/delete')}",{'id':_this},function(data){
+        			if(data.status>0){
+        				alert(data.info);
+        				window.location.reload();
+        			}           
+                });
+            }	  	  
 		}
-			function bank_id(){
-				$("#select_bank").val($("#bank_id").val());
-			}
+		function bank_id(){
+			$("#select_bank").val($("#bank_id").val());
+		}
     </script>
+
 </table>
            
 <table id="addNewAddr" class="add_list" border="0" cellpadding="0" cellspacing="0" style="display:none"> 
@@ -394,11 +395,11 @@
     <script src="js/city.js"></script> 
     <script src="js/cnyout.js"></script> -->
 <script>
-$("document").ready(function(){
-    //initProvinceCity($("#p1"),$("#c1"));
-    //$('#account').inputFormat('account');
-    // $('#money_rmb').inputFormat('amount');
-});
+    $("document").ready(function(){
+        //initProvinceCity($("#p1"),$("#c1"));
+        //$('#account').inputFormat('account');
+        // $('#money_rmb').inputFormat('amount');
+    });
 </script> 
 
   </div>
@@ -458,12 +459,12 @@ function chexiao(id){
         },1000);
         
             $.post("{:U('Common/ajaxSandPhone')}",{'phone':phone},
-                    function(d){
-                       layer.msg(d.info);
-                        if(d.status==1){
-                            i=120;
-                            $("#msgt").attr("data-key","off");
-            	 }
+                function(d){
+                   layer.msg(d.info);
+                    if(d.status==1){
+                        i=120;
+                        $("#msgt").attr("data-key","off");
+            	}
             });
     }</script>
 <!--footer start--> 

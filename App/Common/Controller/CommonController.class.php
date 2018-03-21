@@ -562,7 +562,7 @@ class CommonController extends Controller {
       * @param char $inc_dec  setDec setInc 是加钱还是减去
       * @param char forzen_num num
       */
-      protected   function setUserMoney($member_id,$currency_id,$num,$inc_dec,$field){
+      protected function setUserMoney($member_id,$currency_id,$num,$inc_dec,$field){
          $inc_dec=strtolower($inc_dec) ;
          $field=strtolower($field) ;
          //允许传入的字段
@@ -570,7 +570,7 @@ class CommonController extends Controller {
              return false;
          }
          //如果是RMB
-         if ($currency_id==0){
+         if ($currency_id == 0){
              //修正字段
              switch ($field){
                  case 'forzen_num': $field='forzen_rmb';break;

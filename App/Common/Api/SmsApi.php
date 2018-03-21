@@ -10,11 +10,10 @@ use Sms\Request\V20160927 as Sms;
  */
 class SmsApi {
 	public	$user 		= 'shitilian';	//短信账户		默认liyi
-
 	public	$password 	= '123456';	//账户密码		
 	public	$type 		= 'huaxin';	//发送短信分类	默认华信
-	public	$time 		= 60;		//发送短信间隔 	默认120秒
-	public	$length 	= 4;		//验证码位数	默认4位
+	public	$time 		=  60;		//发送短信间隔 	默认120秒
+	public	$length 	=  4;		//验证码位数	默认4位
 	public	$signature 	= 'ST';	//签名			默认千翼
 	private	$ip;					//当前用户ip
 	/**
@@ -55,9 +54,8 @@ class SmsApi {
 			return array('status'=>-104,'info'	=>'短信已发送！请稍等');	//验证发送时间
 		}
 		if(!$this->checkApp($phone,'','check')){
-			return array('status'=>-104,'info'	=>'您已经禁止发送验证码 ');	//验证发送时间
-		}
-	
+			return array('status'=>-104,'info'	=>'您今日获取短信验证码的次数过多,已禁止发送验证码 ');	//验证发送时间
+		}	
 		$code=substr(rand(100000,999999),0,$this->length);
 		if(!$content){	
 			$content = $this ->getSmsContent($code);
@@ -72,7 +70,6 @@ class SmsApi {
 		}
 		if(!$data['status'])
 			return array('status'=>-104,'info'	=>'系统繁忙请稍后再试');			//判断发送状态
-
 		if(!empty($code)){
 			$this ->writeSmsApp($phone,$code);								//app写入日志
 			$this->checkIp();												//写入ip时间
@@ -123,16 +120,16 @@ class SmsApi {
 		$result = file_get_contents($url);
 		if($result == 0){
 			$data=array(
-					'status'=>1,	//短信回馈接口码 0  失败  1成功
-					'info'=>'发送成功'			//短信回馈文字描述
+				'status'=>1,			//短信回馈接口码 0  失败  1成功
+				'info'=>'发送成功'		//短信回馈文字描述
 			);
 		}else{
 			$data=array(
-					'status'=>$result,	//短信回馈接口码 0  失败  1成功
-					'info'=>$result			//短信回馈文字描述
+				'status'=>$result,		//短信回馈接口码 0  失败  1成功
+				'info'=>$result			//短信回馈文字描述
 			);
 		}
-		return $data;							//返回信息
+		return $data;					//返回信息
 	}
 	
 	

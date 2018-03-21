@@ -125,6 +125,16 @@ class UserController extends HomeController {
                 $data['info']='原始密码输入错误';
                 $this->ajaxReturn($data);
             }
+
+            //修改密码不能与交易密码相同
+            $arr['member_id'] = session('USER_KEY_ID');
+            $dt = $M_member -> where($arr) -> find();
+            if( $newPwd === $dt['pwdtrade'] ){
+                $data['status']= 2;
+                $data['info'] = '登录密码不能与支付密码一致';
+                $this->ajaxReturn($data);
+            }
+
             if($newPwd===$oldPwd){
                 $data['status']=2;
                 $data['info']='新密码不能和密码一样';
@@ -184,8 +194,7 @@ class UserController extends HomeController {
             	$rdata['status']= -1;
             	$rdata['info'] = '密码输入位数不正确';
                 $this->ajaxReturn($rdata);
-            }
-            
+            }          
             if(!checkPwd($data['pwdtrade'])){
             	$rdata['status']= -3;
             	$rdata['info'] = '新密码输入位数不正确';
@@ -196,7 +205,7 @@ class UserController extends HomeController {
             	$rdata['info'] = '两次支付密码输入不一致';
             	$this->ajaxReturn($rdata);
             }
-            if($info['pwd']!=md5($data['pwd'])){
+            if($info['pwd'] != md5($data['pwd'])){
             	$rdata['status']= -4;
             	$rdata['info'] = '密码输入错误';
             	$this->ajaxReturn($rdata);
@@ -215,7 +224,7 @@ class UserController extends HomeController {
                 $this->ajaxReturn($data);
             }
             $A_Sms->deleteSendSmsApp($phone);
-            if($info['pwd']==md5($data['pwdtrade'])){
+            if($info['pwd'] == md5($data['pwdtrade'])){
             	$rdata['status']= -4;
             	$rdata['info'] = '支付密码不能与登录密码一致';
             	$this->ajaxReturn($rdata);
@@ -363,36 +372,27 @@ class UserController extends HomeController {
         	$my_invit[$k]['status_name'] = $vo['status']?"已填写个人信息":"未填写个人信息";
 			$my_invit[$k]['reg_time'] = date("Y-m-d H:i:s",$vo['reg_time']);
             $my_invit[$k]['phone'] = $vo['phone']?$vo['phone']:未填写;
-        }
-        
+        }       
         $this->assign('page',$show);
         $this->assign('my_invit',$my_invit);
-
         $info = M('Article')->Field('title,article_id,content')->where('position_id = 121')->find();
         $info1 = M('Article')->Field('title,article_id,content')->where('position_id = 122')->find();
-
         $info['title']=html_entity_decode($info['title']);
         $info['content']=html_entity_decode($info['content']);
         $info1['title']=html_entity_decode($info1['title']);
         $info1['content']=html_entity_decode($info1['content']);
         $this->assign('info',$info);
-        $this->assign('info1',$info1);
-			
-        
-		$count_reward =  M('Member')->Field('member_id')->where(array('pid'=>session('USER_KEY_ID'),'status'=>1))->count();//根据分类查找数据数量
-        
+        $this->assign('info1',$info1);			       
+		$count_reward =  M('Member')->Field('member_id')->where(array('pid'=>session('USER_KEY_ID'),'status'=>1))->count();//根据分类查找数据数量        
 		$currency_list_d = M('Currency')->Field('currency_id,currency_name')->select();
-		foreach($currency_list_d as $k => $v){
-			
+		foreach($currency_list_d as $k => $v){			
 			$count_fee= M('Finance_'.$this->table_f)->Field('money')->where("member_id={$_SESSION['USER_KEY_ID']} and type=24 AND `currency_id`={$v['currency_id']}")->sum('money');
 			$currency_fee[$k] = $v;
-			$currency_fee[$k]['money'] = sprintf("%.2f", $count_fee);
-			
+			$currency_fee[$k]['money'] = sprintf("%.2f", $count_fee);		
 			unset($count_fee);
 		}
 		$counta = $this->daishu(session('USER_KEY_ID'),20);
-		$count = count($counta);
-		
+		$count = count($counta);		
 		$this->assign('currency_list',$currency_list);
         $this->assign('currency_fee',$currency_fee);
         $this->assign('count',$count);
@@ -403,7 +403,6 @@ class UserController extends HomeController {
 
 	//查询团队人数
 	protected function daishu($items,$lv){
-
 		for($i=0;$i<$lv;$i++){
 			$where['pid']=array("in",$items);
 			$user=M("Member")->where($where)->select();
@@ -570,12 +569,10 @@ class UserController extends HomeController {
 	 *  提现显示信息及添加信息
 	 */
     public function draw(){
-
         //dump(C('DRAW'));die;
         if (C('DRAW') === false) {
             $this -> error ("提现功能已关闭");
         }else{
-
     
         $bank = M('Bank');
         $member = M('Member');
@@ -821,6 +818,7 @@ class UserController extends HomeController {
 			$data['info'] = "撤销成功";
 			$this->ajaxReturn($data);
 	}
+    
     
     /**
      * 充值

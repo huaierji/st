@@ -45,7 +45,7 @@
             <!-- <h2 class="pctips state1"><span style="display:none;">{$vo.title}</span></h2> -->
             <h2><span style="display:none;">{$vo.title}</span></h2>
             <!--图片-->
-            <div class="clearfix" style="margin-left:120px;width:60%;">
+            <div class="clearfix" style="margin-left:120px;width:60%; height:335px;">
                 <a href="{:U('Zhongchou/show',array('id'=>$vo['id']))}">
                     <img style="width: 100%;" src="{$vo.pic}" alt="{$vo.title}">
                 </a>
@@ -53,6 +53,7 @@
         </div>
     <!--内容-->    
     </volist>
+
     <div style="width: 1200px; clear: both; margin: 0px auto;">
         <div class="page" style="min-width: 250px !important;margin-left: 500px;">
             {$page}

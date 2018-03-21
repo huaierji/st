@@ -41,9 +41,9 @@ class VoteController extends AdminController {
 			$upload -> autoSub  = true;
 			$upload -> subName  = array('date','Y-m-d');
 			$arr = $upload ->upload();
-				if(!$arr){
-					$this->error($upload->getError());
-				}
+			if(!$arr){
+				$this->error($upload->getError());
+			}
 			//dump($arr);die;
 			$data['logo'] = $arr['pic']['savename'];
 			$data['logo'] = '/Uploads/'.$arr['pic']['savepath'].$arr['pic']['savename'];
@@ -134,16 +134,5 @@ class VoteController extends AdminController {
             return;
         }
 	}	
-
-	public function buy(){
-		$info = D('Currency_new')->select();
-        $this->assign('info',$info);
-        $this->display();
-	}
-
-	public function addcoin() {
-		$this->display();
-	}
-
 }
 ?>

@@ -12,7 +12,7 @@ class AlidirectController extends HomeController {
 		$alidirect_pid = "22471";
 		//您在www.zfbjk.com的商户密钥
 		$alidirect_key = "43e3e540de90339fd960d00aba42136d";
-		
+				
 		$tradeNo = isset($_POST['tradeNo'])?$_POST['tradeNo']:'';
 		$Money = isset($_POST['Money'])?$_POST['Money']:0;
 		$title = isset($_POST['title'])?$_POST['title']:'';

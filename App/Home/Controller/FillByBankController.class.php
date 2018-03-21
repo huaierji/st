@@ -11,12 +11,10 @@ class FillByBankController extends HomeController {
 	protected $url;
 	public function _initialize() {
 		parent::_initialize ();
-		$this->User_status ();
-		
+		$this->User_status ();		
 		$this->pMerCode = "191955";
 		$this->pMerCert = "1eeHYSJhqD5AEror5cMmSfQCocr5qdbCTwCQarDbLcVsdZTLRVE9WCkx5280T8fJHcLlotMkm0f1OwcbgLfZnU1q8H0H0R8HZlUsstt3s8kBX8PzfhTTPctNQA3125Kp";
-		$this->pAccount = "1919550010";
-		
+		$this->pAccount = "1919550010";		
 		$this->url = $_SERVER ['HTTP_HOST'];
 	}
 	// 空操作
@@ -35,20 +33,17 @@ class FillByBankController extends HomeController {
 		//echo 123;die;
 		if($this->config['huanxun'] != 1){
 			$this->error ( '网银充值暂时关闭，请选择其他充值方式进行充值' );
-		}
-		
-		
+		}				
 		if ($_POST ["p3_Amt"] < $this->config ['huanxun_min_money']) {
 			$this->error ( '充值金额不得小于' . $this->config ['huanxun_min_money'] );
 		}
 		// 写入订单
 		$orderno = date ( 'YmdHis' ) . mt_rand ( 100000, 999999 );
-		;
 		$data ['num'] = floatval($_POST ["p3_Amt"]);
 		$data ['random'] = rand ( 0001, 9999 );
 		$data ['uid'] = $_SESSION ['USER_KEY_ID'];
 		$data ['email'] = $_SESSION ['USER_KEY'];
-	    $data['uname']=$this->auth['name'];
+	    $data ['uname']=$this->auth['name'];
 		$data ['ctime'] = time ();
 		$data ['fee'] = $this->config['huanxun_fee'];
 		$data ['actual'] = $data['num']*(1-$this->config['huanxun_fee']);
@@ -64,15 +59,13 @@ class FillByBankController extends HomeController {
 		//dump($r);die;
 		$pMerCode = $this->pMerCode;
 		$pMerCert = $this->pMerCert;
-		$pAccount = $this->pAccount;
-		
+		$pAccount = $this->pAccount;		
 		$pMerBillNo = $orderno;
 		$amount = $_POST ["p3_Amt"];
 		$pAmount = number_format ( $amount, 2, '.', '' );
 		$pIsCredit = "1"; // '银行直连
 		$pBankCode = $_POST ["pd_FrpId"]; // request("rtype")
-		$pAttach = $this->auth ['member_id'];
-		
+		$pAttach = $this->auth ['member_id'];		
 		$pVersion = "v1.0.0";
 		$pMerName = $pMerCode;
 		$pMsgId = "msg" . mt_rand ( 1000, 9999 );
@@ -91,8 +84,7 @@ class FillByBankController extends HomeController {
 		$pServerUrl = "http://" . $this->url . "/index.php/Home/FillByBank/OrderReturn2"; // 异步
 		$pBillEXP = 1;
 		$pGoodsName = "ipsonlinepay";
-		$pProductType = "1";
-		
+		$pProductType = "1";		
 		$reqParam = "【商户号】:" . $pMerCode . "【商户名】:" . $pMerName . " 【账户号】:" . $pAccount . " 【消息编号】:" . $pMsgId . " 【商户请求时间】:" . $pReqDate . " 【商户订单号】:" . $pMerBillNo;
 		$reqParam = $reqParam . " 【订单金额】:" . $pAmount . " 【订单日期】:" . $pDate . " 【币种】:" . $pCurrencyType . " 【支付方式】:" . $pGatewayType . " 【语言】:" . $pLang . " 【支付结果成功返回的商户URL】:" . $pMerchanturl;
 		$reqParam = $reqParam . " 【支付结果失败返回的商户URL】:" . $pFailUrl . " 【商户数据包】:" . $pAttach . " 【订单支付接口加密方式】:" . $pOrderEncodeTyp . " 【交易返回接口加密方式】:" . $pRetEncodeType;
@@ -102,8 +94,7 @@ class FillByBankController extends HomeController {
 		if ($pIsCredit == "0") {
 			$pBankCode = "";
 			$pProductType = "";
-		}
-		
+		}		
 		$strbodyxml = "<body><MerBillNo>" . $pMerBillNo . "</MerBillNo><Amount>" . $pAmount . "</Amount>";
 		$strbodyxml = $strbodyxml . "<Date>" . $pDate . "</Date><CurrencyType>" . $pCurrencyType . "</CurrencyType>";
 		$strbodyxml = $strbodyxml . "<GatewayType>" . $pGatewayType . "</GatewayType><Lang>" . $pLang . "</Lang>";
@@ -206,29 +197,23 @@ class FillByBankController extends HomeController {
 			//dump($md5sign);
 			//dump($Signature);die;
 			// 判断签名
-			if ($Signature == $md5sign) {
-				
-				if ($RspCode == '000000') {
-					
+			if ($Signature == $md5sign) {				
+				if ($RspCode == '000000') {					
 					$extra_return_param = $Attach;
 					$order_no = $MerBillNo;
-					$order_amount = $Amount;
-					
+					$order_amount = $Amount;					
 					$link = mysql_connect (  C('DB_HOST'), C('DB_USER'), C('DB_PWD')) or die ( "数据库连接失败" );
 					mysql_select_db ( C('DB_NAME'), $link );
 					mysql_set_charset ( "utf8" );
 					//dump($extra_return_param);die;
-					$result = mysql_query ( "select count(*) from ".C('DB_PREFIX')."fill where uid='{$extra_return_param}'", $link );
-					
+					$result = mysql_query ( "select count(*) from ".C('DB_PREFIX')."fill where uid='{$extra_return_param}'", $link );					
 					$num = mysql_result ( $result, "0" );
 					if (! $num) {
 						echo "<tr align=center bgcolor=#FFFFFF><td colspan=16>暂无用户数据</td></tr>";
 						exit ();
-					} else {
-						
+					} else {						
 						$result2 = mysql_query ( "select * from ".C('DB_PREFIX')."fill where uid='{$extra_return_param}'", $link  );
-						$row = mysql_fetch_assoc ( $result2 );
-						
+						$row = mysql_fetch_assoc ( $result2 );						
 						$assets = $row ['num'];
 						$uid = $row ['uid'];
 						$username = $row ['name'];
@@ -236,11 +221,9 @@ class FillByBankController extends HomeController {
 					//dump($order_no);
 					/*$result3 = mysql_query ( "SELECT * FROM ".C('DB_PREFIX')."fill WHERE `tradeno` = '{$order_no}'",$link);
 					echo "SELECT * FROM ".C('DB_PREFIX')."fill WHERE `tradeno` = '{$order_no}'";
-					dump($result3);
-					
+					dump($result3);					
 					$row3 = mysql_fetch_assoc ( $result3 );*/
-					$row3 = M("fill")->where("`tradeno` = '{$order_no}'")->find();
-					
+					$row3 = M("fill")->where("`tradeno` = '{$order_no}'")->find();					
 					if (empty ( $row3 )) {
 						echo "无此订单号" . $order_no . "订单";
 						exit ();
@@ -253,8 +236,7 @@ class FillByBankController extends HomeController {
 					
 					$check_status = M('Fill')->Field('status')->where("id={$m_id}")->find();
 					if($check_status['status'] != 1){
-						$sql2 = "UPDATE ".C('DB_PREFIX')."fill SET `status` =1 WHERE id=$m_id";
-						
+						$sql2 = "UPDATE ".C('DB_PREFIX')."fill SET `status` =1 WHERE id=$m_id";						
 						if (mysql_query ( $sql2 )) {
 							echo "";
 						} else {
@@ -404,12 +386,10 @@ class FillByBankController extends HomeController {
 					$u_id = $row3 ['uid'];
 					$p_money = $row3 ['actual'];
 					
-					// $sql2 = "update k_money,k_user set k_money.status=1,k_money.update_time=now(),k_user.money=k_user.money+k_money.m_value,k_money.about='ips chong zhi ok',k_money.sxf=0,k_money.balance=k_user.money+k_money.m_value where k_money.uid=k_user.uid and k_money.m_id=$m_id and k_money.`status`=2";
-					
+					// $sql2 = "update k_money,k_user set k_money.status=1,k_money.update_time=now(),k_user.money=k_user.money+k_money.m_value,k_money.about='ips chong zhi ok',k_money.sxf=0,k_money.balance=k_user.money+k_money.m_value where k_money.uid=k_user.uid and k_money.m_id=$m_id and k_money.`status`=2";					
 					$check_status = M('Fill')->Field('status')->where("id={$m_id}")->find();
 					if($check_status['status'] != 1){
-						$sql2 = "UPDATE ".C('DB_PREFIX')."fill SET `status` =1 WHERE id=$m_id";
-						
+						$sql2 = "UPDATE ".C('DB_PREFIX')."fill SET `status` =1 WHERE id=$m_id";						
 						if (mysql_query ( $sql2 )) {
 							echo "";
 						} else {

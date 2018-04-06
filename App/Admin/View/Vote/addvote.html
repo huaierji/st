@@ -2,17 +2,6 @@
 <script type="text/javascript" charset="utf-8" src="__PUBLIC__/kindeditor/kindeditor.js"></script>
 <script type="text/javascript" charset="utf-8" src="__PUBLIC__/kindeditor/lang/zh_CN.js"></script>
 <script type="text/javascript" charset="utf-8" src="__PUBLIC__/kindeditor/plugins/prettify.js"></script>
-<script>
-	function checkForm(){
-		editor.sync();
-		var name = document.getElementById('title').value;
-		if(name != ""){
-			document.getElementById('myform').submit();
-		}else{
-			alert('请填写标题');
-		}
-	}
-</script>
 
 
 <div class="main-wrap">
@@ -26,27 +15,31 @@
             <a class="crumb-name" href="javascript:void(0)" onclick="history.go(-1)">
                 投票管理
             </a>
-            <span class="crumb-step">&gt;</span><span>新增积分投票</span> 
+            <span class="crumb-step">&gt;</span><span>新增积分投票</span>
         </div>
     </div>
 
     <div class="result-wrap">
-       <!-- <div class="result-content"> -->
-        <form action="{:U('Vote/add')}" method="post" id="myform" name="myform" enctype="multipart/form-data" >        
+       <div class="result-content">
+        <form action="{:U('Vote/add')}" method="post" id="myform" name="myform" enctype="multipart/form-data" >
             <table class="insert-tab" width="100%">
                 <tbody>
                     <!-- <input type="hidden" id="article_category_id" name="article_category_id" value="{$Think.get.article_category_id}"> -->
                     <tr>
                       <th>新增积分名称</th>
-                      <td><input name="title" size="20" value="" type="text"></td>
+                      <td><input name="title" size="20" type="text" placeholder="积分名" required="required"></td>
+                    </tr>
 
-                    </tr>  
-                    
                     <tr>
+                      <th>币种ID</th>
+                      <td><input name="nu" size="10" type="number" placeholder="新积分ID" required="required"></td>
+                    </tr>
+
+                   <!--  <tr>
                     	<th>上传积分图片</th>
                     	<td>
-                    		<input type="file" name="pic" value="">
-                            <!-- <div style="border:2px">
+                    		<input type="file" name="pic">
+                            <div style="border:2px">
                                 <p>
                                     <input type="file" id="xdaTanFileImg" onchange="xmTanUploadImg(this)" accept="image/*"/>
                                     <input type="button" value="隐藏图片" onclick="document.getElementById('xmTanImg').style.display = 'none';"/>
@@ -55,7 +48,7 @@
                                 <img id="xmTanImg"/>
                                 <div id="xmTanDiv"></div>
                             </div>
-                                <script type="text/javascript">            
+                                <script type="text/javascript">
                                     //判断浏览器是否支持FileReader接口
                                     if (typeof FileReader == 'undefined') {
                                         document.getElementById("xmTanDiv").InnerHTML = "<h1>当前浏览器不支持FileReader接口</h1>";
@@ -64,7 +57,7 @@
                                     }
                                     //选择图片，马上预览
                                     function xmTanUploadImg(obj) {
-                                        var file = obj.files[0];           
+                                        var file = obj.files[0];
                                         console.log(obj);console.log(file);
                                         console.log("file.size = " + file.size);  //file.size 单位为byte
                                         var reader = new FileReader();
@@ -89,43 +82,69 @@
                                         }
                                         reader.readAsDataURL(file)
                                     }
-                                </script> -->
-                    	</td>
-                    </tr>
+                                </script>
+                            </td>
+                        </tr>
+                        -->
 
                     <tr>
-                        <th>投票开始时间</th>                   
-                        <td><input name="start_time" size="20" value="" type="date"></td>
+                        <th>投票开始时间</th>
+                        <td><input name="start_time" size="20" type="datetime" placeholder="2018-05-01 21:00:00" required="required"></td>
                     </tr>
                     <tr>
                         <th>投票结束时间</th>
-                        <td><input name="end_time" size="20" value="" type="date"></td>
+                        <td><input name="end_time" size="20" type="datetime" placeholder="2018-05-01 21:00:00" required="required"></td>
                     </tr>
                     <tr>
-                        <th>抢购开始时间</th>                   
-                        <td><input name="buy_start_time" size="20" value="" type="date"></td>
+                        <th>抢购开始时间</th>
+                        <td><input name="buy_start_time" size="20" type="datetime" placeholder="2018-05-01 21:00:00" required="required"></td>
                     </tr>
                     <tr>
                         <th>抢购结束时间</th>
-                        <td><input name="buy_end_time" size="20" value="" type="date"></td>
+                        <td><input name="buy_end_time" size="20" type="datetime" placeholder="2018-05-01 21:00:00" required="required"></td>
                     </tr>
 
                     <tr>
                         <th>积分抢购总量</th>
-                        <td><input name="total" size="20" value="" type="number"></td>
+                        <td><input name="total" size="20" value="" type="number" placeholder="整数" required="required"></td>
                     </tr>
                     <tr>
                         <th>对外抢购总量</th>
-                        <td><input name="surplus" size="20" value="" type="number"></td>
+                        <td><input name="surplus" size="20" type="number" placeholder="整数" required="required"></td>
                     </tr>
 
                     <tr>
                         <th>积分发行价格</th>
-                        <td><input name="price" size="20" value="" type="number"></td>
+                        <td><input name="price" size="20" type="number" placeholder="保留两位小数" step="0.01" required="required"></td>
                     </tr>
-                    
+
                     <tr>
-                        <th></th>              
+                        <th>积分汇率</th>
+                        <td><input name="rate" size="20" type="number" placeholder="保留两位小数" step="0.01" required="required"></td>
+                    </tr>
+
+                    <tr>
+                        <th>投票操作</th>
+                        <td>
+                            上线<input type="radio" name="activity" value=1 >
+                            下线<input type="radio" name="activity" value=2 >
+                            关闭投票<input type="radio" name="activity" value=3 checked="checked">
+                            开启投票<input type="radio" name="activity" value=4 >
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>积分介绍</th>
+                        <td><textarea id="content" name="content" cols="30" style="width:800px;height:300px;" rows="10"></textarea>
+                            <script>
+                                KindEditor.ready(function(K) {
+                                    window.editor = K.create('#content');
+                                });
+                            </script>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th></th>
                         <td>
                             <input class="btn btn-primary btn6 mr10" value="新增"  name="submit" type="submit" onclick="checkForm()" >
                             <input class="btn btn-primary btn6" onclick="history.go(-1)" value="返回" type="button">
@@ -134,13 +153,14 @@
                 </tbody>
             </table>
         </form>
-    </div>
+   </div>
 </div>
 
 
-<script>
+
+<!-- <script>
     $(".sub-menu").eq(10).show();
     $("#myform").ready(function(e) {
         $(".sub-menu").eq(10).children("li").eq(0).addClass("on");
     });
-</script>
+</script> -->

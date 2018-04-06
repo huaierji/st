@@ -1,0 +1,76 @@
+<include file="App/Admin/View/Public/left.html"/>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/kindeditor/kindeditor.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/kindeditor/lang/zh_CN.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/kindeditor/plugins/prettify.js"></script>
+<div class="main-wrap">
+    <div class="crumb-wrap">
+        <div class="crumb-list">
+            <i class="icon-font"></i>
+            <a href="{:U('Index/index')}">
+                首页
+            </a>
+            <span class="crumb-step">&gt;</span>
+            <a class="crumb-name" href="javascript:void(0)" onclick="history.go(-1)">
+                抢购管理
+            </a>
+            <span class="crumb-step">&gt;</span><span>新积分抢购设置</span>
+        </div>
+    </div>
+
+    <div class="result-wrap">
+       <div class="result-content">
+        <form action="{:U('Emption/emptionAdd')}" method="post" id="myform" name="myform" enctype="multipart/form-data" >
+            <table class="insert-tab" width="100%">
+                <tbody>
+                    <tr>
+                      <th>积分名</th>
+                      <td><input name="title" size="20" type="text" placeholder="积分名" required="required"></td>
+                    </tr>
+
+                    <tr>
+                      <th>积分ID</th>
+                      <td><input name="nu" size="10" type="number" placeholder="新积分ID" required="required"></td>
+                    </tr>
+
+                    <tr>
+                        <th>普通会员</th>
+                        <td><input name="putong" size="20" type="number" placeholder="" required="required"></td>
+                    </tr>
+                    <tr>
+                        <th>铜牌会员</th>
+                        <td><input name="tongpai" size="20" type="number" placeholder="" required="required"></td>
+                    </tr>
+                    <tr>
+                        <th>银牌会员</th>
+                        <td><input name="yinpai" size="20" type="number" placeholder="" required="required"></td>
+                    </tr>
+                    <tr>
+                        <th>金牌会员</th>
+                        <td><input name="jinpai" size="20" type="number" placeholder="" required="required"></td>
+                    </tr>
+
+                    <tr>
+                        <th>钻石会员</th>
+                        <td><input name="zuanshi" size="20" value="" type="number" placeholder="" required="required"></td>
+                    </tr>
+
+                    <tr>
+                        <th>是否开启抢购</th>
+                        <td>
+                            开启抢购<input type="radio" name="activity" value=1 >
+                            关闭抢购<input type="radio" name="activity" value=2  checked="checked">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th></th>
+                        <td>
+                            <input class="btn btn-primary btn6 mr10" value="新增"  name="submit" type="submit" onclick="checkForm()" >
+                            <input class="btn btn-primary btn6" onclick="history.go(-1)" value="返回" type="button">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+   </div>
+</div>

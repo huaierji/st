@@ -4,42 +4,61 @@
             <div class="result-title">
                 <div class="result-list">
                     <a href="{:U('Vote/addvote')}">新增积分</a>
-                </div>                
+                </div>
             </div>
+
             <div class="result-content">
                 <table class="result-tab" width="100%">
-                    <tr>
-                        <th>积分图片</th>
-                        <th>积分名称</th>          
-                        <th>投票开始时间</th>
-                        <th>投票结束时间</th>
-                        <th>抢购开始时间</th>
-                        <th>抢购结束时间</th>
-                        <th>抢购总量</th>
-                        <th>对外抢购总量</th>
-                        <th>发行价格</th>
-                        <th>支持人数</th>
-                        <th>反对人数</th>                       
-                        <th>操作</th>
+                    <tr align="center">
+                        <!-- <td>积分图片</td> -->
+                        <td>积分名称</td>
+                        <td>投票开始时间</td>
+                        <td>投票结束时间</td>
+                        <td>抢购开始时间</td>
+                        <td>抢购结束时间</td>
+                        <td>发行总量</td>
+                        <td>剩余数量</td>
+                        <td>发行价格</td>
+                        <td>汇率</td>
+                        <td>支持人数</td>
+                        <td>反对人数</td>
+                        <!-- <td>积分介绍</td> -->
+                        <!-- <td>修改删除</td> -->
+                        <td>状态</td>
+                        <td>操作</td>
                     </tr>
             	<volist name='info' id='info'>
-                    <tr>
-                        <td>{$info.logo}</td>
-                        <td>{$info.vote_name}</td>                           
+                    <tr align="center">
+                        <!-- <td width="160">{$info.logo}</td> -->
+                        <td>{$info.currency_name}</td>
                         <td>{$info.vote_start_time|date='Y-m-d H:i:s',###}</td>
                         <td>{$info.vote_end_time|date='Y-m-d H:i:s',###}</td>
                         <td>{$info.buy_start_time|date='Y-m-d H:i:s',###}</td>
                         <td>{$info.buy_end_time|date='Y-m-d H:i:s',###}</td>
                         <td>{$info.total}</td>
                         <td>{$info.surplus}</td>
-                        <td>{$info.price}</td>                       
+                        <td>{$info.price}</td>
+                        <td>{$info.rate}</td>
                         <td>{$info.support}</td>
                         <td>{$info.nonsupport}</td>
-                        
+                        <!-- <td>{$info.currency_introduce}</td> -->
+                        <td>
+                            <if condition="($info.status eq 1)">上线
+                                <elseif condition=" ($info.status eq 3) "/>投票关闭
+                                <elseif condition=" ($info.status eq 4) "/>投票开启
+                                <else />下线
+                            </if>
+                        </td>
                         <td>
                             <a class="link-update" href="{:U('Vote/updatevote',array('id'=>$info['id']))}">修改</a>
                             <a class="link-del" href="{:U('Vote/deletevote',array('id'=>$info['id']))}" onclick="return confirm('确认删除吗？')">删除</a>
                         </td>
+                        <!-- <td>
+                            上线<input type="radio" name="activity" value="上线" >
+                            下线<input type="radio" name="activity" value="下线" >
+                            开始抢购<input type="radio" name="activity" value="开启抢购" >
+                            关闭抢购<input type="radio" name="activity" value="开启抢购" >
+                        </td> -->
                     </tr>
                 </volist>
                 </table>
@@ -50,7 +69,3 @@
 </body>
 </html>
 
-<script>
-$(".sub-menu").eq(7).show();
-$(".sub-menu").eq(7).children("li").eq(0).addClass("on");
-</script>

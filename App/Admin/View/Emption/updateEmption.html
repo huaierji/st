@@ -1,0 +1,93 @@
+<include file="App/Admin/View/Public/left.html"/>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/kindeditor/kindeditor.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/kindeditor/lang/zh_CN.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/kindeditor/plugins/prettify.js">
+</script>
+
+
+<div class="main-wrap">
+    <div class="crumb-wrap">
+        <div class="crumb-list">
+            <i class="icon-font"></i>
+            <a href="{:U('Index/index')}">
+                首页
+            </a>
+            <span class="crumb-step">&gt;</span>
+            <a class="crumb-name" href="javascript:void(0)" onclick="history.go(-1)">
+                投票管理
+            </a>
+            <span class="crumb-step">&gt;</span><span>修改积分投票</span>
+        </div>
+    </div>
+
+    <div class="result-wrap">
+        <!-- <div class="result-content"> -->
+        <form action="{:U('Emption/update')}" method="post" id="myform" name="myform" enctype="multipart/form-data" >
+            <table class="insert-tab" width="100%">
+                <tbody>
+                    <tr>
+                      <th>修改抢购积分名称</th>
+                      <td><input name="title" size="20" type="text" value="{$info.currency_name}" required="required"></td>
+                      <td><input name="emption_id" type="hidden" value="{$info['id']}"></td>
+                    </tr>
+
+                    <tr>
+                      <th>修改新积分ID</th>
+                      <td><input name="nu" size="10" value="{$info.currency_id}" type="number" required="required"></td>
+                    </tr>
+
+                    <tr>
+                        <th>修改普通会员抢购数量</th>
+                        <td><input name="putong" size="20" value="{$info.putong}" type="number"  required="required"></td>
+                    </tr>
+
+                    <tr>
+                        <th>修改铜牌会员抢购数量</th>
+                        <td><input name="tongpai" size="20" value="{$info.tongpai}" type="number" step="0.01" required="required"></td>
+                    </tr>
+
+                    <tr>
+                        <th>修改银牌会员抢购数量</th>
+                        <td><input name="yinpai" size="20" value="{$info.yinpai}" type="number" step="0.01" required="required"></td>
+                    </tr>
+
+                    <tr>
+                        <th>修改金牌会员抢购数量</th>
+                        <td><input name="jinpai" size="20" value="{$info.jinpai}" type="number" step="0.01" required="required"></td>
+                    </tr>
+
+                    <tr>
+                        <th>修改钻石会员抢购数量</th>
+                        <td><input name="zuanshi" size="20" value="{$info.zuanshi}" type="number" step="0.01" required="required"></td>
+                    </tr>
+
+                    <tr>
+                        <th>操作</th>
+                        <td>
+                            <input type="radio" value="1" name="activity" <if condition = "$info['status'] eq 1 "> checked="checked"</if>/>开启抢购
+                            <input type="radio" value="2" name="activity" <if condition = "$info['status'] eq 2 "> checked="checked"</if>/>关闭抢购
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th></th>
+                        <td>
+                            <input class="btn btn-primary btn6 mr10" value="确认修改" type="submit" onclick="checkForm()" >
+                            <input class="btn btn-primary btn6" onclick="history.go(-1)" value="返回" type="button">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+
+
+
+
+ <script>
+    $(".sub-menu").eq(10).show();
+    $("#myform").ready(function(e) {
+        $(".sub-menu").eq(10).children("li").eq(0).addClass("on");
+    });
+</script>

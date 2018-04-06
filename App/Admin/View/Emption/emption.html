@@ -1,0 +1,68 @@
+<include file="App/Admin/View/Public/left.html"/>
+    <div class="main-wrap">
+        <div class="result-wrap">
+            <div class="result-title">
+                <div class="result-list">
+                    <a href="{:U('Emption/addEmption')}">新增设置</a>
+                </div>
+            </div>
+
+            <div class="result-content">
+                <table class="result-tab" width="100%">
+                    <tr align="center">
+                        <td>积分名称</td>
+                        <td>积分ID</td>
+                        <td>普通会员</td>
+                        <td>铜牌会员</td>
+                        <td>银牌会员</td>
+                        <td>金牌会员</td>
+                        <td>钻石会员</td>
+                        <td>状态</td>
+                        <td>操作</td>
+                    </tr>
+            	<!-- <volist name='info' id='info'> -->
+                    <tr align="center">
+                        <td>{$info.currency_name}</td>
+                        <td>{$info.currency_id}</td>
+                        <td>{$info.putong}</td>
+                        <td>{$info.tongpai}</td>
+                        <td>{$info.yinpai}</td>
+                        <td>{$info.jinpai}</td>
+                        <td>{$info.zuanshi}</td>
+                        <td>
+                            <if condition="($info.status eq 1)">已开启
+                                <else />已关闭
+                            </if>
+                        </td>
+                        <td>
+                            <a class="link-update" href="{:U('Emption/updateEmption',array('id'=>$info['id']))}">修改</a>
+                            <a class="link-del" href="{:U('Emption/deleteEmption',array('id'=>$info['id']))}" onclick="return confirm('确认删除吗？')">删除</a>
+                        </td>
+                    </tr>
+               <!--  </volist> -->
+                </table>
+                <div class="list-page"> <ul>{$page}</ul></div>
+                详情:<br>
+                <table class="result-tab" width="100%">
+                    <tr align="center">
+                        <td>普通会员数量</td>
+                        <td>铜牌会员数量</td>
+                        <td>银牌会员数量</td>
+                        <td>金牌会员数量</td>
+                        <td>钻石会员数量</td>
+                    </tr>
+                    <tr align="center">
+                        <td>{$total}</td>
+                        <td>123</td>
+                        <td>123</td>
+                        <td>123</td>
+                        <td>123</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+

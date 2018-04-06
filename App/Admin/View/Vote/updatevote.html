@@ -27,76 +27,111 @@
             <a class="crumb-name" href="javascript:void(0)" onclick="history.go(-1)">
                 投票管理
             </a>
-            <span class="crumb-step">&gt;</span><span>修改积分投票</span> 
+            <span class="crumb-step">&gt;</span><span>修改积分投票</span>
         </div>
     </div>
 
     <div class="result-wrap">
        <!-- <div class="result-content"> -->
 
-        <form action="{:U('Vote/update')}" method="post" id="myform" name="myform" enctype="multipart/form-data" >        
+        <form action="{:U('Vote/update')}" method="post" id="myform" name="myform" enctype="multipart/form-data" >
             <table class="insert-tab" width="100%">
-                <tbody>                  
+                <tbody>
                     <!-- <input type="hidden" id="article_category_id" name="article_category_id" value="{$Think.get.article_category_id}"> -->
                     <tr>
                       <th>修改积分名称</th>
-                      <td><input name="title" size="20" type="text" required="required"></td>
+                      <td><input name="title" size="20" type="text" value="{$info.currency_name}" required="required"></td>
                       <td><input name="vote_id" type="hidden" value="{$info['id']}"></td>
-                    </tr>  
-                    
-                    <tr>
-                    	<th>修改积分图片</th>
-                    	<td>
-                    		<input type="file" name="pic" required="required">
-                    	</td>
                     </tr>
 
                     <tr>
-                        <th>修改投票开始时间</th>                   
-                        <td><input name="start_time" size="20" type="date" required="required"></td>
+                      <th>修改新积分ID</th>
+                      <td><input name="nu" size="10" type="number" value="{$info.currency_id}" required="required"></td>
+                    </tr>
+
+                    <!-- <tr>
+                    	<th>修改积分图片</th>
+                    	<td>
+                    		<input type="file" name="pic" value="{$info.logo'}" required="required">
+                    	</td>
+                    </tr> -->
+
+                    <tr>
+                        <th>修改投票开始时间</th>
+                        <td><input name="start_time" size="20" type="datetime" value="{$info.vote_start_time|date='Y-m-d H:i:s',###}" required="required"></td>
                     </tr>
 
                     <tr>
                         <th>修改投票结束时间</th>
-                        <td><input name="end_time" size="20" value="" type="date" required="required"></td>
+                        <td><input name="end_time" size="20" type="datetime" value="{$info.vote_end_time|date='Y-m-d H:i:s',###}" required="required"></td>
                     </tr>
                     <tr>
-                        <th>修改抢购开始时间</th>                   
-                        <td><input name="buy_start_time" size="20" value="" type="date" required="required"></td>
+                        <th>修改抢购开始时间</th>
+                        <td><input name="buy_start_time" size="20" value="{$info.buy_start_time|date='Y-m-d H:i:s',###}" type="datetime" required="required"></td>
                     </tr>
 
                     <tr>
                         <th>修改抢购结束时间</th>
-                        <td><input name="buy_end_time" size="20" value="" type="date" required="required"></td>
+                        <td><input name="buy_end_time" size="20" value="{$info.buy_end_time|date='Y-m-d H:i:s',###}" type="datetime" required="required"></td>
                     </tr>
 
                     <tr>
-                        <th>修改积分抢购总量</th>                   
-                        <td><input name="total" size="20" value="" type="number" required="required"></td>
+                        <th>修改积分抢购总量</th>
+                        <td><input name="total" size="20" value="{$info.total}" type="number" required="required"></td>
                     </tr>
 
                     <tr>
                         <th>修改对外抢购总量</th>
-                        <td><input name="surplus" size="20" value="" type="number" required="required"></td>
+                        <td><input name="surplus" size="20" value="{$info.surplus}" type="number" required="required"></td>
                     </tr>
 
                     <tr>
                         <th>修改积分发行价格</th>
-                        <td><input name="price" size="20" value="" type="number" required="required"></td>
+                        <td><input name="price" size="20" value="{$info.price}" type="number" step="0.01" required="required"></td>
+                    </tr>
+
+                    <tr>
+                        <th>修改积分汇率</th>
+                        <td><input name="rate" size="20" value="{$info.rate}" type="number" step="0.01" required="required"></td>
                     </tr>
 
                     <tr>
                         <th>修改投票支持人数</th>
-                        <td><input name="support" size="20" value="" type="number" required="required"></td>
+                        <td><input name="support" size="20" value="{$info.support}" type="number" required="required"></td>
                     </tr>
 
                     <tr>
                         <th>修改投票反对人数</th>
-                        <td><input name="nonsupport" size="20" value="" type="number" required="required"></td>
+                        <td><input name="nonsupport" size="20" value="{$info.nonsupport}" type="number" required="required"></td>
+                    </tr>
+                    <tr>
+
+                    <tr>
+                        <th>修改投票操作</th>
+                        <td>
+                            <input type="radio" value="1" name="activity" <if condition = "$info['status'] eq 1 "> checked="checked"</if>/>上线
+                            <input type="radio" value="2" name="activity" <if condition = "$info['status'] eq 2 "> checked="checked"</if>/>关闭
+                            <input type="radio" value="3" name="activity" <if condition = "$info['status'] eq 3 "> checked="checked"</if>/>关闭投票
+                            <input type="radio" value="4" name="activity" <if condition = "$info['status'] eq 4 "> checked="checked"</if>/>开启投票
+                        </td>
                     </tr>
 
                     <tr>
-                        <th></th>              
+                        <th>修改积分介绍</th>
+                        <td>
+                            <textarea id="content" name="content" style="width:800px;height:300px;">
+                                {$info.currency_introduce}
+                            </textarea>
+                            <script>
+                                KindEditor.ready(function(K) {
+                                    window.editor = K.create('#content');
+                                });
+                            </script>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th></th>
                         <td>
                             <input class="btn btn-primary btn6 mr10" value="确认修改" type="submit" onclick="checkForm()" >
                             <input class="btn btn-primary btn6" onclick="history.go(-1)" value="返回" type="button">
